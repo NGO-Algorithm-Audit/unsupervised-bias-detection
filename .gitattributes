@@ -1,0 +1,2 @@
+/Users/jurriaanparie/Downloads/Documents/AI_Trustworthy_Fairness_Training/Medium_blog/FairerML/AI_Audit_Challenge/data/BERT_fake_news/best_model.pth filter=lfs diff=lfs merge=lfs -text
+classification_models/BERT_disinformation_classifier/best_model.pth filter=lfs diff=lfs merge=lfs -text

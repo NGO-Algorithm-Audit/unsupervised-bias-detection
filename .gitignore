@@ -1,0 +1,4 @@
+~$as_scan_tool_report.docx
+*.ipynb_checkpoints
+*.DS_Store
+*__pycache__
