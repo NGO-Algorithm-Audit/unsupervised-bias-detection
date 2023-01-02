@@ -120,9 +120,9 @@ The identified quantitative disparities are submitted to an audit commission, ex
     ├── .gitattributes                                          # To store large files
     ├── .gitignore                                              # Files to be ignored in this repo
     ├── LICENSE                                                 # MIT license for sharing 
-    ├── Main_Presentation_Bias_scan.pdf                         # Main presentation
-    ├── README.md                                               # ReadMe file 
-    └── Technical_Documentation_Bias_scan.docx                  # Techical documentation
+    ├── Main_presentation_bias_scan.pdf                         # Main presentation
+    ├── README.md                                               # Readme file 
+    └── Technical_documentation_bias_scan.docx                  # Techical documentation
 ```
 
 ## Contributors to this project:
@@ -130,7 +130,7 @@ The identified quantitative disparities are submitted to an audit commission, ex
 - Ariën Voogt, PhD-candidate in Philosophy at Protestant Theological University of Amsterdam;
 - Joel Persson, PhD-candidate in Applied Data Science at ETH Zürich;
 - dr. Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University;
-- Floris Holstege, PhD-candidate in Explanable Machine Learning at University of Amsterdam.
+- Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam.
 
 ## This project is endorsed by:
 - Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports;
