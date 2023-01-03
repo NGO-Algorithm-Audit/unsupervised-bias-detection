@@ -62,6 +62,7 @@ A False Positives (FP) means that true content is classified as disinformation b
 On average, users that:
 - are verified, have higher #followers, user engagement and #URLs;
 - use less #hashags and have lower tweet length
+
 have more true content classified as false (false positives).
 
 This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.08) and rest of dataset:
@@ -89,6 +90,7 @@ A False Negative (FN) means that disinformation is classified as true by the AI 
 On average, users that:
 - use more #hashtags and have higher sentiment score;
 - are non-verified, have less #followers, user engagement and tweet length
+
 have more false content classified as true (false negatives).
 
 This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.13) and rest of dataset:
