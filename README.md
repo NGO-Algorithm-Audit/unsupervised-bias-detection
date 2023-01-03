@@ -58,7 +58,7 @@ For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster
 
 _Bias = FPR(cluster) - FPR(rest of dataset)_. 
 
-A False Positives (FP) means that true content is classified as disinformation by the AI classifier. The cluster with highest bias deviates 0.08 from the rest of the data set. There are 249 tweets in this cluster.
+A False Positive (FP) means that true content is classified as disinformation by the AI classifier. The cluster with highest bias deviates 0.08 from the rest of the data set. There are 249 tweets in this cluster.
 ![image](./images/FPR_metric.png)*Figure 3 – Bias scan results for FPR bias scan. Features with dark blue confidence intervals that do not hit the x=0 line indicate statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*
 
 On average, users that:
@@ -67,7 +67,7 @@ On average, users that:
 
 have more true content classified as false (false positives).
 
-This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.08) and rest of dataset:
+<!-- This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.08) and rest of dataset:
 | feature          | difference | p-value |
 |------------------|------------|---------|
 | verified         | 1.419      | 0.000   |
@@ -79,7 +79,7 @@ This is the full list of statistical significant differences in (feature) means 
 | length           | -0.669     | 0.000   |
 | #sentiment_score | 0.167      | 0.115   |
 
-*Table 2 – Bias scan results for FPR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*
+*Table 2 – Bias scan results for FPR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.* -->
 
 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb). 
 
@@ -97,7 +97,7 @@ On average, users that:
 
 have more false content classified as true (false negatives).
 
-This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.13) and rest of dataset:
+<!-- This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.13) and rest of dataset:
 | feature          | difference | p-value |
 |------------------|------------|---------|
 | verified         | -1.965     | 0.000   |
@@ -109,7 +109,7 @@ This is the full list of statistical significant differences in (feature) means 
 | length           | -0.702     | 0.000   |
 | #sentiment_score | 0.917      | 0.000   |
 
-*Table 3 – Bias scan results for FNR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*
+*Table 3 – Bias scan results for FNR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.* -->
 
 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb).  
 
