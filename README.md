@@ -15,7 +15,7 @@
 - **Open-source and not-for-profit**: Available for the entire AI Audit community.
 
 ## Solution overview
-![image](./images/Quantitative-qualitative.png)*Figure 1 – Solution overview*
+![image](./images/Quantitative-qualitative.png)*Figure 1 – Quantitative-qualitative solution overview*
 
 ## Executive summary
 Artificial intelligence (AI) is increasingly used to automate or support policy decisions that affects individuals and groups. It is imperative that AI adheres to the legal and ethical requirements that apply to such policy decisions. In particular, policy decisions should not be systematically discriminatory (direct or indirect) with respect to protected attributes such as gender, sex, ethnicity or race.
@@ -40,6 +40,7 @@ A .csv file of max. 1GB, with columns structured as follows: features, predicted
 | 10     | 1      | ... | 0.1    | 1          | 1           |
 | 20     | 2      | ... | 0.2    | 1          | 0           |
 | 30     | 3      | ... | 0.3    | 0          | 0           |
+
 *Table 1 – Structure of input data bias scan web application*
 
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
