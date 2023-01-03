@@ -15,7 +15,7 @@
 - **Open-source and not-for-profit**: Available for the entire AI Audit community.
 
 ## Solution overview
-![image](./images/Quantitative_qualitative.png)
+![image](./images/Quantitative-qualitative.png)
 
 ## Executive summary
 Artificial intelligence (AI) is increasingly used to automate or support policy decisions that affects individuals and groups. It is imperative that AI adheres to the legal and ethical requirements that apply to such policy decisions. In particular, policy decisions should not be systematically discriminatory (direct or indirect) with respect to protected attributes such as gender, sex, ethnicity or race.
@@ -49,7 +49,7 @@ We use the bias scan tool to assess fair treatment of a self-trained disinformat
 ### Bias scan pipeline
 A BERT-based disinformation classifier is trained on true and false tweets (n=1,057) from the [Twitter1516](https://www.dropbox.com/s/7ewzdrbelpmrnxu/rumdetect2017.zip?dl=0&file_subpath=%2Frumor_detection_acl2017) dataset. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. More details on the training process of the BERT-based disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb).
 
-![image](./images/Bias_scan_pipeline.png)
+![image](./images/HBAC_pipeline.png)
 
 ### Results: False Positive Rate (FPR) bias metric
 For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster. That is: 
@@ -146,14 +146,15 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 - BB
 
 #### Industry
-- Selma Muhammad, Trustworthy AI consultant at Deloitte;
 - Laurens van der Maas, Data Scientist at AWS;
+- CC
+- DD
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
 - Hinda Haned [to be confirmed], Professor in Data Science at University of Amsterdam
 - Marlies van Eck, Assistant Professor in Administrative Law & AI at Radboud University
-- Emma Beauxis-Ausselet, Associate Professor Ethical Computing at University of Amsterdam
+- Emma Beauxis-Ausselet [to be confirmed], Associate Professor Ethical Computing at University of Amsterdam
 - Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University
 - Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam
 
