@@ -44,7 +44,7 @@ A .csv file of max. 1GB, with columns structured as follows: features, predicted
 The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
 ## Case study – BERT-based disinformation classifier (Twitter1516 data set)
-A BERT-based disinformation classifier is trained on true and false tweets (n=1,057) from the Twitter1516 data set. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. More details on the training process of the BERT-based disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb). 
+A BERT-based disinformation classifier is trained on true and false tweets (n=1,057) from the [Twitter1516](https://www.dropbox.com/s/7ewzdrbelpmrnxu/rumdetect2017.zip?dl=0&file_subpath=%2Frumor_detection_acl2017) dataset. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. More details on the training process of the BERT-based disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb). 
 ### Bias scan pipeline
 ![image](./images/Bias_scan_pipeline.png)
 
@@ -112,7 +112,7 @@ The identified quantitative disparities are submitted to an audit commission, ex
 ```
     .
     ├── HBAC_scan                                               # Unsupervised bias scan (quantitative)
-    ├── audit_commission                                        # commission materials
+    ├── audit_commission                                        # Audit commission materials (qualitative)
     ├── classifiers                                             # Self-trained binary AI classifiers
     ├── data                                                    # Twitter1516 and German Credit data
     ├── images                                                  # Images
@@ -120,17 +120,17 @@ The identified quantitative disparities are submitted to an audit commission, ex
     ├── .gitattributes                                          # To store large files
     ├── .gitignore                                              # Files to be ignored in this repo
     ├── LICENSE                                                 # MIT license for sharing 
-    ├── Main_presentation_bias_scan.pdf                         # Main presentation
+    ├── Main_presentation_bias_scan.pdf                         # Main presentation (slides)
     ├── README.md                                               # Readme file 
-    └── Technical_documentation_bias_scan.docx                  # Techical documentation
+    └── Technical_documentation_bias_scan.docx                  # Techical documentation (report)
 ```
 
-## Algorithm Audit's bias scan tool team:
+### Algorithm Audit's bias scan tool team:
 - Jurriaan Parie, Trustworthy AI consultant at Deloitte
 - Ariën Voogt, PhD-candidate in Philosophy at Protestant Theological University of Amsterdam
 - Joel Persson, PhD-candidate in Applied Data Science at ETH Zürich
 
-## This project is endorsed by:
+### This project is endorsed by:
 #### Journalism
 - Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports
 - AA
@@ -148,7 +148,7 @@ The identified quantitative disparities are submitted to an audit commission, ex
 - Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University
 - Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam
 
-# Civil society organisations
+#### Civil society organisations
 - XX
 - YY
 - Simone Maria Parazzoli, Intern at the OECD Observatory of Public Sector Innovation (OPSI).
