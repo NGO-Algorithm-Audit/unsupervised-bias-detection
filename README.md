@@ -41,11 +41,14 @@ A .csv file of max. 1GB, with columns structured as follows: features, predicted
 | 20     | 2      | ... | 0.2    | 1          | 0           |
 | 30     | 3      | ... | 0.3    | 0          | 0           |
 
-The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
+☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
 ## Case study – BERT-based disinformation classifier (Twitter1516 data set)
-A BERT-based disinformation classifier is trained on true and false tweets (n=1,057) from the [Twitter1516](https://www.dropbox.com/s/7ewzdrbelpmrnxu/rumdetect2017.zip?dl=0&file_subpath=%2Frumor_detection_acl2017) dataset. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. More details on the training process of the BERT-based disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb). 
+We use the bias scan tool to assess fair treatment of a self-trained disinformation detection algorithm on the Twitter1516 dataset. Below, statistically significant disparities found by the tool are presented. Based on these quantitative results, questions distilled and asked to a commission of human experts. This audit commission formulates normative advice if, and how, (higher-dimensional) unfair treatment can be assessed.
+
 ### Bias scan pipeline
+A BERT-based disinformation classifier is trained on true and false tweets (n=1,057) from the [Twitter1516](https://www.dropbox.com/s/7ewzdrbelpmrnxu/rumdetect2017.zip?dl=0&file_subpath=%2Frumor_detection_acl2017) dataset. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. More details on the training process of the BERT-based disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb).
+
 ![image](./images/Bias_scan_pipeline.png)
 
 ### Results: False Positive Rate (FPR) bias metric
@@ -53,14 +56,13 @@ For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster
 
 _Bias = FPR(cluster) - FPR(rest of dataset)_. 
 
-A False Positives (FP) means that true content is classified as disinfo by the AI classifier. The cluster with highest bias deviates 0.08 from the rest of the data set. There are 249 tweets in this cluster.
+A False Positives (FP) means that true content is classified as disinformation by the AI classifier. The cluster with highest bias deviates 0.08 from the rest of the data set. There are 249 tweets in this cluster.
 ![image](./images/FPR_metric.png)
 
-In this cluster, users with:
-- above average verified profiles, #followers, user engagement, #URLs
-- below average #hashags, tweet length
-
-face on average more FP classifications.
+On average, users that:
+- are verified, have higher #followers, user engagement and #URLs;
+- use less #hashags and have lower tweet length
+have more true content classified as false (false positives).
 
 This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.08) and rest of dataset:
 | feature          | difference | p-value |
@@ -77,19 +79,17 @@ This is the full list of statistical significant differences in (feature) means 
 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb). 
 
 ### Results: False Negative Rate (FNR) bias metric
-For this bias scan, bias is defined by the False Negative Rate (FPR) per cluster. That is: 
+For this bias scan, bias is defined by the False Negative Rate (FNR) per cluster. That is: 
 
 _Bias = FNR(cluster) - FNR(rest of dataset)_. 
 
-A False Negative (FN) means that disinformation is classified as true content by the AI classifier. The cluster with highest bias deviates 0.13 from the rest of the data set. There are 46 tweets in this cluster.
+A False Negative (FN) means that disinformation is classified as true by the AI classifier. The cluster with highest bias deviates 0.13 from the rest of the data set. There are 46 tweets in this cluster.
 ![image](./images/FNR_metric.png)
 
-In this cluster, users with:
-- above average #hashtags, sentiment score;
-- below average verified profile, #followers, user engagement and tweet length
-
-face on average more FN classifications.
-
+On average, users that:
+- use more #hashtags and have higher sentiment score;
+- are non-verified, have less #followers, user engagement and tweet length
+have more false content classified as true (false negatives).
 
 This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.13) and rest of dataset:
 | feature          | difference | p-value |
@@ -105,8 +105,15 @@ This is the full list of statistical significant differences in (feature) means 
 
 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb).  
 
-### Conclusion
-The identified quantitative disparities are submitted to an audit commission, existing of AI experts with a wide range of professional background. The problem statement proposed to commission member can be found here. The advice of the commission will shape the conclusion of this case study, i.e., whether the identified disparities might indicate unfair treatment or not.
+### Audit commission: Qualitative assessment of identified disparities
+These above quantitative disparities do not establish prohibited _prima facie_ discrimination. Rather, the identified disparities serve as a starting point to assess potential unfair treatment according to the context-sensitive qualitative doctrine. To assess unfair treatment, we question a commission of experts:
+1. Is there an indication that one of the statistically significant features, or a combination of the features, stated in Figure 2-3 are critically linked to one or multiple protected grounds? 
+2. Is it as harmful to classify true content as false (false positive) as false content as true (false negative)?
+3. For a specific cluster of people, is it justifiable to have true content classified as false 8 percentage points more often? For a specific cluster of people, is it justifiable to have false content classified as true 13 percentage points more often?
+4. Considering the disparate treatment of users with a verified profile, above average sentiment score and/or below average number of URLs used in their tweets, could the observed disparate treatment be perceived as ethically undesirable?
+
+## Conclusion
+The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questions.
 
 ### Structure of this repository
 ```
