@@ -125,15 +125,30 @@ The identified quantitative disparities are submitted to an audit commission, ex
     └── Technical_documentation_bias_scan.docx                  # Techical documentation
 ```
 
-## Contributors to this project:
-- Jurriaan Parie, Trustworthy AI consultant at Deloitte;
-- Ariën Voogt, PhD-candidate in Philosophy at Protestant Theological University of Amsterdam;
-- Joel Persson, PhD-candidate in Applied Data Science at ETH Zürich;
-- dr. Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University;
-- Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam.
+## Algorithm Audit's bias scan tool team:
+- Jurriaan Parie, Trustworthy AI consultant at Deloitte
+- Ariën Voogt, PhD-candidate in Philosophy at Protestant Theological University of Amsterdam
+- Joel Persson, PhD-candidate in Applied Data Science at ETH Zürich
 
 ## This project is endorsed by:
-- Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports;
-- Marlies van Eck, Assistant Professor at Radboud University;
+#### Journalism
+- Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports
+- AA
+- BB
+
+#### Industry
+- Selma Muhammad, Trustworthy AI consultant at Deloitte;
 - Laurens van der Maas, Data Scientist at AWS;
+
+#### Academia
+- Anne Meuwese, Professor in Public Law & AI at Leiden University
+- Hinda Haned [to be confirmed], Professor in Data Science at University of Amsterdam
+- Marlies van Eck, Assistant Professor in Administrative Law & AI at Radboud University
+- Emma Beauxis-Ausselet, Associate Professor Ethical Computing at University of Amsterdam
+- Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University
+- Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam
+
+# Civil society organisations
+- XX
+- YY
 - Simone Maria Parazzoli, Intern at the OECD Observatory of Public Sector Innovation (OPSI).
