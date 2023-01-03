@@ -12,7 +12,7 @@
 - **Unsupervised bias detection**: No user data needed on protected attributes; 
 - **Model-agnostic**: Works for all binary AI classifiers; 
 - **Audit commission**: Qualitative, expert-led approach to _establish_ unfair treatment;
-- **Open-source and not-for-profit**: Available for the entire AI Audit community.
+- **Open-source and not-for-profit**: Available for the entire AI auditing community.
 
 ## Solution overview
 ![image](./images/Quantitative-qualitative.png)
