@@ -309,13 +309,13 @@ def CI_plot(df, x_lim, feat_ls):
     ax.tick_params(axis='both', which='major', labelsize=16)
     
     # x-axis
-    ax.set_xlabel('Difference in means\n(standardized dataset)',fontsize=22)
+    ax.set_xlabel('Difference in means',fontsize=22)
     ax.set_xlim(x_lim)
     xlims = ax.get_xlim()
     
     # annotate x-axis
-    ax.annotate('Cluster mean lower\nthan rest of (standardized)\ndataset',xy=(xlims[0],-0.1),xytext=(xlims[0],-0.5), ha='center', annotation_clip=False, fontsize=14, style='italic')
-    ax.annotate('Cluster mean higher\nthan rest of (standardized)\ndataset',xy=(xlims[1],-0.1),xytext=(xlims[1],-0.5), ha='center', annotation_clip=False, fontsize=14, style='italic')
+    ax.annotate('Cluster mean lower than\nrest of (standardized) dataset', xy=(xlims[0],-0.1),xytext=(xlims[0],-0.5), ha='center', annotation_clip=False, fontsize=14, style='italic')
+    ax.annotate('Cluster mean higher than\nrest of (standardized) dataset' ,xy=(xlims[1],-0.1),xytext=(xlims[1],-0.5), ha='center', annotation_clip=False, fontsize=14, style='italic')
     
     # y-axis
     columns = feat_ls
