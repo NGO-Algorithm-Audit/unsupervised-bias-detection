@@ -110,7 +110,7 @@ More details on this case study can be found [here](https://github.com/NGO-Algor
 ### Audit commission: Qualitative assessment of identified disparities
 These above quantitative disparities do not establish prohibited _prima facie_ discrimination. Rather, the identified disparities serve as a starting point to assess potential unfair treatment according to the context-sensitive qualitative doctrine. To assess unfair treatment, we question a commission of experts:
 1. Is there an indication that one of the statistically significant features, or a combination of the features, stated in Figure 2-3 are critically linked to one or multiple protected grounds? 
-2. Is it as harmful to classify true content as false (false positive) as false content as true (false negative)?
+2. In the context of disinformation detection, is it as harmful to classify true content as false (false positive) as false content as true (false negative)?
 3. For a specific cluster of people, is it justifiable to have true content classified as false 8 percentage points more often? For a specific cluster of people, is it justifiable to have false content classified as true 13 percentage points more often?
 4. Considering the disparate treatment of users with a verified profile, above average sentiment score and/or below average number of URLs used in their tweets, could the observed disparate treatment be perceived as ethically undesirable?
 
