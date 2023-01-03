@@ -127,7 +127,7 @@ These above quantitative disparities do not establish prohibited _prima facie_ d
 ## Conclusion
 The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questions.
 
-### Structure of this repository
+## Structure of this repository
 ```
     .
     ├── HBAC_scan                                               # Unsupervised bias scan (quantitative)
@@ -143,7 +143,7 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
     ├── README.md                                               # Readme file 
     └── Technical_documentation_bias_scan.docx                  # Techical documentation (report)
 ```
-
+## Contributors and endorsements
 ### Algorithm Audit's bias scan tool team:
 - Jurriaan Parie, Trustworthy AI consultant at Deloitte
 - Ariën Voogt, PhD-candidate in Philosophy at Protestant Theological University of Amsterdam
