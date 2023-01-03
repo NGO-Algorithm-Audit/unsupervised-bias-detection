@@ -15,7 +15,8 @@
 - **Open-source and not-for-profit**: Available for the entire AI Audit community.
 
 ## Solution overview
-![image](./images/Quantitative-qualitative.png)*Figure 1 – Quantitative-qualitative solution overview*
+![image](./images/Quantitative-qualitative.png)
+<sub>*Figure 1 – Quantitative-qualitative solution overview*</sub>
 
 ## Executive summary
 Artificial intelligence (AI) is increasingly used to automate or support policy decisions that affects individuals and groups. It is imperative that AI adheres to the legal and ethical requirements that apply to such policy decisions. In particular, policy decisions should not be systematically discriminatory (direct or indirect) with respect to protected attributes such as gender, sex, ethnicity or race.
