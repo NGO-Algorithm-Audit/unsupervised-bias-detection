@@ -41,7 +41,7 @@ A .csv file of max. 1GB, with columns structured as follows: features, predicted
 | 20     | 2      | ... | 0.2    | 1          | 0           |
 | 30     | 3      | ... | 0.3    | 0          | 0           |
 
-*Table 1 – Structure of input data in bias scan web application*
+<sub>*Table 1 – Structure of input data in bias scan web application*</sub>
 
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
@@ -51,7 +51,8 @@ We use the bias scan tool to assess fair treatment of a self-trained disinformat
 ### Bias scan pipeline
 A BERT-based disinformation classifier is trained on true and false tweets (n=1,057) from the [Twitter1516](https://www.dropbox.com/s/7ewzdrbelpmrnxu/rumdetect2017.zip?dl=0&file_subpath=%2Frumor_detection_acl2017) dataset. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. More details on the training process of the BERT-based disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb). 
 
-![image](./images/HBAC_pipeline.png)*Figure 2 – Bias scan pipeline for the disinformation classifier case study*
+![image](./images/HBAC_pipeline.png)
+<sub>*Figure 2 – Bias scan pipeline for the disinformation classifier case study*</sub>
 
 ### Results: False Positive Rate (FPR) bias metric
 For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster. That is: 
@@ -59,7 +60,8 @@ For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster
 _Bias = FPR(cluster) - FPR(rest of dataset)_. 
 
 A False Positive (FP) means that true content is classified as disinformation by the AI classifier. The cluster with highest bias deviates 0.08 from the rest of the data set. There are 249 tweets in this cluster.
-![image](./images/FPR_metric.png)*Figure 3 – Bias scan results for FPR bias scan. Features with dark blue confidence intervals that do not hit the x=0 line indicate statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*
+![image](./images/FPR_metric.png)
+<sub>*Figure 3 – Bias scan results for FPR bias scan. Features with dark blue confidence intervals that do not hit the x=0 line indicate statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*</sub>
 
 On average, users that:
 - are verified, have higher #followers, user engagement and #URLs;
@@ -89,7 +91,8 @@ For this bias scan, bias is defined by the False Negative Rate (FNR) per cluster
 _Bias = FNR(cluster) - FNR(rest of dataset)_. 
 
 A False Negative (FN) means that disinformation is classified as true by the AI classifier. The cluster with highest bias deviates 0.13 from the rest of the data set. There are 46 tweets in this cluster.
-![image](./images/FNR_metric.png)*Figure 4 – Bias scan results for FNR bias scan. Features with dark blue confidence intervals that do not hit the x=0 line indicate statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*
+![image](./images/FNR_metric.png)
+<sub>*Figure 4 – Bias scan results for FNR bias scan. Features with dark blue confidence intervals that do not hit the x=0 line indicate statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*</sub>
 
 On average, users that:
 - use more #hashtags and have higher sentiment score;
