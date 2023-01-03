@@ -15,7 +15,7 @@
 - **Open-source and not-for-profit**: Available for the entire AI Audit community.
 
 ## Solution overview
-![image](./images/Quantitative-qualitative.png)
+![image](./images/Quantitative-qualitative.png)*Figure 1 – Solution overview*
 
 ## Executive summary
 Artificial intelligence (AI) is increasingly used to automate or support policy decisions that affects individuals and groups. It is imperative that AI adheres to the legal and ethical requirements that apply to such policy decisions. In particular, policy decisions should not be systematically discriminatory (direct or indirect) with respect to protected attributes such as gender, sex, ethnicity or race.
@@ -40,6 +40,7 @@ A .csv file of max. 1GB, with columns structured as follows: features, predicted
 | 10     | 1      | ... | 0.1    | 1          | 1           |
 | 20     | 2      | ... | 0.2    | 1          | 0           |
 | 30     | 3      | ... | 0.3    | 0          | 0           |
+*Table 1 – Structure of input data bias scan web application*
 
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
@@ -49,7 +50,7 @@ We use the bias scan tool to assess fair treatment of a self-trained disinformat
 ### Bias scan pipeline
 A BERT-based disinformation classifier is trained on true and false tweets (n=1,057) from the [Twitter1516](https://www.dropbox.com/s/7ewzdrbelpmrnxu/rumdetect2017.zip?dl=0&file_subpath=%2Frumor_detection_acl2017) dataset. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. More details on the training process of the BERT-based disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb). 
 
-![image](./images/HBAC_pipeline.png)*HBAC pipeline*
+![image](./images/HBAC_pipeline.png)*Figure 2 – Bias scan pipeline*
 
 ### Results: False Positive Rate (FPR) bias metric
 For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster. That is: 
@@ -57,7 +58,7 @@ For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster
 _Bias = FPR(cluster) - FPR(rest of dataset)_. 
 
 A False Positives (FP) means that true content is classified as disinformation by the AI classifier. The cluster with highest bias deviates 0.08 from the rest of the data set. There are 249 tweets in this cluster.
-![image](./images/FPR_metric.png)
+![image](./images/FPR_metric.png)*Figure 3 – Identified quantitative feature disparities in cluster with highest bias. For this bias scan, bias is defined by the False Positive Rate.*
 
 On average, users that:
 - are verified, have higher #followers, user engagement and #URLs;
@@ -76,6 +77,7 @@ This is the full list of statistical significant differences in (feature) means 
 | #hashs           | -0.634     | 0.000   |
 | length           | -0.669     | 0.000   |
 | #sentiment_score | 0.167      | 0.115   |
+*Table 2 – Bias scan results for FPR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*
 
 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb). 
 
@@ -85,7 +87,7 @@ For this bias scan, bias is defined by the False Negative Rate (FNR) per cluster
 _Bias = FNR(cluster) - FNR(rest of dataset)_. 
 
 A False Negative (FN) means that disinformation is classified as true by the AI classifier. The cluster with highest bias deviates 0.13 from the rest of the data set. There are 46 tweets in this cluster.
-![image](./images/FNR_metric.png)
+![image](./images/FNR_metric.png)*Figure 4 – Identified quantitative feature disparities in cluster with highest bias. For this bias scan, bias is defined by the False Negative Rate.*
 
 On average, users that:
 - use more #hashtags and have higher sentiment score;
@@ -104,6 +106,7 @@ This is the full list of statistical significant differences in (feature) means 
 | #hashs           | 0.588      | 0.005   |
 | length           | -0.702     | 0.000   |
 | #sentiment_score | 0.917      | 0.000   |
+*Table 3 – Bias scan results for FNR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*
 
 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb).  
 
