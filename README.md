@@ -3,7 +3,7 @@
 
 ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
 
-⚖️ Algorithm Audit's case repository can be found here: https://www.algorithmaudit.eu/cases/.
+⚖️ Algorithm Audit's case repository: https://www.algorithmaudit.eu/cases/.
 
 📊 Main presentation: [slides](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Main_presentation_bias_scan.pdf).
 
@@ -22,16 +22,15 @@
 <sub>*Figure 1 – Quantitative-qualitative solution overview*</sub>
 
 ## Executive summary
-Artificial intelligence (AI) is increasingly used to automate or support policy decisions that affect individuals and groups. It is imperative that AI adheres to the legal and ethical requirements that apply to such policy decisions. In particular, policy decisions should not be systematically unfair. AI can be unfair, for instance, through differentiation linked to protected attributes, such as gender, sex, ethnicity or race, i.e., direct or indirect discrimination. Or, through differentiation upon new categories of people (defined by a high-dimensional mixture of features) that evades non-discrimination law. Such new types of differentiation could be perceived as unfair, for instance if it reinforces socio-economic inequality.
+As AI is more commonly used to make or support policy and business decisions, it is essential that it follows legal and ethical guidelines. It is especially important to prevent unfair bias in these decisions. Unfair bias can come from differentiating people based on protected attributes, such as gender, sexual orientation, or race, i.e. by way of direct or indirect discrimination. Unfair differentiation can also occur in relation to new categories of people (defined by a high-dimensional mixture of features), which are not covered by anti-discrimination law. Such new types of differentiation could be perceived as unfair, if for instance it reinforces socio- economic inequality. Yet it is often difficult to detect and mitigate such higher- dimensional forms of bias.
 
-To address these risks, we propose a scalable, model-agnostic, and open-source bias scan tool to identify potentially unfair treated groups of similar users in binary AI classifiers. This bias scan tool does not require _a priori_ information about existing disparities and protected attributes, and is therefore able to detect possible proxy discrimination, intersectional discrimination and other types of (higher-dimensional) differentiation. The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit, such that it can be used by the entire AI auditing community.
+To address this challenge, we propose a scalable, model-agnostic, and open-source bias scan tool, which is able to identify groups of similar users (called ‘clusters’) that are potentially treated unfairly by a binary AI classifier. This bias scan tool does not require _a priori_ information about existing disparities and protected attributes. It is therefore able to detect possible proxy discrimination, intersectional discrimination and other types of (higher-dimensional) unfair differentiation. The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit, so that it may be freely used by the entire AI auditing community.
 
-As demonstrated on a self-trained BERT Twitter disinformation detection model, the bias scan tool identifies statistically significant disinformation classification bias against users with a verified profile, higher number of followers and higher user engagement score. These results are supported by sensitivity testing for 162 reasonable hyperparameter configurations of the unsupervised bias scan tool. Resulting in 1,000+ clusters, which aggregation statistics confirm our findings.
+We tested our bias scan tool on a BERT-based disinformation detection model, which is trained on the widely cited Twitter1516 data set. Our bias scan identifies a statistically significant bias against a cluster of similar users (characterized by a verified profile, higher number of followers and higher user engagement score). This cluster of users on average faces more true content being classified as false (false positives). We also find a bias in respect of another cluster of users, of whom false content is more often classified as true (false negatives). These results are supported by sensitivity testing for 162 reasonable hyperparameter configurations of the unsupervised bias scan tool. Resulting in 1,000+ clusters, which aggregation statistics confirm our findings.
 
-These observations do not establish prohibited _prima facie_ discrimination. Rather, the identified disparities serve as a starting point to assess potential unfair treatment according to the context-sensitive legal doctrine, i.e., assessment of the legitimacy of the aim pursued and whether the means of achieving that aim are _proportional_ and _necessary_. For this qualitative assessment, we propose an expert-led, deliberative method. Informed by the quantitative results of the bias scan, we raise questions about the BERT disinformation classifier to an independent audit commission of AI experts, to form a normative judgements about unfair treatment of this specific AI classifier.
+These observations do not establish prohibited _prima facie_ discrimination. Rather, the identified disparities serve as a starting point for evaluating the possibility of unfair treatment in a qualitative way, which takes into account the particular context and the relevant legal doctrines. For this qualitative assessment, we propose an expert-led deliberation method. This approach is commonly used by Algorithm Audit to provide ethical guidance on issues that arise when using algorithmic methods. For this particular test case, we formulate a set of pressing questions about the disinformation classifier performance and present these questions to an independent audit commission of AI experts. Building on the quantitative results of the bias scan, these experts provide qualitative justifications to make a normative judgment about whether the classifier is causing unfair treatment or not.
 
-All documentation relating to this case study is publicly available. In this way, we enable policy makers, journalists, data subjects and other stakeholders to review the normative judgements Algorithm Audit's commissions arrive at. In our two-pronged quantitative-qualitative solution, scalable statistical methods work in tandem with the normative capabilities of human subject matter experts to define fair AI on a case-by-case basis (see Figure 1).
-
+All documentation relating to this and other case studies is publicly available in our [case repository](https://www.algorithmaudit.eu/cases/). In this way, we enable policy makers, journalists, data subjects and other stakeholders to review the normative judgements issued by the audit commissions of Algorithm Audit. In our two-pronged solution to algorithmic bias, the quantitative and scalable methods of statistical testing work in tandem with the normative judgment of human experts, in order to determine fair AI on a case-by- case basis (see Figure 1).
 
 <sub>**Note**: The implemented bias scan tool is based on the k-means Hierarchical Bias-Aware Clustering (HBAC) method as described in Misztal-Radecka, Indurkya, *Information Processing and Management*. Bias-Aware Hierarchical Clustering for detecting the discriminated groups of users in recommendation systems (2021). Additional research indicates that k-means HBAC, in comparison to other clustering algorithms, works best to detect bias in real-world datasets.</sub>
 
@@ -166,8 +165,8 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 - BB
 
 #### Industry
-- Laurens van der Maas, Data Scientist at AWS;
-- CC
+- Laurens van der Maas, Data Scientist at AWS
+- Xiaoming op de Hoek, Data Scientist at Rabobank
 - DD
 
 #### Academia
