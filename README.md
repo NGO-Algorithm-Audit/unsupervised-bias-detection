@@ -1,4 +1,4 @@
-# Unsupervised bias scan tool
+# Unsupervised bias scan tool and case repository
 ## A quantitative method to inform qualitative bias testing 
 
 ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
