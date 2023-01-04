@@ -129,7 +129,7 @@ The above quantitative disparities do not establish prohibited _prima facie_ dis
 3. For a specific cluster of people, is it justifiable to have true content classified as false 8 percentage points more often? For a specific cluster of people, is it justifiable to have false content classified as true 13 percentage points more often?
 4. Is it justifiable that the disinformation classification algorithm is too harsh towards users with verified profile, more #followers and higher user engagement and too lenient towards users with non-verified profile, less #followers and lower user engagement?
 
-📑 More context on the questions submitted to the audit commission can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/tree/master/audit_commission). 
+📑 More context on the questions submitted to the audit commission can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/audit_commission/Problem%20statement%20disinformation%20detection.pdf). 
 
 ## Conclusion
 The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questions.
