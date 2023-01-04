@@ -146,7 +146,7 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
     ├── LICENSE                                                 # MIT license for sharing 
     ├── Main_presentation_bias_scan.pdf                         # Main presentation (slides)
     ├── README.md                                               # Readme file 
-    └── Technical_documentation_bias_scan.docx                  # Techical documentation (report)
+    └── Technical_documentation_bias_scan.pdf                   # Techical documentation (report)
 ```
 ## Contributors and endorsements
 ### Algorithm Audit's bias scan tool team:
