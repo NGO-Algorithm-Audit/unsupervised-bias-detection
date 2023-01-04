@@ -14,7 +14,7 @@
 - **Unsupervised bias detection**: No user data needed on protected attributes; 
 - **Model-agnostic**: Works for all binary AI classifiers; 
 - **Audit commission**: Qualitative, expert-led approach to _establish_ unfair treatment;
-- **Case repository**: 
+- **Case repository**: Over time a case repository emerges from which data scientists and public authorities can distill ‘techno-ethical’ best-practices;
 - **Open-source and not-for-profit**: Available for the entire AI auditing community.
 
 ## Solution overview
