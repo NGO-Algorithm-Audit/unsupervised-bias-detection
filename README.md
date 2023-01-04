@@ -3,6 +3,8 @@
 
 ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
 
+⚖️ Algorithm Audit's case repository can be found here: https://www.algorithmaudit.eu/cases/.
+
 📊 Main presentation: [slides](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Main_presentation_bias_scan.pdf).
 
 📄 Technical documentation: [report](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Technical_documentation_bias_scan.pdf).
