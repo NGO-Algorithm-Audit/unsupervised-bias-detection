@@ -18,6 +18,8 @@
 - **Open-source and not-for-profit**: Available for the entire AI auditing community.
 
 ## Solution overview
+_Problem 1_: The human mind is not equipped to detect higher-dimensional forms of algorithmic differentiation.
+_Problem 2_: If differentiation is detected, a persistent gap remains between quantitative fairness metrics and qualitative interpretation
 ![image](./images/Quantitative-qualitative.png)
 <sub>*Figure 1 – Quantitative-qualitative solution overview*</sub>
 
