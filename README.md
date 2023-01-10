@@ -19,6 +19,7 @@
 
 ## Solution overview
 _Problem 1_: The human mind is not equipped to detect higher-dimensional forms of algorithmic differentiation.
+
 _Problem 2_: If differentiation is detected, a persistent gap remains between quantitative fairness metrics and qualitative interpretation
 ![image](./images/Quantitative-qualitative.png)
 <sub>*Figure 1 – Quantitative-qualitative solution overview*</sub>
@@ -182,4 +183,4 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 #### Civil society organisations
 - XX
 - YY
-- Simone Maria Parazzoli, Intern at the OECD Observatory of Public Sector Innovation (OPSI).
+- Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI).
