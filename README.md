@@ -1,3 +1,4 @@
+![image](./images/Header_Github.png)
 # Unsupervised bias scan tool and case repository
 ## A quantitative method to inform qualitative bias testing 
 
