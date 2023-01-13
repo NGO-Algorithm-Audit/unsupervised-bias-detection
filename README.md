@@ -169,9 +169,10 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 - BB
 
 #### Industry
+- Selma Muhammad, Trustworthy AI consultant at Deloitte
 - Laurens van der Maas, Data Scientist at AWS
 - Xiaoming op de Hoek, Data Scientist at Rabobank
-- DD
+- CC
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
