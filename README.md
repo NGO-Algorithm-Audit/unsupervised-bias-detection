@@ -176,7 +176,9 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
-- Hinda Haned [to be confirmed], Professor in Data Science at University of Amsterdam
+- Hinda Haned, Professor in Data Science at University of Amsterdam
+- Raphaële Xenidis, Associate Professor in EU law at Sciences Po Paris
+- Aileen Nielsen, Fellow Law&Tech at ETH Zürich
 - Marlies van Eck, Assistant Professor in Administrative Law & AI at Radboud University
 - Emma Beauxis-Ausselet [to be confirmed], Associate Professor Ethical Computing at University of Amsterdam
 - Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University
