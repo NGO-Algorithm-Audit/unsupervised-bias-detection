@@ -185,6 +185,6 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 - Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam
 
 #### Civil society organisations
-- XX
+- [Progressive Café](https://progressiefcafe.nl), founded by Kiza Magendane.
 - YY
 - Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI).
