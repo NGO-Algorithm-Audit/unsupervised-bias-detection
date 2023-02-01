@@ -172,7 +172,7 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 - Selma Muhammad, Trustworthy AI consultant at Deloitte
 - Laurens van der Maas, Data Scientist at AWS
 - Xiaoming op de Hoek, Data Scientist at Rabobank
-- CC
+- Jan Overgoor, Data Scientist at SPAN
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
@@ -185,6 +185,6 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 - Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam
 
 #### Civil society organisations
-- [Progressive Café](https://progressiefcafe.nl), founded by Kiza Magendane.
+- [Progressive Café](https://progressiefcafe.nl), founded by Kiza Magendane
 - YY
-- Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI).
+- Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI)
