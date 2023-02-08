@@ -41,17 +41,15 @@ All documentation relating to this and other case studies is publicly available 
 ## Input data bias scan tool
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
-A .csv file of max. 1GB, with columns structured as follows: features, predicted labels, truth labels. Only the order, not the naming, of the columns is important.
-
-- **Features**: unscaled numeric values, e.g., *feat_1, feat_2, ..., feat_n;*
-- **Predicted label**: 0 or 1;
-- **Truth label**: 0 or 1.
+A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), truth labels (named: 'truth_label'). Only the naming, not the order of the columns is important. The following dataframe is digestible by the web application:
 
 | feat_1 | feat_2 | ... | feat_n | pred_label | truth_label |
 |--------|--------|-----|--------|------------|-------------|
 | 10     | 1      | ... | 0.1    | 1          | 1           |
 | 20     | 2      | ... | 0.2    | 1          | 0           |
 | 30     | 3      | ... | 0.3    | 0          | 0           |
+
+Note that the features values are unscaled numeric values, and 0 or 1 for the predicted and ground truth labels.
 
 <sub>*Table 1 – Structure of input data in the bias scan web application*</sub>
 
@@ -176,7 +174,7 @@ The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questi
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
-- Hinda Haned, Professor in Data Science at University of Amsterdam
+- Hinda Haned, Professor in Responsible Data Science at University of Amsterdam
 - Raphaële Xenidis, Associate Professor in EU law at Sciences Po Paris
 - Marlies van Eck, Assistant Professor in Administrative Law & AI at Radboud University
 - Emma Beauxis-Ausselet [to be confirmed], Associate Professor Ethical Computing at University of Amsterdam
