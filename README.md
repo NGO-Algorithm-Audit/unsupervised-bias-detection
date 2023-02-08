@@ -41,7 +41,7 @@ All documentation relating to this and other case studies is publicly available 
 ## Input data bias scan tool
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
-A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importantance. The following dataframe is digestible by the web application:
+A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importance. The following dataframe is digestible by the web application:
 
 | feat_1 | feat_2 | ... | feat_n | pred_label | truth_label |
 |--------|--------|-----|--------|------------|-------------|
