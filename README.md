@@ -1,6 +1,5 @@
 ![image](./images/Header_Github.png)
-# Unsupervised bias scan tool and case repository
-## A quantitative method to inform qualitative bias testing 
+# an expert-led, deliberative audit informed by a quantitative bias scan
 
 ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
 
