@@ -1,5 +1,5 @@
 ![image](./images/Header_Github.png)
-# an expert-led, deliberative audit informed by a quantitative bias scan
+## an expert-led, deliberative audit informed by a quantitative bias scan
 
 ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
 
@@ -47,10 +47,9 @@ A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_
 | 10     | 1      | ... | 0.1    | 1          | 1           |
 | 20     | 2      | ... | 0.2    | 1          | 0           |
 | 30     | 3      | ... | 0.3    | 0          | 0           |
+<sub>*Table 1 – Structure of input data in the bias scan web application*</sub>
 
 Note that the features values are unscaled numeric values, and 0 or 1 for the predicted and ground truth labels.
-
-<sub>*Table 1 – Structure of input data in the bias scan web application*</sub>
 
 ## Case study – BERT disinformation classifier (Twitter1516 data set)
 We use the unsupervised bias scan tool to assess fair treatment of a self-trained disinformation detection algorithm on the Twitter1516 dataset. Below, statistically significant disparities found by the tool are presented. Based on these quantitative results, questions are distilled and submitted to an audit commission consiting of AI experts. This audit commission formulates a normative advice if, and how, (higher-dimensional) unfair treatment can be assessed on the basis of the bias scan results.
