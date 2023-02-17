@@ -55,6 +55,7 @@ A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_
 | 10     | 1      | ... | 0.1    | 1          | 1           |
 | 20     | 2      | ... | 0.2    | 1          | 0           |
 | 30     | 3      | ... | 0.3    | 0          | 0           |
+
 <sub>*Table 1 – Structure of input data in the bias scan web application*</sub>
 
 Note that the features values are unscaled numeric values, and 0 or 1 for the predicted and ground truth labels.
