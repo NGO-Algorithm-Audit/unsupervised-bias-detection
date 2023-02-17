@@ -25,13 +25,6 @@
 - **Model-agnostic**: Works for all binary AI classifiers;
 - **Open-source and not-for-profit**: Easy to use and available for the entire AI auditing community.
 
-## Solution overview
-Problem 1: The human mind is not equipped to detect higher-dimensional forms of algorithmic differentiation.
-
-Problem 2: If differentiation is detected, a persistent gap remains between quantitative fairness metrics and qualitative interpretation
-![image](./images/Quantitative-qualitative.png)
-<sub>*Figure 1 – Quantitative-qualitative solution overview*</sub>
-
 ## Executive summary
 Bias in machine learning models can have far-reaching and detrimental effects. With the increasing use of AI to automate or support decision-making in a wide variety of fields, there is a pressing need for bias assessment methods that take into account both the statistical detection and the social impact of bias in a context-sensitive way. This is why we present a comprehensive, two-pronged approach to addressing algorithmic bias. Our approach comprises two components: (1) a quantitative bias scan tool, and (2) a qualitative, deliberative assessment. In this way, the scalable and data-driven benefits of machine learning work in tandem with the normative and context-sensitive judgment of human experts, in order to determine fair AI in a concrete way.
 
@@ -69,7 +62,7 @@ A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_
 
 Note that the features values are unscaled numeric values, and 0 or 1 for the predicted and ground truth labels.
 
-## Case study – BERT disinformation classifier (Twitter1516 data set)
+<!-- ## Case study – BERT disinformation classifier (Twitter1516 data set)
 We use the unsupervised bias scan tool to assess fair treatment of a self-trained disinformation detection algorithm on the Twitter1516 dataset. Below, statistically significant disparities found by the tool are presented. Based on these quantitative results, questions are distilled and submitted to an audit commission consiting of AI experts. This audit commission formulates a normative advice if, and how, (higher-dimensional) unfair treatment can be assessed on the basis of the bias scan results.
 
 ### Bias scan pipeline
@@ -140,6 +133,7 @@ have more false content classified as true (false negatives).
 
 *Table 3 – Bias scan results for FNR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.* -->
 
+<!-- 
 📑 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb).  
 
 ### Audit commission: Qualitative assessment of identified disparities
@@ -149,10 +143,7 @@ The above quantitative disparities do not establish prohibited _prima facie_ dis
 3. For a specific cluster of people, is it justifiable to have true content classified as false 8 percentage points more often? For a specific cluster of people, is it justifiable to have false content classified as true 13 percentage points more often?
 4. Is it justifiable that the disinformation classification algorithm is too harsh towards users with verified profile, more #followers and higher user engagement and too lenient towards users with non-verified profile, less #followers and lower user engagement?
 
-📑 More context on the questions submitted to the audit commission can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/audit_commission/Problem%20statement%20disinformation%20detection.pdf). 
-
-## Conclusion
-The audit commissions convenes in Jan-Feb 2023, to elaborate on the above questions.
+📑 More context on the questions submitted to the audit commission can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/audit_commission/Problem%20statement%20disinformation%20detection.pdf).  -->
 
 ## Structure of this repository
 ```
