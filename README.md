@@ -102,7 +102,7 @@ have more true content classified as false (false positives).
 
 *Table 2 – Bias scan results for FPR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.* -->
 
-📑 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb). 
+<!-- 📑 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb). 
 
 ### Results: False Negative Rate (FNR) bias metric
 For this bias scan, bias is defined by the False Negative Rate (FNR) per cluster. That is: 
@@ -117,7 +117,7 @@ On average, users that:
 - use more #hashtags and have higher sentiment score;
 - are non-verified, have less #followers, user engagement and tweet length
 
-have more false content classified as true (false negatives).
+have more false content classified as true (false negatives). -->
 
 <!-- This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.13) and rest of dataset:
 | feature          | difference | p-value |
