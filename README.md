@@ -10,13 +10,12 @@
 📄 Technical documentation: [report](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Technical_documentation_bias_scan.pdf).
 
 ## Key takeaways – Why this approach?
-- **Bias scan tool**: Quantitative method to _detect_ higher- and lower-dimensional forms of algorithmic differentiation;
+<!-- - **Bias scan tool**: Quantitative method to _detect_ higher- and lower-dimensional forms of algorithmic differentiation;
 - **Unsupervised bias detection**: No user data needed on protected attributes; 
 - **Model-agnostic**: Works for all binary AI classifiers; 
 - **Audit commission**: Qualitative, expert-led approach to _establish_ unfair treatment;
 - **Case repository**: Over time a case repository emerges from which data scientists and public authorities can distill ‘techno-ethical’ best-practices;
-- **Open-source and not-for-profit**: Available for the entire AI auditing community.
-
+- **Open-source and not-for-profit**: Available for the entire AI auditing community. -->
 
 - **Innovative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
 - **Audit commission**: Expert-led, deliberative assessment to establish unfair treatment;
