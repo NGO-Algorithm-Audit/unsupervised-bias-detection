@@ -1,9 +1,9 @@
 ![image](./images/Header_Github.png)
 ## an expert-led, deliberative audit informed by a quantitative bias scan
 
-☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
+<!-- ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
 
-⚖️ Algorithm Audit's case repository: https://www.algorithmaudit.eu/cases/.
+⚖️ Algorithm Audit's case repository: https://www.algorithmaudit.eu/cases/. -->
 
 📊 Main presentation: [slides](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Main_presentation_bias_scan.pdf).
 
