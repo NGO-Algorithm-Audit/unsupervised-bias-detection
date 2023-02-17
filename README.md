@@ -17,6 +17,15 @@
 - **Case repository**: Over time a case repository emerges from which data scientists and public authorities can distill ‘techno-ethical’ best-practices;
 - **Open-source and not-for-profit**: Available for the entire AI auditing community.
 
+
+- **Innovative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
+- **Audit commission**: Expert-led, deliberative assessment to establish unfair treatment;
+- **Bias scan tool**: Scalable method based on machine learning to detect algorithmic bias;
+- **Unsupervised bias detection**: No user data needed on protected attributes;
+- **Detects complex bias**: Identifies unfairly treated groups characterized by mixture of features, detects intersectional bias;
+- **Model-agnostic**: Works for all binary AI classifiers;
+- **Open-source and not-for-profit**: Easy to use and available for the entire AI auditing community.
+
 ## Solution overview
 Problem 1: The human mind is not equipped to detect higher-dimensional forms of algorithmic differentiation.
 
