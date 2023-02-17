@@ -46,7 +46,7 @@ In sum, our two-pronged approach combines the power of rigorous, machine learnin
 
 <sup>1</sup><sub>The bias scan tool is based on the k-means Hierarchical Bias-Aware Clustering (HBAC) method as described in Misztal-Radecka, Indurkya, Information Processing and Management. Bias-Aware Hierarchical Clustering for detecting the discriminated groups of users in recommendation systems (2021). Additional research indicates that k-means HBAC, in comparison to other clustering algorithms, works best to detect bias in real-world datasets.</sub>
 
-## Input data bias scan tool
+## Bias scan tool manual
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
 A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importance. The following dataframe is digestible by the web application:
