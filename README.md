@@ -1,5 +1,5 @@
 ![image](./images/Header_Github.png)
-## an expert-led, deliberative audit informed by a quantitative bias scan
+## An expert-led, deliberative audit informed by a quantitative bias scan
 
 <!-- ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
 
