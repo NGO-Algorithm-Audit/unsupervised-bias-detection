@@ -167,7 +167,7 @@ The above quantitative disparities do not establish prohibited _prima facie_ dis
 - Ariën Voogt, PhD-candidate in Philosophy at Protestant Theological University of Amsterdam
 - Joel Persson, PhD-candidate in Applied Data Science at ETH Zürich
 
-### This project is endorsed by:
+### 20+ endorsements from various parts of the AI auditing community 
 #### Journalism
 - Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports
 
