@@ -44,12 +44,12 @@ We visually present the results of our case study and our general approach to bi
 
 In sum, our two-pronged approach combines the power of rigorous, machine learning-informed quantitative testing with the balanced judgement of human experts, in order to determine fair AI on a case-by-case basis.
 
-<sup>1</sup><sub>The bias scan tool is based on the k-means Hierarchical Bias-Aware Clustering (HBAC) method as described in Misztal-Radecka, Indurkya, Information Processing and Management. Bias-Aware Hierarchical Clustering for detecting the discriminated groups of users in recommendation systems (2021). Additional research indicates that k-means HBAC, in comparison to other clustering algorithms, works best to detect bias in real-world datasets.</sub>
+<sub><sup>1</sup>The bias scan tool is based on the k-means Hierarchical Bias-Aware Clustering (HBAC) method as described in Misztal-Radecka, Indurkya, Information Processing and Management. Bias-Aware Hierarchical Clustering for detecting the discriminated groups of users in recommendation systems (2021). Additional research indicates that k-means HBAC, in comparison to other clustering algorithms, works best to detect bias in real-world datasets.</sub>
 
 ## Bias scan tool manual
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
-A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importance. The following dataframe is digestible by the web application:
+A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), ground truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importance. The following dataframe is digestible by the web application:
 
 | feat_1 | feat_2 | ... | feat_n | pred_label | truth_label |
 |--------|--------|-----|--------|------------|-------------|
@@ -170,26 +170,28 @@ The above quantitative disparities do not establish prohibited _prima facie_ dis
 ### This project is endorsed by:
 #### Journalism
 - Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports
-- AA
-- BB
+
+#### Civil society organisations
+- [Maldita](https://maldita.es/maldita-es-journalism-to-not-be-fooled/) [to be confirmed], an independent journalistic platform focused on the control of disinformation and public discourse through fact-checking and data journalism techniques
+- [OpenDemos](https://demos.co.uk/) [to be confirmed], Britain's leading cross-party think-tank
+- [NLAIC](https://nlaic.com) [to be confirmed], The Netherlands AI Coalition
+- [Progressive Café](https://progressiefcafe.nl), founded by Kiza Magendane
+- Samaa Mohammad, Chair of Dutch AI Ethics Community
+- Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI)
 
 #### Industry
 - Selma Muhammad, Trustworthy AI consultant at Deloitte
 - Laurens van der Maas, Data Scientist at AWS
 - Xiaoming op de Hoek, Data Scientist at Rabobank
 - Jan Overgoor, Data Scientist at SPAN
+- AA
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
 - Hinda Haned, Professor in Responsible Data Science at University of Amsterdam
 - Raphaële Xenidis, Associate Professor in EU law at Sciences Po Paris
 - Marlies van Eck, Assistant Professor in Administrative Law & AI at Radboud University
-- Emma Beauxis-Ausselet [to be confirmed], Associate Professor Ethical Computing at University of Amsterdam
 - Aileen Nielsen, Fellow Law&Tech at ETH Zürich
 - Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University
 - Floris Holstege, PhD-candidate in Explainable Machine Learning at University of Amsterdam
 
-#### Civil society organisations
-- [Progressive Café](https://progressiefcafe.nl), founded by Kiza Magendane
-- YY
-- Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI)
