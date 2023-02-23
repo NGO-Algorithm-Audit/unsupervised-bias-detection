@@ -173,7 +173,7 @@ The above quantitative disparities do not establish prohibited _prima facie_ dis
 
 #### Civil society organisations
 - [Maldita](https://maldita.es/maldita-es-journalism-to-not-be-fooled/) [to be confirmed], an independent journalistic platform focused on the control of disinformation and public discourse through fact-checking and data journalism techniques
-- [OpenDemos](https://demos.co.uk/) [to be confirmed], Britain's leading cross-party think-tank
+- [Demos](https://demos.co.uk/) [to be confirmed], Britain's leading cross-party think-tank
 - [NLAIC](https://nlaic.com) [to be confirmed], The Netherlands AI Coalition
 - [Progressive Café](https://progressiefcafe.nl), founded by Kiza Magendane
 - Samaa Mohammad, Chair of Dutch AI Ethics Community
