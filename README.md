@@ -38,7 +38,7 @@ In sum, our two-pronged approach combines the power of rigorous, machine learnin
 ## Bias scan tool manual
 ☁️ The tool is available as a web application on the [website](https://www.algorithmaudit.eu/bias_scan/) of Algorithm Audit.
 
-A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), ground truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importance. The following dataframe is digestible by the web application:
+A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), ground truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importance. The dataframe displayed in Table 1 is digestible by the web application.
 
 | feat_1 | feat_2 | ... | feat_n | pred_label | truth_label |
 |--------|--------|-----|--------|------------|-------------|
@@ -63,7 +63,7 @@ Note that the features values are unscaled numeric values, and 0 or 1 for the pr
     ├── .gitattributes                                          # To store large files
     ├── .gitignore                                              # Files to be ignored in this repo
     ├── LICENSE                                                 # MIT license for sharing 
-    ├── Main_presentation_bias_scan.pdf                         # Main presentation (slides)
+    ├── Main_presentation_joint_fairness_assessment_method.pdf  # Main presentation (slides)
     ├── README.md                                               # Readme file 
     └── Technical_documentation_bias_scan.pdf                   # Techical documentation (report)
 ```
