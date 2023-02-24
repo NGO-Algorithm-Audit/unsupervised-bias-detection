@@ -1,23 +1,12 @@
 ![image](./images/Header_Github.png)
 ## An expert-led, deliberative audit informed by a quantitative bias scan
 
-<!-- ☁️ The bias scan tool is available as a web application: https://www.algorithmaudit.eu/bias_scan/. 
-
-⚖️ Algorithm Audit's case repository: https://www.algorithmaudit.eu/cases/. -->
-
 📊 Main presentation: [slides](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Main_presentation_bias_scan.pdf).
 
 📄 Technical documentation: [report](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Technical_documentation_bias_scan.pdf).
 
 ## Key takeaways – Why this approach?
-<!-- - **Bias scan tool**: Quantitative method to _detect_ higher- and lower-dimensional forms of algorithmic differentiation;
-- **Unsupervised bias detection**: No user data needed on protected attributes; 
-- **Model-agnostic**: Works for all binary AI classifiers; 
-- **Audit commission**: Qualitative, expert-led approach to _establish_ unfair treatment;
-- **Case repository**: Over time a case repository emerges from which data scientists and public authorities can distill ‘techno-ethical’ best-practices;
-- **Open-source and not-for-profit**: Available for the entire AI auditing community. -->
-
-- **Innovative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
+- **Quantitative-qualitative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
 - **Audit commission**: Expert-led, deliberative assessment to establish unfair treatment;
 - **Bias scan tool**: Scalable method based on machine learning to detect algorithmic bias;
 - **Unsupervised bias detection**: No user data needed on protected attributes;
@@ -61,89 +50,6 @@ A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_
 <sub>*Table 1 – Structure of input data in the bias scan web application*</sub>
 
 Note that the features values are unscaled numeric values, and 0 or 1 for the predicted and ground truth labels.
-
-<!-- ## Case study – BERT disinformation classifier (Twitter1516 data set)
-We use the unsupervised bias scan tool to assess fair treatment of a self-trained disinformation detection algorithm on the Twitter1516 dataset. Below, statistically significant disparities found by the tool are presented. Based on these quantitative results, questions are distilled and submitted to an audit commission consiting of AI experts. This audit commission formulates a normative advice if, and how, (higher-dimensional) unfair treatment can be assessed on the basis of the bias scan results.
-
-### Bias scan pipeline
-A BERT disinformation classifier is trained on true and false tweets (n=1,057) from the [Twitter1516](https://www.dropbox.com/s/7ewzdrbelpmrnxu/rumdetect2017.zip?dl=0&file_subpath=%2Frumor_detection_acl2017) dataset. For this dataset, user and content features are [collected](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/data/Twitter_dataset/Twitter_API_data_collection.ipynb) from the Twitter API. 
-
-📑 More details on the training process of the BERT disinformation classifier can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb). 
-
-![image](./images/HBAC_pipeline.png)
-<sub>*Figure 2 – Bias scan pipeline for the disinformation classifier case study*</sub>
-
-### Results: False Positive Rate (FPR) bias metric
-For this bias scan, bias is defined by the False Positive Rate (FPR) per cluster. That is: 
-
-_Bias = FPR(cluster) - FPR(rest of dataset)_. 
-
-A False Positive (FP) means that true content is classified as disinformation by the AI classifier. The cluster with highest bias deviates 0.08 from the rest of the data set. There are 249 tweets in this cluster.
-![image](./images/FPR_metric.png)
-<sub>*Figure 3 – Bias scan results for FPR bias scan. Features with dark blue confidence intervals that do not hit the x=0 line indicate statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*</sub>
-
-On average, users that:
-- are verified, have higher #followers, user engagement and #URLs;
-- use less #hashags and have lower tweet length
-
-have more true content classified as false (false positives).
-
-<!-- This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.08) and rest of dataset:
-| feature          | difference | p-value |
-|------------------|------------|---------|
-| verified         | 1.419      | 0.000   |
-| #followers       | 0.777      | 0.000   |
-| user_engagement  | 0.878      | 0.000   |
-| #URLs            | 1.130      | 0.000   |
-| #mentions        | -0.193     | 0.064   |
-| #hashs           | -0.634     | 0.000   |
-| length           | -0.669     | 0.000   |
-| #sentiment_score | 0.167      | 0.115   |
-
-*Table 2 – Bias scan results for FPR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.* -->
-
-<!-- 📑 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb). 
-
-### Results: False Negative Rate (FNR) bias metric
-For this bias scan, bias is defined by the False Negative Rate (FNR) per cluster. That is: 
-
-_Bias = FNR(cluster) - FNR(rest of dataset)_. 
-
-A False Negative (FN) means that disinformation is classified as true by the AI classifier. The cluster with highest bias deviates 0.13 from the rest of the data set. There are 46 tweets in this cluster.
-![image](./images/FNR_metric.png)
-<sub>*Figure 4 – Bias scan results for FNR bias scan. Features with dark blue confidence intervals that do not hit the x=0 line indicate statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.*</sub>
-
-On average, users that:
-- use more #hashtags and have higher sentiment score;
-- are non-verified, have less #followers, user engagement and tweet length
-
-have more false content classified as true (false negatives). -->
-
-<!-- This is the full list of statistical significant differences in (feature) means between the cluster with most bias (0.13) and rest of dataset:
-| feature          | difference | p-value |
-|------------------|------------|---------|
-| verified         | -1.965     | 0.000   |
-| #followers       | -0.575     | 0.000   |
-| user_engagement  | -0.619     | 0.000   |
-| #URLs            | -0.080     | 0.607   |
-| #mentions        | -0.086     | 0.465   |
-| #hashs           | 0.588      | 0.005   |
-| length           | -0.702     | 0.000   |
-| #sentiment_score | 0.917      | 0.000   |
-
-*Table 3 – Bias scan results for FNR scan. A p-values below 0.05 indicates statistically significant difference in feature means between the cluster with highest bias and the rest of the dataset.* -->
-
-<!-- 
-📑 More details on this case study can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/HBAC_scan/HBAC_BERT_disinformation_classifier.ipynb).  
-
-### Audit commission: Qualitative assessment of identified disparities
-The above quantitative disparities do not establish prohibited _prima facie_ discrimination. Rather, the identified disparities serve as a starting point to assess potential unfair treatment according to the context-sensitive qualitative doctrine. To assess unfair treatment, we question a commission of experts:
-1. Is there an indication that one of the statistically significant features, or a combination of the features, stated in Figure 3-4 are critically linked to one or multiple protected grounds? 
-2. In the context of disinformation detection, is it as harmful to classify true content as false (false positive) as false content as true (false negative)?
-3. For a specific cluster of people, is it justifiable to have true content classified as false 8 percentage points more often? For a specific cluster of people, is it justifiable to have false content classified as true 13 percentage points more often?
-4. Is it justifiable that the disinformation classification algorithm is too harsh towards users with verified profile, more #followers and higher user engagement and too lenient towards users with non-verified profile, less #followers and lower user engagement?
-
-📑 More context on the questions submitted to the audit commission can be found [here](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/audit_commission/Problem%20statement%20disinformation%20detection.pdf).  -->
 
 ## Structure of this repository
 ```
