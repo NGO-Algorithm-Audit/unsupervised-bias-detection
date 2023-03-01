@@ -76,11 +76,11 @@ Note that the features values are unscaled numeric values, and 0 or 1 for the pr
 - Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports
 
 #### Civil society organisations
-- [Maldita](https://maldita.es/maldita-es-journalism-to-not-be-fooled/) [to be confirmed], an independent journalistic platform focused on the control of disinformation and public discourse through fact-checking and data journalism techniques
-- [Demos](https://demos.co.uk/) [to be confirmed], Britain's leading cross-party think-tank
-- [NLAIC](https://nlaic.com) [to be confirmed], The Netherlands AI Coalition
-- [Progressive Café](https://progressiefcafe.nl), founded by Kiza Magendane
-- Samaa Mohammad, Chair of Dutch AI Ethics Community
+- [Maldita](https://maldita.es/maldita-es-journalism-to-not-be-fooled/), an independent journalistic platform focused on the control of disinformation and public discourse through fact-checking and data journalism techniques
+- [Demos](https://demos.co.uk/), Britain's leading cross-party think-tank
+- [NLAIC](https://nlaic.com), The Netherlands AI Coalition
+- [Progressive Café](https://progressiefcafe.nl), public platform of young Dutch intellectuals, represented by Kiza Magendane
+- [Dutch AI Ethics Community](https://www.linkedin.com/company/daiec/), represented by Samaa Mohammad
 - Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI)
 
 #### Industry
@@ -88,7 +88,7 @@ Note that the features values are unscaled numeric values, and 0 or 1 for the pr
 - Laurens van der Maas, Data Scientist at AWS
 - Xiaoming op de Hoek, Data Scientist at Rabobank
 - Jan Overgoor, Data Scientist at SPAN
-- AA
+- Dasha Simons [to be confirmed], Trustworthy AI consultant at IBM
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
