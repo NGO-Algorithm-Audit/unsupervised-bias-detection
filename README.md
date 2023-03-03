@@ -88,7 +88,7 @@ Note that the features values are unscaled numeric values, and 0 or 1 for the pr
 - Laurens van der Maas, Data Scientist at AWS
 - Xiaoming op de Hoek, Data Scientist at Rabobank
 - Jan Overgoor, Data Scientist at SPAN
-- Dasha Simons [to be confirmed], Trustworthy AI consultant at IBM
+- Dasha Simons, Trustworthy AI consultant at IBM
 
 #### Academia
 - Anne Meuwese, Professor in Public Law & AI at Leiden University
