@@ -1,9 +1,9 @@
 ![image](./images/Header_Github.png)
 ## An expert-led, deliberative audit informed by a quantitative bias scan
 
-📊 Main presentation: [slides](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Main_presentation_joint_fairness_assessment_method.pdf).
+📊 Main presentation: [slides](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Main_presentation_joint_fairness_assessment_method.pdf)
 
-📄 Technical documentation: [report](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Technical_documentation_bias_scan.pdf).
+📄 Technical documentation: [report](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Technical_documentation_bias_scan.pdf)
 
 ## Key takeaways – Why this approach?
 - **Quantitative-qualitative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
