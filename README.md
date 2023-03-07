@@ -32,7 +32,9 @@ The detailed results of our case study and our general approach to bias assessme
 In sum, our joint approach combines the power of rigorous, machine learning-informed quantitative testing with the balanced judgment of human experts, in order to determine fair AI on a case-by-case basis.
 
 <sub><sup>1</sup>The bias scan tool is based on the k-means Hierarchical Bias-Aware Clustering method as described in Bias-Aware Hierarchical Clustering for detecting the discriminated groups of users in recommendation systems, Misztal-Radecka, Indurkya, _Information Processing and Management_ (2021). Additional research indicates that k-means HBAC, in comparison to other clustering algorithms, works best to detect bias in real-world datasets.</sub>
+
 <sub><sup>2</sup>The uploaded data is instantly deleted from the server after being processed.</sub>
+
 <sub><sup>3</sup>Real-time Rumor Debunking on Twitter, Liu et al., _Proceedings of the 24th ACM International on Conference on Information and Knowledge Management_ (2015).</sub>
 
 ## Bias scan tool manual
