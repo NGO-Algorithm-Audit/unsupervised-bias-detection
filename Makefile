@@ -9,4 +9,4 @@ format:
 	black .
 
 lint:
-	ruff check .
+	ruff check bias_scan
