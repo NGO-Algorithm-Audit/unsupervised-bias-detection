@@ -5,14 +5,10 @@ on:
         branches:
             - master
             - dev
-        paths:
-            - bias_scan/**
     push:
         branches:
             - master
             - dev
-        paths:
-            - bias_scan/**
     workflow_dispatch:
 
 jobs:
