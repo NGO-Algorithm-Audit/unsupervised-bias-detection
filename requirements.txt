@@ -1,4 +1,5 @@
 pytest
+black
 numpy
 scikit-learn
 kmodes
