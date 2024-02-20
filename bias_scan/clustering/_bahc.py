@@ -6,9 +6,9 @@ from sklearn.base import BaseEstimator, ClusterMixin
 
 class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     """
-    Base class for Bias Aware Hierarchical Clustering.
+    Base class for Bias-Aware Hierarchical Clustering.
 
-    This abstract class specifies an interface for all bias aware hierarchical
+    This abstract class specifies an interface for all bias-aware hierarchical
     clustering classes.
 
     Parameters
@@ -17,6 +17,15 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         Maximum number of iterations.
     min_cluster_size : int
         Minimum size of a cluster.
+    
+    Attributes
+    ----------
+    n_cluster_ : int
+        Number of clusters.
+    labels_ : ndarray of shape (n_samples,)
+        Labels for each point.
+    biases_ : ndarray of shape (n_clusters,)
+        Biases for each cluster.
     """
 
     def __init__(self, max_iter, min_cluster_size):
@@ -24,7 +33,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         self.min_cluster_size = min_cluster_size
 
     def fit(self, X, y):
-        """What the function does
+        """Compute bias-aware hierarchical clustering.
 
         Parameters
         ----------
@@ -37,7 +46,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         Returns
         -------
         self : object
-            Description here
+            Fitted estimator.
         """
         n_samples, _ = X.shape
         self.n_clusters_ = 1
@@ -81,12 +90,16 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
                 biases.append(bias)
         labels = np.array(labels + [label for _, label, _ in heap])
         biases = np.array(biases + [bias for _, _, bias in heap])
-        self.biases_ = biases[np.argsort(labels)]
+        sorted_indices = np.argsort(-biases)
+        labels = labels[sorted_indices]
+        self.biases_ = biases[sorted_indices]
+        d = { label: index for label, index in zip(labels, range(n_samples))}
+        self.labels_ = np.array(d[label] for label in self.labels_)
         return self
 
     @abstractmethod
     def split(self, X):
-        """What the function does
+        """Splits the data into two clusters.
 
         Parameters
         ----------
@@ -95,6 +108,6 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         Returns
         -------
         labels : (n_samples)
-            Description goes here.
+            ndarray of shape (n_samples,)
         """
         pass

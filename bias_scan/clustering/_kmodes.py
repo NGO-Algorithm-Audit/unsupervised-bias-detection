@@ -3,7 +3,7 @@ from kmodes.kmodes import KModes
 
 
 class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
-    """Bias Aware Hierarchical k-Means Clustering.
+    """Bias-Aware Hierarchical k-Modes Clustering.
 
     Parameters
     ----------

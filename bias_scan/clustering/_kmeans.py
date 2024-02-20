@@ -3,7 +3,7 @@ from sklearn.cluster import KMeans
 
 
 class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
-    """Bias Aware Hierarchical k-Means Clustering.
+    """Bias-Aware Hierarchical k-Means Clustering.
 
     Parameters
     ----------
