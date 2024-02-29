@@ -1,26 +1,43 @@
 name: Continuous Integration Workflow
 
 on:
-    pull_request:
-        branches:
-            - master
-            - dev
-    push:
-        branches:
-            - master
-            - dev
     workflow_dispatch:
+    push:
+      branches:
+          - master
+          - dev
+    pull_request:
+      branches:
+          - master
+          - dev
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: install
-              run: make install
-            - name: test
-              run: make test
-            - name: format
-              run: make format
-            - name: lint
-              run: make lint
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        run: |
+          pipx install poetry
+          poetry config virtualenvs.in-project true
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          cache: poetry
+          cache-dependency-path: poetry.lock
+      
+      - name: Install Dependencies
+        run: poetry install --no-root --no-interaction
+
+      - name: Lint
+        run: poetry run ruff check bias_scan
+      
+      - name: Test
+        run: poetry run pytest
+          --color=yes
+          --full-trace
+          --showlocals
+          --verbose
