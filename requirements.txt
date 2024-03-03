@@ -1,0 +1,6 @@
+pytest
+ruff
+black
+numpy
+scikit-learn
+kmodes
