@@ -14,6 +14,9 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,14 +24,17 @@ jobs:
       - name: Install poetry
         run: |
           pipx install poetry
-          poetry config virtualenvs.in-project true
+          poetry config virtualenvs.path .virtualenvs
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
           cache: poetry
           cache-dependency-path: poetry.lock
+      
+      - name: Set poetry environment
+        run: poetry env use ${{ matrix.python-version }}
       
       - name: Install dependencies
         run: poetry install --no-root --no-interaction

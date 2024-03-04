@@ -10,22 +10,6 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
 
     This abstract class specifies an interface for all bias-aware hierarchical
     clustering classes.
-
-    Parameters
-    ----------
-    max_iter : int
-        Maximum number of iterations.
-    min_cluster_size : int
-        Minimum size of a cluster.
-    
-    Attributes
-    ----------
-    n_cluster_ : int
-        Number of clusters.
-    labels_ : ndarray of shape (n_samples,)
-        Labels for each point.
-    biases_ : ndarray of shape (n_clusters,)
-        Biases for each cluster.
     """
 
     def __init__(self, max_iter, min_cluster_size):
@@ -50,19 +34,21 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         """
         n_samples, _ = X.shape
         self.n_clusters_ = 1
-        self.labels_ = np.zeros(n_samples, dtype=np.uint16)
-        labels = []
+        labels = np.zeros(n_samples, dtype=np.uint32)
+        clusters = []
         biases = []
         label = 0
         bias = -np.mean(y)
         heap = [(None, label, bias)]
+        print(labels)
         for _ in range(self.max_iter):
             if not heap:
                 break
             _, label, bias = heapq.heappop(heap)
-            cluster_indices = np.nonzero(self.labels_ == label)[0]
+            cluster_indices = np.nonzero(labels == label)[0]
             cluster = X[cluster_indices]
-            cluster_labels = self.split(cluster)
+            cluster_labels = self._split(cluster)
+            # TODO: Maybe check if cluster_labels are 0s and 1s
             indices0 = cluster_indices[np.nonzero(cluster_labels == 0)[0]]
             indices1 = cluster_indices[np.nonzero(cluster_labels == 1)[0]]
             if (
@@ -80,25 +66,31 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
                     heapq.heappush(heap, (-std0, label, bias0))
                     std1 = np.std(y[indices1])
                     heapq.heappush(heap, (-std1, self.n_clusters_, bias1))
-                    self.labels_[indices1] = self.n_clusters_
+                    labels[indices1] = self.n_clusters_
                     self.n_clusters_ += 1
                 else:
-                    labels.append(label)
+                    clusters.append(label)
                     biases.append(bias)
             else:
-                labels.append(label)
+                clusters.append(label)
                 biases.append(bias)
-        labels = np.array(labels + [label for _, label, _ in heap])
+            print(labels)
+            print(heap)
+            print(clusters)
+        clusters = np.array(clusters + [label for _, label, _ in heap])
         biases = np.array(biases + [bias for _, _, bias in heap])
-        sorted_indices = np.argsort(-biases)
-        labels = labels[sorted_indices]
-        self.biases_ = biases[sorted_indices]
-        d = { label: index for label, index in zip(labels, range(n_samples))}
-        self.labels_ = np.array(d[label] for label in self.labels_)
+        print(clusters)
+        print(biases)
+        indices = np.argsort(-biases)
+        clusters = clusters[indices]
+        self.biases_ = biases[indices]
+        mapping = np.zeros(self.n_clusters_, dtype=np.uint32)
+        mapping[clusters] = np.arange(self.n_clusters_, dtype=np.uint32)
+        self.labels_ = mapping[labels]
         return self
 
     @abstractmethod
-    def split(self, X):
+    def _split(self, X):
         """Splits the data into two clusters.
 
         Parameters
