@@ -1,9 +1,4 @@
-os
 pandas
-time
-sys
-random
-warnings
 numpy
 seaborn
 matplotlib
