@@ -23,7 +23,7 @@ def init_GermanCredit_dataset(raw_data, features, with_errors=True, just_feature
 
     new_data = raw_data.copy(deep=True)
 
-    to_scale = new_data.drop(['predicted_class', 'true_class', 'errors', 'FP_errors', 'FN_errors'], axis=1).columns
+    to_scale = new_data.drop(['predicted_class', 'true_class', 'errors'], axis=1).columns
     new_data[to_scale] = StandardScaler().fit_transform(features[to_scale])
 
     new_data['clusters'] = 0
@@ -50,8 +50,8 @@ def init_dataset(raw_data, features):
 def bias(results, metric):
     ''' Return accuracy, FP rate or FN rate of dataframe '''
     
-    if metric == 'Accuracy':
-        correct = results.loc[results['errors'] == 0]
+    if metric == 'accuracy':
+        correct = results.loc[(results['errors'] == 0.0) | (results['errors'] == 0)]
         acc = len(correct)/len(results)
         return acc
     if metric == 'FP':
@@ -102,7 +102,7 @@ def get_max_bias_cluster(fulldata, metric, function=bias_acc):
         print(f"{cluster_number} has bias {current_bias}")
         
         # Accuracy
-        if metric == 'Accuracy':
+        if metric == 'accuracy':
             if current_bias < max_bias:
                 max_bias = current_bias
                 best_cluster = cluster_number
@@ -137,7 +137,7 @@ def get_next_cluster(data, metric):
         if (i == -1):
             continue
         cluster_i = data.loc[data['clusters'] == i]
-        if metric == 'Accuracy':
+        if metric == 'accuracy':
             variance_cluster = np.var(cluster_i['errors'])
         if metric == 'FP':
             variance_cluster = np.var(cluster_i['FP_errors'])
