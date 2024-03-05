@@ -10,7 +10,6 @@ torch
 gensim
 transformers
 tensorflow
-protobuf==4.21
 ipywidgets
 xgboost
 pingouin
