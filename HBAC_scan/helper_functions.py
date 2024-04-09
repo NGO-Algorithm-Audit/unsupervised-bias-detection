@@ -37,9 +37,8 @@ def init_dataset(raw_data, features):
     new_data = raw_data.copy(deep=True)
 
     # only scale features
-    to_scale = new_data.drop(['tweet','predicted_class', 'true_class', 'errors', 'FP_errors', 'FN_errors'], axis=1).columns
+    to_scale = new_data.drop(['predicted_class', 'true_class', 'errors', 'FP_errors', 'FN_errors'], axis=1).columns
     new_data[to_scale] = StandardScaler().fit_transform(features[to_scale])
-    new_data = new_data.drop(['tweet'], axis=1)
 
     # initialize clustering parameters
     new_data['clusters'] = 0

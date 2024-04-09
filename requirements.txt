@@ -1,3 +1,8 @@
+pytest
+ruff
+black
+numpy
+scikit-learn
 pandas
 numpy
 seaborn
