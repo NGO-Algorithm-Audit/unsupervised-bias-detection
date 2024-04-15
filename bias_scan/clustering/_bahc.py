@@ -8,8 +8,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     """
     Base class for Bias-Aware Hierarchical Clustering.
 
-    This abstract class specifies an interface for all bias-aware hierarchical
-    clustering classes.
+    This abstract class specifies an interface for all bias-aware hierarchical clustering classes.
     """
 
     def __init__(self, max_iter, min_cluster_size):
@@ -32,6 +31,9 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         self : object
             Fitted estimator.
         """
+        X, y = self._validate_data(
+            X, y, reset=False, accept_large_sparse=False, dtype=[np.float32, np.float64], order="C"
+        )
         n_samples, _ = X.shape
         self.n_clusters_ = 1
         labels = np.zeros(n_samples, dtype=np.uint32)
@@ -40,7 +42,6 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         label = 0
         bias = -np.mean(y)
         heap = [(None, label, bias)]
-        print(labels)
         for _ in range(self.max_iter):
             if not heap:
                 break
@@ -48,7 +49,6 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             cluster_indices = np.nonzero(labels == label)[0]
             cluster = X[cluster_indices]
             cluster_labels = self._split(cluster)
-            # TODO: Maybe check if cluster_labels are 0s and 1s
             indices0 = cluster_indices[np.nonzero(cluster_labels == 0)[0]]
             indices1 = cluster_indices[np.nonzero(cluster_labels == 1)[0]]
             if (
@@ -74,13 +74,8 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             else:
                 clusters.append(label)
                 biases.append(bias)
-            print(labels)
-            print(heap)
-            print(clusters)
         clusters = np.array(clusters + [label for _, label, _ in heap])
         biases = np.array(biases + [bias for _, _, bias in heap])
-        print(clusters)
-        print(biases)
         indices = np.argsort(-biases)
         clusters = clusters[indices]
         self.biases_ = biases[indices]
@@ -91,15 +86,16 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
 
     @abstractmethod
     def _split(self, X):
-        """Splits the data into two clusters.
+        """Split the data into two clusters.
 
         Parameters
         ----------
-        X : array-like of shape  (n_samples, n_features)
+        X : ndarray of shape (n_samples, n_features)
 
         Returns
         -------
-        labels : (n_samples)
-            ndarray of shape (n_samples,)
+        labels : ndarray of shape (n_samples,)
+            Cluster labels for each point. Every label is either 0 or 1 indicating
+            that the point belongs to the first or the second cluster, respectively.
         """
         pass

@@ -19,6 +19,12 @@ kmodes = "^0.12.2"
 ruff = "^0.2.2"
 pytest = "^8.0.2"
 
+[tool.ruff.lint]
+select = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
