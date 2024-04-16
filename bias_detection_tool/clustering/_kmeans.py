@@ -8,7 +8,7 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
     Parameters
     ----------
     n_iter : int
-        Maximum number of iterations.
+        Number of iterations.
     min_cluster_size : int
         Minimum size of a cluster.
     kmeans_params : dict
