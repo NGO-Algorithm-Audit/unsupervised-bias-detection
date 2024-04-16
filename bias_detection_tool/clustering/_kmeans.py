@@ -30,7 +30,7 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
     
     Examples
     --------
-    >>> from bias_scan.clustering import BiasAwareHierarchicalKMeans
+    >>> from bias_detection_tool.clustering import BiasAwareHierarchicalKMeans
     >>> import numpy as np
     >>> X = np.array([[1, 2], [1, 4], [1, 0], [10, 2], [10, 4], [10, 0]])
     >>> y = np.array([0, 0, 0, 10, 10, 10])
