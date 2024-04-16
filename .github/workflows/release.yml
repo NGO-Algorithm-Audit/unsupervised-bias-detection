@@ -10,9 +10,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Continuous integration
-        uses: ./.github/workflows/ci.yml
       
       - name: Install poetry
         run: |
