@@ -17,4 +17,6 @@ jobs:
           # poetry config virtualenvs.path .virtualenvs
       
       - name: Publish to PyPI
-        run: poetry publish --build --username "__token__" --password ${{ secrets.PIPY_TOKEN }}
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: poetry publish --build --username "__token__" --password $PYPI_TOKEN
