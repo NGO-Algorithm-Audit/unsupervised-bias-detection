@@ -1,0 +1,23 @@
+name: Release Workflow
+
+on:
+  release:
+      types: [created]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Continuous integration
+        uses: ./.github/workflows/ci.yml
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install poetry
+        run: |
+          pipx install poetry
+          # poetry config virtualenvs.path .virtualenvs
+      
+      - name: Publish to PyPI
+        run: poetry publish --build --username "__token__" --password ${{ secrets.PIPY_TOKEN }}

@@ -1,22 +1,16 @@
 name: Continuous Integration Workflow
 
 on:
-    workflow_dispatch:
-    push:
-      branches:
-          - master
-          - dev
-    pull_request:
-      branches:
-          - master
-          - dev
+  workflow_dispatch:
+  push:
+  pull_request:
 
 jobs:
   main:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.11']
+        python-version: ["3.11"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
