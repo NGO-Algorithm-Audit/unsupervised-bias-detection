@@ -31,9 +31,10 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
     Examples
     --------
     >>> from bias_scan.clustering import BiasAwareHierarchicalKModes
+    >>> import numpy as np
     >>> X = np.array([[0, 1], [0, 2], [0, 0], [1, 4], [1, 5], [1, 3]])
     >>> y = np.array([0, 0, 0, 10, 10, 10])
-    >>> bias_aware_kmodes = BiasAwareHierarchicalKMeans(max_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
+    >>> bias_aware_kmodes = BiasAwareHierarchicalKModes(max_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
     >>> bias_aware_kmodes.labels_
     array([0, 0, 0, 1, 1, 1], dtype=uint32)
     >>> bias_aware_kmodes.biases_
