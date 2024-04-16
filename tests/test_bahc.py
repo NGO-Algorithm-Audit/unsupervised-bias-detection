@@ -1,6 +1,6 @@
 import numpy as np
 
-from bias_scan.clustering import BiasAwareHierarchicalKMeans
+from bias_detection_tool.clustering import BiasAwareHierarchicalKMeans
 
 
 def test_shapes():
