@@ -11,8 +11,8 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     This abstract class specifies an interface for all bias-aware hierarchical clustering classes.
     """
 
-    def __init__(self, max_iter, min_cluster_size):
-        self.max_iter = max_iter
+    def __init__(self, n_iter, min_cluster_size):
+        self.n_iter = n_iter
         self.min_cluster_size = min_cluster_size
 
     def fit(self, X, y):
@@ -42,7 +42,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         label = 0
         bias = -np.mean(y)
         heap = [(None, label, bias)]
-        for _ in range(self.max_iter):
+        for _ in range(self.n_iter):
             if not heap:
                 break
             _, label, bias = heapq.heappop(heap)

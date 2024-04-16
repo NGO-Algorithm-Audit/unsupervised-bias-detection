@@ -7,7 +7,7 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
 
     Parameters
     ----------
-    max_iter : int
+    n_iter : int
         Maximum number of iterations.
     min_cluster_size : int
         Minimum size of a cluster.
@@ -34,7 +34,7 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
     >>> import numpy as np
     >>> X = np.array([[1, 2], [1, 4], [1, 0], [10, 2], [10, 4], [10, 0]])
     >>> y = np.array([0, 0, 0, 10, 10, 10])
-    >>> bias_aware_kmeans = BiasAwareHierarchicalKMeans(max_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
+    >>> bias_aware_kmeans = BiasAwareHierarchicalKMeans(n_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
     >>> bias_aware_kmeans.labels_
     array([0, 0, 0, 1, 1, 1], dtype=uint32)
     >>> bias_aware_kmeans.biases_
@@ -43,11 +43,11 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
 
     def __init__(
         self,
-        max_iter,
+        n_iter,
         min_cluster_size,
         **kmeans_params,
     ):
-        super().__init__(max_iter, min_cluster_size)
+        super().__init__(n_iter, min_cluster_size)
 
         if "n_clusters" in kmeans_params and kmeans_params["n_clusters"] != 2:
             raise ValueError(

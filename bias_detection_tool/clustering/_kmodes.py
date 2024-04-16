@@ -7,7 +7,7 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
 
     Parameters
     ----------
-    max_iter : int
+    n_iter : int
         Maximum number of iterations.
     min_cluster_size : int
         Minimum size of a cluster.
@@ -34,15 +34,15 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
     >>> import numpy as np
     >>> X = np.array([[0, 1], [0, 2], [0, 0], [1, 4], [1, 5], [1, 3]])
     >>> y = np.array([0, 0, 0, 10, 10, 10])
-    >>> bias_aware_kmodes = BiasAwareHierarchicalKModes(max_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
+    >>> bias_aware_kmodes = BiasAwareHierarchicalKModes(n_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
     >>> bias_aware_kmodes.labels_
     array([0, 0, 0, 1, 1, 1], dtype=uint32)
     >>> bias_aware_kmodes.biases_
     array([ 10., -10.])
     """
 
-    def __init__(self, max_iter, min_cluster_size, **kmodes_params):
-        super().__init__(max_iter, min_cluster_size)
+    def __init__(self, n_iter, min_cluster_size, **kmodes_params):
+        super().__init__(n_iter, min_cluster_size)
 
         if "n_clusters" in kmodes_params and kmodes_params["n_clusters"] != 2:
             raise ValueError(
