@@ -1,1 +1,0 @@
-"""bias-detection-tool."""

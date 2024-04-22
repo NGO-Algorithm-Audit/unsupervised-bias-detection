@@ -19,9 +19,9 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
     n_clusters_ : int
         The number of clusters found by the algorithm.
     labels_ : ndarray of shape (n_samples,)
-        Cluster labels for each point.
-    biases_ : ndarray of shape (n_clusters_,)
-        Bias values for each cluster.
+        Cluster labels for each point. Lower labels correspond to higher discrimination scores.
+    scores_ : ndarray of shape (n_clusters_,)
+        Discrimination scores for each cluster.
     
     References
     ----------
@@ -30,14 +30,14 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
     
     Examples
     --------
-    >>> from bias_detection_tool.clustering import BiasAwareHierarchicalKModes
+    >>> from unsupervised_bias_detection.clustering import BiasAwareHierarchicalKModes
     >>> import numpy as np
     >>> X = np.array([[0, 1], [0, 2], [0, 0], [1, 4], [1, 5], [1, 3]])
     >>> y = np.array([0, 0, 0, 10, 10, 10])
-    >>> bias_aware_kmodes = BiasAwareHierarchicalKModes(n_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
-    >>> bias_aware_kmodes.labels_
+    >>> hbac = BiasAwareHierarchicalKModes(n_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
+    >>> hbac.labels_
     array([0, 0, 0, 1, 1, 1], dtype=uint32)
-    >>> bias_aware_kmodes.biases_
+    >>> hbac.scores_
     array([ 10., -10.])
     """
 

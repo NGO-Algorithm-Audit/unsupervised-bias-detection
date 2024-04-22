@@ -38,14 +38,14 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         self.n_clusters_ = 1
         labels = np.zeros(n_samples, dtype=np.uint32)
         clusters = []
-        biases = []
+        scores = []
         label = 0
-        bias = -np.mean(y)
-        heap = [(None, label, bias)]
+        score = -np.mean(y)
+        heap = [(None, label, score)]
         for _ in range(self.n_iter):
             if not heap:
                 break
-            _, label, bias = heapq.heappop(heap)
+            _, label, score = heapq.heappop(heap)
             cluster_indices = np.nonzero(labels == label)[0]
             cluster = X[cluster_indices]
             cluster_labels = self._split(cluster)
@@ -57,28 +57,28 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             ):
                 mask0 = np.ones(n_samples, dtype=bool)
                 mask0[indices0] = False
-                bias0 = np.mean(y[mask0]) - np.mean(y[indices0])
+                score0 = np.mean(y[mask0]) - np.mean(y[indices0])
                 mask1 = np.ones(n_samples, dtype=bool)
                 mask1[indices1] = False
-                bias1 = np.mean(y[mask1]) - np.mean(y[indices1])
-                if max(bias0, bias1) >= bias:
+                score1 = np.mean(y[mask1]) - np.mean(y[indices1])
+                if max(score0, score1) >= score:
                     std0 = np.std(y[indices0])
-                    heapq.heappush(heap, (-std0, label, bias0))
+                    heapq.heappush(heap, (-std0, label, score0))
                     std1 = np.std(y[indices1])
-                    heapq.heappush(heap, (-std1, self.n_clusters_, bias1))
+                    heapq.heappush(heap, (-std1, self.n_clusters_, score1))
                     labels[indices1] = self.n_clusters_
                     self.n_clusters_ += 1
                 else:
                     clusters.append(label)
-                    biases.append(bias)
+                    scores.append(score)
             else:
                 clusters.append(label)
-                biases.append(bias)
+                scores.append(score)
         clusters = np.array(clusters + [label for _, label, _ in heap])
-        biases = np.array(biases + [bias for _, _, bias in heap])
-        indices = np.argsort(-biases)
+        scores = np.array(scores + [score for _, _, score in heap])
+        indices = np.argsort(-scores)
         clusters = clusters[indices]
-        self.biases_ = biases[indices]
+        self.scores_ = scores[indices]
         mapping = np.zeros(self.n_clusters_, dtype=np.uint32)
         mapping[clusters] = np.arange(self.n_clusters_, dtype=np.uint32)
         self.labels_ = mapping[labels]
