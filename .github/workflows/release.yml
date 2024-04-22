@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: "3.11"
       
-      - name: Publish to PyPI
+      - name: Publish package to PyPI
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: poetry publish --build --username "__token__" --password $PYPI_TOKEN
