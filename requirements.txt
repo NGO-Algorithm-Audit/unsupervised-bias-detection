@@ -18,3 +18,4 @@ tensorflow
 ipywidgets
 xgboost
 pingouin
+fairlearn
