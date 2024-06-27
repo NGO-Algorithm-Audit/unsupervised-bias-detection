@@ -5,12 +5,12 @@ import pandas as pd
 # TODO: add functionality to complete checks if dealing with a numpy array instead of pandas
 
 
-def __data_preprocessing(data):
+def _data_preprocessing(data):
     """
     Validate dataset is pandas and extract information about the dataset and returns that info in the form of variables.
 
-    This private method checks the dataset is a pandas dataframe. It extracts the features, predictions, and true labels
-    from the dataset and returns them.
+    This non-public method checks the dataset is a pandas dataframe. It extracts the features, predictions,
+    and true labels from the dataset and returns them.
 
     Parameters
     ----------
@@ -21,14 +21,6 @@ def __data_preprocessing(data):
     features: pandas.core.series.Series
     predictions: pandas.core.series.Series
     true_labels: pandas.core.series.Series
-
-    See Also
-    --------
-    More dataset details: https://fairlearn.org/main/user_guide/datasets/diabetes_hospital_data.html
-
-    Example
-    --------
-    >>> x, preds, labels = __data_preprocessing(dataset)
     """
     if not isinstance(data, pd.DataFrame):
         raise ValueError("Data must be of type pandas.DataFrame.")
@@ -39,8 +31,7 @@ def __data_preprocessing(data):
     true_labels = data.iloc[:, column_length-1]
     return features, predictions, true_labels
 
-
-def __check_numerical_x_y(features, predictions, true_labels):
+def _check_numerical_x_y(features, predictions, true_labels):
     """
     Test that the x (features) and y (preds/labels) are numerical.
 
@@ -53,10 +44,6 @@ def __check_numerical_x_y(features, predictions, true_labels):
     Returns
     -------
     None
-
-    Example
-    --------
-    >>> __check_numerical_x_y(features, preds, labels)
     """
     for i in range(len(features)):
         row = features[i]
@@ -72,7 +59,7 @@ def __check_numerical_x_y(features, predictions, true_labels):
     return
 
 
-def __check_binary_class(predictions, true_labels):
+def _check_binary_class(predictions, true_labels):
     """
     Test that the predictions and true labels are binary in value (0 or 1).
 
@@ -84,10 +71,6 @@ def __check_binary_class(predictions, true_labels):
     Returns
     -------
     None
-
-    Example
-    --------
-    >>> __check_binary_class(preds, labels)
     """
     for i in range(len(predictions)):
         pred = str(predictions[i])
@@ -112,11 +95,19 @@ def run_checks(data):
 
     Example
     --------
-    >>> run_checks(dataset)
+    >>> from unsupervised_bias_detection.utils.validation import run_checks
+    >>>data_dict = {'x': [[1, 2, 3], [3, 2, 1],[4, 5, 6]], 'preds': [0, 1, 1], 'true_labels': [0, 0, 1]}
+    >>>data_df = pd.DataFrame(data=data_dict)
+    >>>data_df
+               x  preds  true_labels
+    0  [1, 2, 3]      0            0
+    1  [3, 2, 1]      1            0
+    2  [4, 5, 6]      1            1
+    >>> run_checks(data_df)
     """
     print('Beginning testing...')
-    features, predictions, true_labels = __data_preprocessing(data)
-    __check_numerical_x_y(features, predictions, true_labels)
-    __check_binary_class(predictions, true_labels)
+    features, predictions, true_labels = _data_preprocessing(data)
+    _check_numerical_x_y(features, predictions, true_labels)
+    _check_binary_class(predictions, true_labels)
     print('No errors, finished testing.')
     return
