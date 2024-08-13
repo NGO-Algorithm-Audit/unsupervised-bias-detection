@@ -9,6 +9,11 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     Base class for Bias-Aware Hierarchical Clustering.
 
     This abstract class specifies an interface for all bias-aware hierarchical clustering classes.
+
+    References
+    ----------
+    .. [1] J. Misztal-Radecka, B. Indurkhya, "Bias-Aware Hierarchical Clustering for detecting the discriminated
+           groups of users in recommendation systems", Information Processing & Management, vol. 58, no. 3, May. 2021.
     """
 
     def __init__(self, n_iter, min_cluster_size):
@@ -35,16 +40,21 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             X, y, reset=False, accept_large_sparse=False, dtype=[np.float32, np.float64], order="C"
         )
         n_samples, _ = X.shape
+        # We start with all samples in a single cluster
         self.n_clusters_ = 1
+        # We assign all samples a label of zero
         labels = np.zeros(n_samples, dtype=np.uint32)
         clusters = []
         scores = []
         label = 0
-        score = -np.mean(y)
+        # The entire dataset has a discrimination score of zero
+        score = 0
         heap = [(None, label, score)]
         for _ in range(self.n_iter):
             if not heap:
+                # If the heap is empty we stop iterating
                 break
+            # Take the cluster with the highest standard deviation of metric y
             _, label, score = heapq.heappop(heap)
             cluster_indices = np.nonzero(labels == label)[0]
             cluster = X[cluster_indices]
@@ -55,6 +65,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
                 len(indices0) >= self.min_cluster_size
                 and len(indices1) >= self.min_cluster_size
             ):
+                # We calculate the discrimination scores using formula (1) in [1]
                 mask0 = np.ones(n_samples, dtype=bool)
                 mask0[indices0] = False
                 score0 = np.mean(y[mask0]) - np.mean(y[indices0])
@@ -62,6 +73,8 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
                 mask1[indices1] = False
                 score1 = np.mean(y[mask1]) - np.mean(y[indices1])
                 if max(score0, score1) >= score:
+                    # heapq implements min-heap
+                    # so we have to negate std before pushing
                     std0 = np.std(y[indices0])
                     heapq.heappush(heap, (-std0, label, score0))
                     std1 = np.std(y[indices1])
@@ -76,6 +89,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
                 scores.append(score)
         clusters = np.array(clusters + [label for _, label, _ in heap])
         scores = np.array(scores + [score for _, _, score in heap])
+        # We sort clusters by decreasing scores
         indices = np.argsort(-scores)
         clusters = clusters[indices]
         self.scores_ = scores[indices]
