@@ -34,7 +34,7 @@ jobs:
         run: poetry install --no-root --no-interaction
 
       - name: Lint
-        run: poetry run ruff check bias_scan
+        run: poetry run ruff check unsupervised_bias_detection
       
       - name: Test
         run: poetry run pytest
