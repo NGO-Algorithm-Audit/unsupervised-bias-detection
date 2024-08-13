@@ -1,13 +1,13 @@
 ![image](./images/Header_Github.png)
-## Detecting higher-dimensional form of proxy bias
+## Detecting higher-dimensional forms of proxy bias
 
 📄 Applied in real-world audit: [audit report](https://algorithmaudit.eu/algoprudence/cases/aa202402_preventing-prejudice_addendum/)
 
-📊 Main presentation: [slides](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Main_presentation_joint_fairness_assessment_method.pdf)
+🌐 Web app: [Algorithm Audit website](https://algorithmaudit.eu/technical-tools/bdt/#web-app)
 
-📄 Technical documentation: [report](https://github.com/NGO-Algorithm-Audit/Bias_scan/blob/master/Technical_documentation_bias_scan.pdf)
+Note: The module is still considered experimental, so conclusions drawn from the results should be carefully reviewed by domain experts. 
 
-## Key takeaways – Why this approach?
+## Key takeaways – Why unsupervised bias detection?
 - **Quantitative-qualitative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
 - **Normative advice commission**: Expert-led, deliberative assessment to establish unfair treatment;
 - **Bias scan tool**: Scalable method based on machine learning to detect algorithmic bias;
@@ -16,8 +16,18 @@
 - **Model-agnostic**: Works for all binary AI classifiers;
 - **Open-source and not-for-profit**: Easy to use and available for the entire AI auditing community.
 
-## New
-...
+|Overview||
+|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+<!-- | **CI/CD**     | [![github-actions-release](https://img.shields.io/github/actions/workflow/status/aeon-toolkit/aeon/release.yml?logo=github&label=build%20%28release%29)](https://github.com/aeon-toolkit/aeon/actions/workflows/release.yml) [![github-actions-main](https://img.shields.io/github/actions/workflow/status/aeon-toolkit/aeon/pr_pytest.yml?logo=github&branch=main&label=build%20%28main%29)](https://github.com/aeon-toolkit/aeon/actions/workflows/pr_pytest.yml) [![github-actions-nightly](https://img.shields.io/github/actions/workflow/status/aeon-toolkit/aeon/periodic_tests.yml?logo=github&label=build%20%28nightly%29)](https://github.com/aeon-toolkit/aeon/actions/workflows/periodic_tests.yml) [![docs-main](https://img.shields.io/readthedocs/aeon-toolkit/stable?logo=readthedocs&label=docs%20%28stable%29)](https://www.aeon-toolkit.org/en/stable/) [![docs-main](https://img.shields.io/readthedocs/aeon-toolkit/latest?logo=readthedocs&label=docs%20%28latest%29)](https://www.aeon-toolkit.org/en/latest/)| -->
+| **Code**      | [![!pypi](https://img.shields.io/pypi/v/unsupervised-bias-detection?logo=pypi&color=blue)](https://pypi.org/project/unsupervised-bias-detection/) [![!python-versions](https://img.shields.io/pypi/pyversions/aeon?logo=python)](https://www.python.org/) [![license](https://img.shields.io/badge/license-MIT-blue)](https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection?tab=MIT-1-ov-file#)|
+| **Community** | [![!slack](https://img.shields.io/static/v1?logo=slack&label=Slack&message=chat&color=lightgreen)](https://join.slack.com/t/aa-experthub/shared_invite/zt-2n8aqry8z-lWC6XTbqVmb6S2hpkThaqQ) [![!linkedin](https://img.shields.io/static/v1?logo=linkedin&label=LinkedIn&message=news&color=lightblue)](https://www.linkedin.com/company/algorithm-audit/)|
+
+## Description of our Joint Fairness Assessment Method (JFAM)
+The Joint Fairness Assessment Method developed by NGO Algorithm Audit combines data-driven bias testing with normative and context-sensitive judgment of human experts, to determine fair AI on a case-by-case basis. The data-driven component comprises an unsupervised clustering tool (available as a free-to-use [web application](https://algorithmaudit.eu/technical-tools/bdt/#web-app)) that discovers complex and hidden forms of bias. It thereby tackles the difficult problem of detecting proxy-discrimination that stems from unforeseen and higher-dimensional forms of bias, including intersectional forms of discrimination. The results of the bias scan tool serve as a starting point for a deliberative assessment by human experts to evaluate potential discrimination and unfairness in an AI system.
+
+As an example, we applied our bias scan tool to a [BERT-based disinformation classifier](https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection/blob/master/classifiers/BERT_disinformation_classifier/BERT_Twitter_classifier.ipynb) and distilled a set of pressing questions about its performance and possible biases. We presented these questions to an independent advice commission composed of four academic experts on fair AI, and two civil society organizations working on disinformation detection. The advice commission believes there is a low risk of (higher-dimensional) proxy discrimination by the reviewed disinformation classifier. The commission judged that the differences in treatment identified by the quantitative bias scan can be justified, if certain conditions apply. The full advice can be read in our [algoprudence case repository](https://algorithmaudit.eu/algoprudence/cases/aa202301_bert-based-disinformation-classifier/).
+
+Our joint approach to fair AI is supported by 20+ actors from the AI auditing community, including journalists, civil society organizations, NGOs, corporate data scientists and academics. In sum, it combines the power of rigorous, machine learning-informed bias testing with the balanced judgment of human experts, to determine fair AI in a concrete way.
 
 <sub><sup>1</sup>The bias scan tool is based on the k-means Hierarchical Bias-Aware Clustering method as described in Bias-Aware Hierarchical Clustering for detecting the discriminated groups of users in recommendation systems, Misztal-Radecka, Indurkya, _Information Processing and Management_ (2021). [[link]](https://www.sciencedirect.com/science/article/abs/pii/S0306457321000285) Additional research indicates that k-means HBAC, in comparison to other clustering algorithms, works best to detect bias in real-world datasets.</sub>
 
