@@ -38,10 +38,9 @@ Our joint approach to AI auditing is supported by 20+ actors from the internatio
 
 <sub><sup>3</sup>Real-time Rumor Debunking on Twitter, Liu et al., _Proceedings of the 24th ACM International on Conference on Information and Knowledge Management_ (2015).</sub>
 
-## Bias scan tool manual
-☁️ The tool is available as a web application on the [website](https://algorithmaudit.eu/technical-tools/bdt/) of Algorithm Audit.
+## Bias detection tool manual
 
-A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_label'), ground truth labels (named: 'truth_label'). Note: Only the naming, not the order of the columns is of importance. The dataframe displayed in Table 1 is digestible by the web application.
+A .csv file of max. 1GB, with columns: features, performance metric. Note: Only the naming, not the order of the columns is of importance. The dataframe displayed in Table 1 is digestible by the [web app](https://algorithmaudit.eu/technical-tools/bdt/#web-app)
 
 | feat_1 | feat_2 | ... | feat_n | performance metric |
 |--------|--------|-----|--------|------------|
@@ -50,9 +49,12 @@ A .csv file of max. 1GB, with columns: features, predicted labels (named: 'pred_
 | 30     | 3      | ... | 0.3    | 0          | 
 
 
-<sub>*Table 1 – Structure of input data in the bias scan web application*</sub>
+<sub>*Table 1 – Structure of input data in the bias detection tool*</sub>
 
 Features values can be numeric or categorical values. The numeric performance metric is context-dependent. The variable can, for instance, represents being 'selected for examination' (yes or no), 'assigned to a high-risk catagory (yes or no)' or false positive (yes or no). Low scores are considered to be a negative bias, i.e., if being selected for examination is considered to be harmful, 'selected for examination=Yes' should be codified as 0 and 'selected for examination=No' should be codified as 1.
+
+## Schematic overview
+![image](./images/Quantitative-qualitative.png)
 
 ## Contributing Members
 - [Floris Holstege](https://github.com/fholstege)
