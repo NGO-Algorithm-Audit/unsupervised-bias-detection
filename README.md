@@ -53,6 +53,24 @@ A .csv file of max. 1GB, with columns: features, performance metric. Note: Only 
 
 Features values can be numeric or categorical values. The numeric performance metric is context-dependent. The variable can, for instance, represents being 'selected for examination' (yes or no), 'assigned to a high-risk catagory (yes or no)' or false positive (yes or no). Low scores are considered to be a negative bias, i.e., if being selected for examination is considered to be harmful, 'selected for examination=Yes' should be codified as 0 and 'selected for examination=No' should be codified as 1.
 
+## Example – Hierarchical Bias-Aware Clustering
+
+Note: The feature labels used in this example can easily be changed for numeric targets. This flexibility enables adaptation to detect (higher-dimensional) bias in various AI classifiers.
+
+```python
+import unsupervised-bias-detection as usb
+
+X = [[35, 55000, 1], # age, income, number of cars
+     [40, 45000, 0], 
+     [20, 30000, 0]]
+y = [1, 0, 0]  # flagged for fraud examination (yes:0, no:1)
+hbac = BiasAwareHierarchicalKMeans(n_iter=1, min_cluster_size=1).fit(X, y)
+hbac.n_clusters_
+>>> 2
+hbac.scores_
+>>> array([ 0.5, -0.5])
+```
+
 ## Schematic overview
 ![image](./images/Quantitative-qualitative.png)
 
@@ -92,3 +110,11 @@ Features values can be numeric or categorical values. The numeric performance me
 - Aileen Nielsen, Fellow Law&Tech at ETH Zürich
 - Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University
 - Ola Al Khatib, PhD-candidate in the legal regulation of algorithmic decision-making at Utrecht University
+
+## Help and Support
+
+This project is still in its early stages, and the documentation is a work in progress. In the meantime, feel free to open an [issue](https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection/issues), and we'll do our best to assist you.
+
+## Contributing
+
+Your contributions are highly encouraged! There are many opportunities for potential projects, so please reach out if you'd like to get involved. Whether it's code, notebooks, examples, or documentation, every contribution is valuable—so don’t hesitate to jump in. To contribute, simply fork the project, make your changes, and submit a pull request. We’ll work with you to address any issues and get your code merged into the main branch.
