@@ -41,6 +41,8 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
     array([ 10., -10.])
     """
 
+    _dtype = None
+
     def __init__(self, n_iter, min_cluster_size, **kmodes_params):
         super().__init__(n_iter, min_cluster_size)
 

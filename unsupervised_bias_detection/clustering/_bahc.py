@@ -37,7 +37,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             Fitted estimator.
         """
         X, y = self._validate_data(
-            X, y, reset=False, accept_large_sparse=False, dtype=[np.float32, np.float64], order="C"
+            X, y, reset=False, accept_large_sparse=False, dtype=self._dtype, order="C"
         )
         n_samples, _ = X.shape
         # We start with all samples in a single cluster

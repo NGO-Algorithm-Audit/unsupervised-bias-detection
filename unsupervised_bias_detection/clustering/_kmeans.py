@@ -1,3 +1,4 @@
+import numpy as np
 from ._bahc import BiasAwareHierarchicalClustering
 from sklearn.cluster import KMeans
 
@@ -40,6 +41,8 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
     >>> hbac.scores_
     array([ 10., -10.])
     """
+
+    _dtype = [np.float32, np.float64]
 
     def __init__(
         self,
