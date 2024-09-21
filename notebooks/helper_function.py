@@ -4,11 +4,10 @@ import scipy.stats as stats
 
 def diff_df(df, features, type=None, cluster1=None, cluster2=None):
     '''
-    Creates difference dataframe, for numerical data only: 
-    Takes dataframe of two clusters of interest and 
-    computes difference in means, incl. 95% confidence
-    interval. Default to analyze most deviating cluster 
-    vs rest of the dataset, except specified otherwise.
+    Creates difference dataframe, for numerical and categorical 
+    data: Takes dataframe of two clusters of interest and 
+    computes difference in means. Default to analyze most deviating 
+    cluster vs rest of the dataset, except specified otherwise.
     '''   
 
     # Cluster comparison (optional)
