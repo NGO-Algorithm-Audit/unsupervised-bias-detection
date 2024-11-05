@@ -17,6 +17,7 @@ from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 
 from joblib import Parallel, delayed
+import sys
 
 def set_seed(seed):
     np.random.seed(seed)
@@ -33,11 +34,11 @@ METRICS_BINARY = {
 METRICS_CONTINUOUS = {
     'y': lambda y, y_pred: y,
     'y_pred': lambda y, y_pred: y_pred,
-    'errr': lambda y, y_pred: (y - y_pred)**2
+    'err': lambda y, y_pred: (y - y_pred)**2
 }
 
 
-def simulate_synthetic_data( K, N_k, y_dgp, x_dgp, d, seed, binary_y=False):
+def simulate_synthetic_data( K, N, y_dgp, x_dgp, d, seed, binary_y=False):
 
     """
     Follows the DGP from Misztal-Radecka & Indurkhya
@@ -46,14 +47,14 @@ def simulate_synthetic_data( K, N_k, y_dgp, x_dgp, d, seed, binary_y=False):
         - K: either 
             int: number of segments
             str: 'random', then uniformly sample K from [2  10]
-        - N_k: either
-            int: number of observations per segment
-            str: 'random', then uniformly sample N_k from [10  200]
-        - y_DGP: str, one of the following options
+        - N: either
+            int: number of observations
+            str: 'random', then uniformly sample per segment N_k from [10  200]
+        - y_dgp: str, one of the following options
             random: M \sim N(mu_k, sigma_k), where mu_k, sigma_k are sampled from [0  1]
             constant: M \sim N(0, 1) for all segments
             linear: M \sim N(0, 1) + 0.1 * k, e.g. an increasing trend per segment
-        - x_DGP: str, one of the following options
+        - x_dgp: str, one of the following options
             constant: X \sim N(0, 1) for all segments
         - d: int, number of features
             Standard is 2 from Misztal-Radecka & Indurkhya
@@ -71,10 +72,10 @@ def simulate_synthetic_data( K, N_k, y_dgp, x_dgp, d, seed, binary_y=False):
         K = np.random.randint(2, 10)
     
     # if N_k is random, sample uniformly from [10  200] for each segment
-    if N_k == 'random':
+    if N == 'random':
         N_k_values = np.random.randint(10, 200, K)
     else:
-        N_k_values = [N_k] * K
+        N_k_values = [int(N/K)]*K
     
     # create matrix to store the data with shape (N, d+1, K)
     data = np.zeros((np.sum(N_k_values), d+2))
@@ -89,34 +90,61 @@ def simulate_synthetic_data( K, N_k, y_dgp, x_dgp, d, seed, binary_y=False):
         # update the index
         i += n_k
 
-        # first, get the dgp for the target variable y
-        # if y_dgp is random, sample mu_k, sigma_k from [0  1]
-        if y_dgp == 'random':
-            mu_k, sigma_k = np.random.uniform(0, 1, 2)
+        ## Set the dgp for the target variable y - this is based on whether or not the target variable is binary
+        # For a continuous target variable, we sample mu_k, sigma_k from [0  1] and sample from N(mu_k, sigma_k)
+        if not binary_y:
+            # If random, sample mu_k, sigma_k from [0  1], and sample from N(mu_k, sigma_k)
+            if y_dgp == 'random':
+                mu_k, sigma_k = np.random.uniform(0, 1, 2)
         
-        # generate the features as a matrix X
-        elif y_dgp == 'constant':
-            mu_k, sigma_k = 0, 1
-        
-        # generate the features as a matrix X
-        elif y_dgp == 'linear':
-            mu_k, sigma_k = 0, 1
-            mu_k += 0.1 * k
+            # If constant, set mu_k as 0, sigma_k as 1, and sample from N(0, 1)
+            elif y_dgp == 'constant':
+                mu_k, sigma_k = 0, 1
+            
+            # If linear, set mu_k as 0, sigma_k as 1, and add 1 * k to mu_k, e.g. mu_k = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 - sample from N(mu_k, sigma_k)
+            elif y_dgp == 'linear':
+                mu_k, sigma_k = 0, 1
+                mu_k += 1 * k
 
-        # now generate the target variable y
-        y_k = np.random.normal(mu_k, sigma_k, n_k)
+            # now generate the target variable y from N(mu_k, sigma_k)
+            y_k = np.random.normal(mu_k, sigma_k, n_k)
+        else:
+            
+            # If binary, and random, sample mu_k from [0  1], and set the probability of y=1 as mu_k
+            if y_dgp == 'random':
+                p_k = np.random.uniform(0, 1, 1)
+
+            # If binary, and constant, set mu_k as 0.5
+            elif y_dgp == 'constant':
+                p_k = 0.5
+
+            # If binary, and linear, set mu_k between 0.1 and 0.9, and increase linearly with k
+            elif y_dgp == 'linear':
+                p_k = 0.1 + 0.8 * k / (K-1)
+            
+            # generate the binary target variable y from a binomial distribution with probability p_k
+            y_k = np.random.binomial(1, p_k, n_k)        
 
         # if binary_y is True, then make the target variable binary
         if binary_y:
-            y_k = np.where(y_k > 0, 1, 0)
+            y_k = np.where(y_k > 0.5, 1, 0)
 
         # then, define the DGP for the features X
         if x_dgp == 'constant':
-            mu_k = np.zeros(d)
-            sigma_k = np.eye(d)
+            mu_k_x = np.zeros(d)
+            sigma_k_x = np.eye(d)
+        elif x_dgp == 'random':
+
+            # sample mu from [0  1]
+            mu = np.random.uniform(0, 1, 1)
+            mu_k_x = np.ones(d) * mu
+
+            # set the covariance matrix as the identity
+            sigma_k_x = np.eye(d) 
+
         
         # generate the features as a matrix X
-        X_k = np.random.multivariate_normal(mu_k, sigma_k, n_k)
+        X_k = np.random.multivariate_normal(mu_k_x, sigma_k_x, n_k)
 
         # create an entry to the matrix
         entry = np.zeros((n_k, d+2))
@@ -140,10 +168,14 @@ def simulate_synthetic_data( K, N_k, y_dgp, x_dgp, d, seed, binary_y=False):
 
     return sim_dict
 
-def simulate_hbac(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binary_y=False, randomize_y=False, fit_train=True, n_iter_hbac=10, min_cluster_size=5, val_frac=0.8):
+def simulate_hbac(method, target_col, K, N, y_dgp, x_dgp, d, seed, binary_y=False, randomize_y=False, fit_train=True, n_iter_hbac='known_clusters', min_cluster_size=5, val_frac=0.8):
+
+    # if fit_train is true, multiply the total data by the validation fraction
+    if fit_train and N != 'random':
+        N = int(N / val_frac)
 
     # simulate the synthetic data
-    result_sim = simulate_synthetic_data(K, N_k, y_dgp, x_dgp, d, seed, binary_y=binary_y)
+    result_sim = simulate_synthetic_data(K, N, y_dgp, x_dgp, d, seed, binary_y=binary_y)
     X = result_sim['data'][:, 1:-1]
     y = result_sim['data'][:, 0].flatten()
     k = result_sim['data'][: , -1].flatten()
@@ -156,13 +188,14 @@ def simulate_hbac(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binary_y=Fa
     # define the model
     if binary_y:
         model = make_pipeline(StandardScaler(), LogisticRegression())
-        stratify = y
     else:
         model = make_pipeline(StandardScaler(), LinearRegression())
-        stratify = None
       
     # Split in train and val set
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=val_frac, stratify=stratify)
+    if fit_train:
+        X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=val_frac, stratify=k)
+    else:
+        X_train, X_val, y_train, y_val = X, X, y, y # in this case, we use all the data for training/testing
 
     # Fit the model on the training set
     model.fit(X_train, y_train)
@@ -184,11 +217,18 @@ def simulate_hbac(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binary_y=Fa
 
         # define the cluster model
         set_seed(seed)
-        cluster_model = KMeans(n_clusters=K)
+
+        # if n_iter_hbac is 'known_clusters', use the number of known clusters
+        if n_iter_hbac == 'known_clusters':
+            n_iter_kmeans = result_sim['K']
+        else:
+            n_iter_kmeans = K
+        
+        cluster_model = KMeans(n_clusters=n_iter_kmeans)
+        cluster_model.fit(X_train)
 
         # fit the model on the training set
         if method == 'kmeans':
-            cluster_model.fit(X_train)
             labels = cluster_model.predict(X_val)
         else:
             labels = cluster_model.fit_predict(X_val)
@@ -196,20 +236,27 @@ def simulate_hbac(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binary_y=Fa
     # if method is hbac, use the BiasAwareHierarchicalKMeans
     elif method == 'hbac':
         set_seed(seed)
+
+        # if n_iter_hbac is 'known_clusters', use the number of known clusters
+        if n_iter_hbac == 'known_clusters':
+            n_iter_hbac = result_sim['K']-1
+        
         hbac = BiasAwareHierarchicalKMeans(n_iter=n_iter_hbac, min_cluster_size=min_cluster_size) # 5 is the minimum
+
+        # Fit on training set
+        hbac.fit(X_train, target_train)
 
         # Fit on training set, predict on validation set
         if fit_train:
-            hbac.fit(X_train, target_train)
             labels = hbac.predict(X_val)
-        # Fit on validation set, predict on validation set
+        # Else, fit/predict on the same set
         else:
-            hbac.fit(X_val, target)
             labels = hbac.labels_
 
     # if method is randomclusters, randomly assign cluster labels
     elif method == 'randomclusters':
-        labels = np.random.choice(range(K), size=X_val.shape[0])
+        K_for_random = result_sim['K']
+        labels = np.random.choice(range(K_for_random), size=X_val.shape[0])
     else:
         raise ValueError(f"Not a known method ({method})")
     
@@ -221,15 +268,12 @@ def check_before_test(c0, c1, min_samples=5):
     """Determines whether to do significance testing
     (don't do this with too few observations/constant data to avoid NaNs)."""
     if (c0.size < min_samples) or (c1.size < min_samples):
-        print('Too few observations, skipping this cluster/feature.')
         return True
 
     if np.mean(c0) == np.mean(c1):
-        print('Means are equal, skipping this cluster/feature.')
         return True
     
     if np.all(c0 == c0[0]) or np.all(c1 == c1[0]):
-        print('Data is constant, skipping this cluster/feature.')
         return True
 
     return False
@@ -265,20 +309,22 @@ def compute_statistics(X, target, idx, bonf_correct, n_clust):
     return p_clust, diff_clust, p_feat, diff_feat
 
 
-def simulate_n_experiments(n_sims, parallel, method, target_col, K, N_k, y_dgp, x_dgp, d, binary_y=False, randomize_y=False, fit_train=True, n_iter_hbac=10, min_cluster_size=5, val_frac=0.8, bonf_correct=True, n_jobs=4):
+def simulate_n_experiments(n_sims, parallel, method, target_col, K, N, y_dgp, x_dgp, d, binary_y=False, randomize_y=False, fit_train=True, n_iter_hbac=10, min_cluster_size=5, val_frac=0.8, bonf_correct=True, n_jobs=4):
 
     # if parallel is True, run the experiments in parallel
     if parallel:
-        results = Parallel(n_jobs=n_jobs)(delayed(simulate_experiment)(method, target_col, K, N_k, y_dgp, x_dgp, d, seed=i, binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac, bonf_correct=bonf_correct) for i in range(n_sims))
+        results = Parallel(n_jobs=n_jobs)(delayed(simulate_experiment)(method, target_col, K, N, y_dgp, x_dgp, d, seed=i, binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac, bonf_correct=bonf_correct) for i in range(n_sims))
     
     # otherwise, run the experiments sequentially
     else:
-        results = [simulate_experiment(method, target_col, K, N_k, y_dgp, x_dgp, d, seed=i, binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac, bonf_correct=bonf_correct) for i in range(n_sims)]
+        results = [simulate_experiment(method, target_col, K, N, y_dgp, x_dgp, d, seed=i, binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac, bonf_correct=bonf_correct) for i in range(n_sims)]
     
 
     # combine the results in a dataframe
     results_clust = pd.concat([r[0] for r in results if r is not None], axis=0)
     results_feat = pd.concat([r[1] for r in results if r is not None], axis=0)
+    avg_missing = np.mean([r[2] for r in results if r is not None])
+    print('Avg. number of clusters skipped per experiment: {}'.format(avg_missing))
 
     return results_clust, results_feat
 
@@ -286,10 +332,10 @@ def simulate_n_experiments(n_sims, parallel, method, target_col, K, N_k, y_dgp, 
 
 
 
-def simulate_experiment(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binary_y=False, randomize_y=False, fit_train=True, n_iter_hbac=10, min_cluster_size=5, val_frac=0.8, bonf_correct=True):
+def simulate_experiment(method, target_col, K, N, y_dgp, x_dgp, d, seed, binary_y=False, randomize_y=False, fit_train=True, n_iter_hbac=10, min_cluster_size=5, val_frac=0.8, bonf_correct=True):
 
     # simulate the outcome of the hbac
-    out = simulate_hbac(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac)
+    out = simulate_hbac(method, target_col, K, N, y_dgp, x_dgp, d, seed, binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac)
 
     # if the outcome is None, return None
     if out is None:
@@ -318,11 +364,12 @@ def simulate_experiment(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binar
 
     # define the parameters to save
     params_ = list(zip(
-        ['method', 'target_col', 'K', 'N_k', 'N', 'y_dgp', 'x_dgp', 'd', 'binary_y', 'randomize_y', 'fit_train', 'n_iter_hbac', 'min_cluster_size', 'val_frac', 'bonf_correct'],
-        [method, target_col, K, N_k, N, y_dgp, x_dgp, d, binary_y, randomize_y, fit_train, n_iter_hbac, min_cluster_size, val_frac, bonf_correct]
+        ['method', 'target_col', 'K', 'N', 'y_dgp', 'x_dgp', 'd', 'binary_y', 'randomize_y', 'fit_train', 'n_iter_hbac', 'min_cluster_size', 'val_frac', 'bonf_correct'],
+        [method, target_col, K, N, y_dgp, x_dgp, d, binary_y, randomize_y, fit_train, n_iter_hbac, min_cluster_size, val_frac, bonf_correct]
     ))
 
     # loop over each cluster
+    count_missing = 0
     for l in np.unique(labels):
 
         # define cluster 1 (with label) and cluster 0 (~label)
@@ -330,8 +377,9 @@ def simulate_experiment(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binar
         c1, c0 = target[idx], target[~idx]
 
         should_continue = check_before_test(c0, c1)
+
         if should_continue:
-            print('Skipping this cluster because of too few data/constant data')
+            count_missing += 1
             continue
   
 
@@ -357,12 +405,14 @@ def simulate_experiment(method, target_col, K, N_k, y_dgp, x_dgp, d, seed, binar
 
             for p_name, p_ in params_:
                 results_feat[p_name].append(p_)
+
+    # print the number of clusters skipped
     
     # save the results in a dataframe
     results_clust = pd.DataFrame(results_clust)
     results_feat = pd.DataFrame(results_feat)
 
-    return results_clust, results_feat
+    return results_clust, results_feat, count_missing
 
 
 
@@ -372,17 +422,20 @@ if __name__ == '__main__':
     from params import n_sims
     from params import params
 
+    EXPERIMENT_NAME='dgp'
+    PARALLEL=True
+
     results_clust, results_feat = [], []
     for params in tqdm(params):
 
         # Get the parameters
-        method, target_col, K, N_k, y_dgp, x_dgp, d, binary_y, randomize_y, fit_train, n_iter_hbac, min_cluster_size, val_frac, bonf_correct = params
+        method, target_col, K, N, y_dgp, x_dgp, d, binary_y, randomize_y, fit_train, n_iter_hbac, min_cluster_size, val_frac, bonf_correct = params
         print('Getting results for: method = {}, target_col = {}, K = {}, N_k = {}, y_dgp = {}, x_dgp = {}, d = {}, binary_y = {}, randomize_y = {}, fit_train = {}, n_iter_hbac = {}, min_cluster_size = {}, val_frac = {}, bonf_correct = {}'.format(
-            method, target_col, K, N_k, y_dgp, x_dgp, d, binary_y, randomize_y, fit_train, n_iter_hbac, min_cluster_size, val_frac, bonf_correct
+            method, target_col, K, N, y_dgp, x_dgp, d, binary_y, randomize_y, fit_train, n_iter_hbac, min_cluster_size, val_frac, bonf_correct
         ))
 
         # Simulate the experiment 
-        results_clust_, results_feat_ = simulate_n_experiments(n_sims, parallel=True, method=method, target_col=target_col, K=K, N_k=N_k, y_dgp=y_dgp, x_dgp=x_dgp, d=d,  binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac)
+        results_clust_, results_feat_ = simulate_n_experiments(n_sims, parallel=PARALLEL, method=method, target_col=target_col, K=K, N=N, y_dgp=y_dgp, x_dgp=x_dgp, d=d,  binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac)
 
         # Append the results
         results_clust.append(results_clust_)
@@ -390,7 +443,7 @@ if __name__ == '__main__':
 
     results_clust = pd.concat(results_clust, axis=0)
     results_feat = pd.concat(results_feat, axis=0)
-    f_out = Path(__file__).parent / 'results_clust.csv'
+    f_out = Path(__file__).parent / 'results_clust_{}.csv'.format(EXPERIMENT_NAME)
     results_clust.to_csv(f_out, index=False)
-    f_out = Path(__file__).parent / 'results_feat.csv'
+    f_out = Path(__file__).parent / 'results_feat_{}.csv'.format(EXPERIMENT_NAME)
     results_feat.to_csv(f_out, index=False)
