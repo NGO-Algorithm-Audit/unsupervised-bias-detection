@@ -9,18 +9,18 @@ from itertools import product
 n_sims = 1000
 method = ['hbac', 'randomclusters']
 target_col = ['y','y_pred', 'err']
-K = [5, 10, 50 ]
+K = [ 5, 10 ]
 N = [1000, 10000]
 y_dgp = ['constant', 'linear']
 x_dgp = ['random']
 d = [2, 10, 50]
-binary_y = [True, False]
+binary_y = [False, True]
 randomize_y = [False]
 fit_train = [False, True]
 n_iter_hbac = ['known_clusters']
 min_cluster_size = [5]
 val_frac = [0.5]
-bonf_correct = [True, False]
+bonf_correct = [False, True]
 
 
 # create the parameter grid

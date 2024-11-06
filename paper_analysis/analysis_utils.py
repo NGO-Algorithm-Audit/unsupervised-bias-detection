@@ -1,11 +1,12 @@
-
-
 import seaborn as sns
+import matplotlib.pyplot as plt
 
+def plot_diff_in_bias(df, target_col_map={'y': r'$y$', 'y_pred': r'$\hat{y}$', 'err': r'Error'}, color_set='Reds', ax=None):
 
-
-def plot_diff_in_bias(df, target_col_map={'y': r'$y', 'y_pred': r'$\hat{y}$', 'err': r'Error'},  color_set='Reds'):
-
+    # if no ax is provided, create a new figure
+    if ax is None:
+        fig, ax = plt.subplots()
+    
     # make a copy of the df for the plot
     df_p = df.copy()
 
@@ -19,13 +20,37 @@ def plot_diff_in_bias(df, target_col_map={'y': r'$y', 'y_pred': r'$\hat{y}$', 'e
     df_p['cluster_nr'] = df_p['cluster_nr'] + 1
 
     # create the plot
-    g = sns.catplot(df_p, x='target_col', y='diff_clust', hue='cluster_nr', kind='bar', palette=color_palette, 
-                     errorbar=("se", 1.96))
+    sns.barplot(data=df_p, x='target_col', y='diff_clust', hue='cluster_nr', palette=color_palette, errorbar = ('ci', 95), ax=ax)
 
     # set the labels
-    g.set_axis_labels('Bias metric', 'Difference in Bias')
+    ax.set_xlabel('Bias metric')
+    ax.set_ylabel('Difference in Bias')
 
     # define the title of the legend
-    g._legend.set_title('Cluster')
+    ax.legend(title='Cluster')
 
-    return g
+    return ax
+
+def plot_grid_of_bias_diffs(df, K_values, N_values, target_col_map={'y': r'$y$', 'y_pred': r'$\hat{y}$', 'err': r'Error'}, color_set='Reds'):
+    fig, axes = plt.subplots(len(N_values), len(K_values), figsize=(5 * len(K_values), 5 * len(N_values)), sharey=True)
+
+    for i, N in enumerate(N_values):
+        for j, K in enumerate(K_values):
+            # Create a modified version of the dataframe for each combination of K and N
+            df_mod = df[(df['K'] == K) & (df['N'] == N)].copy()
+            
+            # Create the plot using the existing function
+            plot_diff_in_bias(df_mod, target_col_map, color_set, ax=axes[i, j])
+            
+            # Set the title for each subplot
+            axes[i, j].set_title(r'$K={}$, $N={}$'.format(K, N))
+    
+    # Adjust layout
+    plt.tight_layout()
+
+    return fig
+
+
+
+
+

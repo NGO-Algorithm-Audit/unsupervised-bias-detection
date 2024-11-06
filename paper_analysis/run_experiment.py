@@ -435,11 +435,12 @@ if __name__ == '__main__':
         ))
 
         # Simulate the experiment 
-        results_clust_, results_feat_ = simulate_n_experiments(n_sims, parallel=PARALLEL, method=method, target_col=target_col, K=K, N=N, y_dgp=y_dgp, x_dgp=x_dgp, d=d,  binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac)
+        results_clust_, results_feat_ = simulate_n_experiments(n_sims, parallel=PARALLEL, method=method, target_col=target_col, K=K, N=N, y_dgp=y_dgp, x_dgp=x_dgp, d=d,  binary_y=binary_y, randomize_y=randomize_y, fit_train=fit_train, n_iter_hbac=n_iter_hbac, min_cluster_size=min_cluster_size, val_frac=val_frac, bonf_correct=bonf_correct)
 
         # Append the results
         results_clust.append(results_clust_)
         results_feat.append(results_feat_)
+   
 
     results_clust = pd.concat(results_clust, axis=0)
     results_feat = pd.concat(results_feat, axis=0)
