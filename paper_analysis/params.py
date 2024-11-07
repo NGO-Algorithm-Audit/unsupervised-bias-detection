@@ -9,7 +9,7 @@ from itertools import product
 n_sims = 1000
 method = ['hbac', 'randomclusters']
 target_col = ['y','y_pred', 'err']
-K = [ 5, 10 ]
+K = [2, 5, 10 ]
 N = [1000, 10000]
 y_dgp = ['constant', 'linear']
 x_dgp = ['random']

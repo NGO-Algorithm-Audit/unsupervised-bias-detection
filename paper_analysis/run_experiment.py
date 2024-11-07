@@ -101,10 +101,15 @@ def simulate_synthetic_data( K, N, y_dgp, x_dgp, d, seed, binary_y=False):
             elif y_dgp == 'constant':
                 mu_k, sigma_k = 0, 1
             
-            # If linear, set mu_k as 0, sigma_k as 1, and add 1 * k to mu_k, e.g. mu_k = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 - sample from N(mu_k, sigma_k)
+            # If linear, set mu_k between -1 and 1, and increase linearly with k
             elif y_dgp == 'linear':
-                mu_k, sigma_k = 0, 1
-                mu_k += 1 * k
+
+                # set sigma_k as 1
+                sigma_k = 1
+
+                # increase linearly with k
+                mu_k = -1 + (2 * k / (K-1))
+                
 
             # now generate the target variable y from N(mu_k, sigma_k)
             y_k = np.random.normal(mu_k, sigma_k, n_k)

@@ -1,7 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def plot_diff_in_bias(df, target_col_map={'y': r'$y$', 'y_pred': r'$\hat{y}$', 'err': r'Error'}, color_set='Reds', ax=None):
+def plot_diff_in_bias(df, target_col_map={'y': r'$y$', 'y_pred': r'$\hat{y}$', 'err': r'Error'}, color_set='Reds', ax=None, show_legend='auto'):
 
     # if no ax is provided, create a new figure
     if ax is None:
@@ -20,14 +20,15 @@ def plot_diff_in_bias(df, target_col_map={'y': r'$y$', 'y_pred': r'$\hat{y}$', '
     df_p['cluster_nr'] = df_p['cluster_nr'] + 1
 
     # create the plot
-    sns.barplot(data=df_p, x='target_col', y='diff_clust', hue='cluster_nr', palette=color_palette, errorbar = ('ci', 95), ax=ax)
+    sns.barplot(data=df_p, x='target_col', y='diff_clust', hue='cluster_nr', palette=color_palette, errorbar = ('ci', 95), ax=ax, legend=show_legend)
 
     # set the labels
     ax.set_xlabel('Bias metric')
     ax.set_ylabel('Difference in Bias')
 
     # define the title of the legend
-    ax.legend(title='Cluster')
+    if show_legend == 'auto':
+        ax.legend(title='Cluster')
 
     return ax
 
@@ -36,11 +37,17 @@ def plot_grid_of_bias_diffs(df, K_values, N_values, target_col_map={'y': r'$y$',
 
     for i, N in enumerate(N_values):
         for j, K in enumerate(K_values):
+
+            # only show legend at first plot in column
+            show_legend = 'auto' if (i ==0) else False
+            print('i is {}, j is {}, show_legend is {}'.format(i, j, show_legend))
+
+
             # Create a modified version of the dataframe for each combination of K and N
             df_mod = df[(df['K'] == K) & (df['N'] == N)].copy()
             
             # Create the plot using the existing function
-            plot_diff_in_bias(df_mod, target_col_map, color_set, ax=axes[i, j])
+            plot_diff_in_bias(df_mod, target_col_map, color_set, ax=axes[i, j], show_legend=show_legend)
             
             # Set the title for each subplot
             axes[i, j].set_title(r'$K={}$, $N={}$'.format(K, N))
