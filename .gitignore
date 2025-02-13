@@ -5,3 +5,6 @@
 *.env
 *fpr_experiment
 *.csv
+*DUO_CBS
+*paper_analysis
+*sim
