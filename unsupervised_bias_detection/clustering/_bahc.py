@@ -1,8 +1,9 @@
-import numpy as np
-import heapq
 from abc import ABC, abstractmethod
+import heapq
+from numbers import Integral
+import numpy as np
 from sklearn.base import BaseEstimator, ClusterMixin
-
+from sklearn.utils._param_validation import Interval
 
 class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     """
@@ -15,6 +16,11 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     .. [1] J. Misztal-Radecka, B. Indurkhya, "Bias-Aware Hierarchical Clustering for detecting the discriminated
            groups of users in recommendation systems", Information Processing & Management, vol. 58, no. 3, May. 2021.
     """
+
+    _parameter_constraints: dict = {
+        "n_iter": [Interval(Integral, 1, None, closed="left")],
+        "min_cluster_size": [Interval(Integral, 1, None, closed="left")],
+    }
 
     def __init__(self, n_iter, min_cluster_size):
         self.n_iter = n_iter
