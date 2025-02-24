@@ -6,6 +6,7 @@ from sklearn.base import BaseEstimator, ClusterMixin
 from sklearn.utils._param_validation import Interval
 from sklearn.utils.validation import validate_data
 
+
 class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     """
     Base class for Bias-Aware Hierarchical Clustering.
@@ -44,7 +45,13 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             Fitted estimator.
         """
         X, y = validate_data(
-            self, X, y, reset=False, accept_large_sparse=False, dtype=self._dtype, order="C"
+            self,
+            X,
+            y,
+            reset=False,
+            accept_large_sparse=False,
+            dtype=self._dtype,
+            order="C",
         )
         n_samples, _ = X.shape
         # We start with all samples in a single cluster

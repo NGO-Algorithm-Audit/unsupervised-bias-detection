@@ -13,7 +13,7 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
         Minimum size of a cluster.
     kmodes_params : dict
         k-modes parameters
-    
+
     Attributes
     ----------
     n_clusters_ : int
@@ -22,12 +22,12 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
         Cluster labels for each point. Lower labels correspond to higher discrimination scores.
     scores_ : ndarray of shape (n_clusters_,)
         Discrimination scores for each cluster.
-    
+
     References
     ----------
     .. [1] J. Misztal-Radecka, B. Indurkhya, "Bias-Aware Hierarchical Clustering for detecting the discriminated
            groups of users in recommendation systems", Information Processing & Management, vol. 58, no. 3, May. 2021.
-    
+
     Examples
     --------
     >>> from unsupervised_bias_detection.clustering import BiasAwareHierarchicalKModes

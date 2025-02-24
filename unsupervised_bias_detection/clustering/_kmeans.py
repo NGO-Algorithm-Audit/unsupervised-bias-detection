@@ -14,7 +14,7 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
         Minimum size of a cluster.
     kmeans_params : dict
         k-means parameters
-    
+
     Attributes
     ----------
     n_clusters_ : int
@@ -23,12 +23,12 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
         Cluster labels for each point. Lower labels correspond to higher discrimination scores.
     scores_ : ndarray of shape (n_clusters_,)
         Discrimination scores for each cluster.
-    
+
     References
     ----------
     .. [1] J. Misztal-Radecka, B. Indurkhya, "Bias-Aware Hierarchical Clustering for detecting the discriminated
            groups of users in recommendation systems", Information Processing & Management, vol. 58, no. 3, May. 2021.
-    
+
     Examples
     --------
     >>> from unsupervised_bias_detection.clustering import BiasAwareHierarchicalKMeans
@@ -58,10 +58,10 @@ class BiasAwareHierarchicalKMeans(BiasAwareHierarchicalClustering):
             )
         else:
             kmeans_params["n_clusters"] = 2
-        
+
         if "n_init" not in kmeans_params:
             kmeans_params["n_init"] = "auto"
-        
+
         self.kmeans = KMeans(**kmeans_params)
 
     def _split(self, X):
