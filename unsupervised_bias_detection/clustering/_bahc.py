@@ -94,8 +94,8 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             else:
                 clusters.append(label)
                 scores.append(score)
-        clusters = np.array(clusters + [label for _, label, _ in heap])
-        scores = np.array(scores + [score for _, _, score in heap])
+        clusters = np.concatenate([clusters, [label for _, label, _ in heap]])
+        scores = np.concatenate([scores, [score for _, _, score in heap]])
         # We sort clusters by decreasing scores
         indices = np.argsort(-scores)
         clusters = clusters[indices]
