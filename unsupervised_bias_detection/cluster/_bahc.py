@@ -8,7 +8,7 @@ from typing import Any, Type
 
 
 class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
-    """TODO: Add docstring
+    """TODO: Add docstring.
 
     References
     ----------
