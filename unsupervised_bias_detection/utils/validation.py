@@ -27,9 +27,10 @@ def _data_preprocessing(data):
 
     column_length = len(data.columns)
     features = data.iloc[:, column_length - 3]
-    predictions = data.iloc[:, column_length-2]
-    true_labels = data.iloc[:, column_length-1]
+    predictions = data.iloc[:, column_length - 2]
+    true_labels = data.iloc[:, column_length - 1]
     return features, predictions, true_labels
+
 
 def _check_numerical_x_y(features, predictions, true_labels):
     """
@@ -52,10 +53,10 @@ def _check_numerical_x_y(features, predictions, true_labels):
         for x in range(len(row)):
             # numerical x check
             if not str(row[x]).isnumeric():
-                raise ValueError('Features must be numeric.')
+                raise ValueError("Features must be numeric.")
         # numerical y check
         if not (pred.isnumeric() and true_lab.isnumeric()):
-            raise ValueError('Labels and predictions must be numeric.')
+            raise ValueError("Labels and predictions must be numeric.")
     return
 
 
@@ -75,8 +76,10 @@ def _check_binary_class(predictions, true_labels):
     for i in range(len(predictions)):
         pred = str(predictions[i])
         true_lab = str(true_labels[i])
-        if not ((pred == '0' or pred == '1') and (true_lab == '0' or true_lab == '1')):
-            raise ValueError('Labels and predictions should be 0 or 1 for binary classification.')
+        if not ((pred == "0" or pred == "1") and (true_lab == "0" or true_lab == "1")):
+            raise ValueError(
+                "Labels and predictions should be 0 or 1 for binary classification."
+            )
     return
 
 
@@ -105,9 +108,9 @@ def run_checks(data):
     2  [4, 5, 6]      1            1
     >>> run_checks(data_df)
     """
-    print('Beginning testing...')
+    print("Beginning testing...")
     features, predictions, true_labels = _data_preprocessing(data)
     _check_numerical_x_y(features, predictions, true_labels)
     _check_binary_class(predictions, true_labels)
-    print('No errors, finished testing.')
+    print("No errors, finished testing.")
     return

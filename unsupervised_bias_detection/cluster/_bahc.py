@@ -1,17 +1,14 @@
-from abc import ABC, abstractmethod
 import heapq
 from numbers import Integral
 import numpy as np
 from sklearn.base import BaseEstimator, ClusterMixin
 from sklearn.utils._param_validation import Interval
 from sklearn.utils.validation import validate_data
+from typing import Any, Type
 
 
-class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
-    """
-    Base class for Bias-Aware Hierarchical Clustering.
-
-    This abstract class specifies an interface for all bias-aware hierarchical clustering classes.
+class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
+    """TODO: Add docstring
 
     References
     ----------
@@ -20,13 +17,21 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
     """
 
     _parameter_constraints: dict = {
-        "n_iter": [Interval(Integral, 1, None, closed="left")],
-        "min_cluster_size": [Interval(Integral, 1, None, closed="left")],
+        "bahc_max_iter": [Interval(Integral, 1, None, closed="left")],
+        "bahc_min_cluster_size": [Interval(Integral, 1, None, closed="left")],
     }
 
-    def __init__(self, n_iter, min_cluster_size):
-        self.n_iter = n_iter
-        self.min_cluster_size = min_cluster_size
+    def __init__(
+        self,
+        clustering_cls: Type[ClusterMixin],
+        bahc_max_iter: int,
+        bahc_min_cluster_size: int,
+        **clustering_params: Any,
+    ):
+        self.clustering_cls = clustering_cls
+        self.bahc_max_iter = bahc_max_iter
+        self.bahc_min_cluster_size = bahc_min_cluster_size
+        self.clustering_params = clustering_params
 
     def fit(self, X, y):
         """Compute bias-aware hierarchical clustering.
@@ -50,7 +55,6 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             y,
             reset=False,
             accept_large_sparse=False,
-            dtype=self._dtype,
             order="C",
         )
         n_samples, _ = X.shape
@@ -64,7 +68,7 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         # The entire dataset has a discrimination score of zero
         score = 0
         heap = [(None, label, score)]
-        for _ in range(self.n_iter):
+        for _ in range(self.bahc_max_iter):
             if not heap:
                 # If the heap is empty we stop iterating
                 break
@@ -72,12 +76,18 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             _, label, score = heapq.heappop(heap)
             cluster_indices = np.nonzero(labels == label)[0]
             cluster = X[cluster_indices]
-            cluster_labels = self._split(cluster)
+
+            clustering_model = self.clustering_cls(**self.clustering_params)
+            cluster_labels = clustering_model.fit_predict(cluster)
+
+            # TODO: Generalize for more than 2 clusters
+            # Can do this by checking clustering_model.n_clusters_ (if it exists)
+            # or by checking the number of unique values in cluster_labels
             indices0 = cluster_indices[np.nonzero(cluster_labels == 0)[0]]
             indices1 = cluster_indices[np.nonzero(cluster_labels == 1)[0]]
             if (
-                len(indices0) >= self.min_cluster_size
-                and len(indices1) >= self.min_cluster_size
+                len(indices0) >= self.bahc_min_cluster_size
+                and len(indices1) >= self.bahc_min_cluster_size
             ):
                 # We calculate the discrimination scores using formula (1) in [1]
                 mask0 = np.ones(n_samples, dtype=bool)
@@ -101,8 +111,15 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
             else:
                 clusters.append(label)
                 scores.append(score)
-        clusters = np.concatenate([clusters, [label for _, label, _ in heap]])
-        scores = np.concatenate([scores, [score for _, _, score in heap]])
+        # clusters = np.array(clusters + [label for _, label, _ in heap])
+        # scores = np.array(scores + [score for _, _, score in heap])
+        if heap:
+            clusters = np.concatenate([clusters, [label for _, label, _ in heap]])
+            scores = np.concatenate([scores, [score for _, _, score in heap]])
+        else:
+            clusters = np.array(clusters)
+            scores = np.array(scores)
+
         # We sort clusters by decreasing scores
         indices = np.argsort(-scores)
         clusters = clusters[indices]
@@ -111,19 +128,3 @@ class BiasAwareHierarchicalClustering(ABC, BaseEstimator, ClusterMixin):
         mapping[clusters] = np.arange(self.n_clusters_, dtype=np.uint32)
         self.labels_ = mapping[labels]
         return self
-
-    @abstractmethod
-    def _split(self, X):
-        """Split the data into two clusters.
-
-        Parameters
-        ----------
-        X : ndarray of shape (n_samples, n_features)
-
-        Returns
-        -------
-        labels : ndarray of shape (n_samples,)
-            Cluster labels for each point. Every label is either 0 or 1 indicating
-            that the point belongs to the first or the second cluster, respectively.
-        """
-        pass

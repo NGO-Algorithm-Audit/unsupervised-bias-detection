@@ -9,6 +9,7 @@ def test_loading_dataset_passes():
     data, true_labels = load_default_dataset()
     assert data is not None and true_labels is not None
 
+
 @pytest.mark.xfail
 def test_unneeded_argument():
     """Checks that no argument is necessary for the function call."""
