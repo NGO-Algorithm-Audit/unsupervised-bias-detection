@@ -1,19 +1,20 @@
 from ._bahc import BiasAwareHierarchicalClustering
 from kmodes.kmodes import KModes
+from sklearn.base import BaseEstimator, ClusterMixin
 
 
-class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
+class BiasAwareHierarchicalKModes(BaseEstimator, ClusterMixin):
     """Bias-Aware Hierarchical k-Modes Clustering.
 
     Parameters
     ----------
-    n_iter : int
-        Number of iterations.
-    min_cluster_size : int
+    bahc_max_iter : int
+        Maximum number of iterations.
+    bahc_min_cluster_size : int
         Minimum size of a cluster.
     kmodes_params : dict
         k-modes parameters
-    
+
     Attributes
     ----------
     n_clusters_ : int
@@ -22,30 +23,26 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
         Cluster labels for each point. Lower labels correspond to higher discrimination scores.
     scores_ : ndarray of shape (n_clusters_,)
         Discrimination scores for each cluster.
-    
+
     References
     ----------
     .. [1] J. Misztal-Radecka, B. Indurkhya, "Bias-Aware Hierarchical Clustering for detecting the discriminated
            groups of users in recommendation systems", Information Processing & Management, vol. 58, no. 3, May. 2021.
-    
+
     Examples
     --------
     >>> from unsupervised_bias_detection.clustering import BiasAwareHierarchicalKModes
     >>> import numpy as np
     >>> X = np.array([[0, 1], [0, 2], [0, 0], [1, 4], [1, 5], [1, 3]])
     >>> y = np.array([0, 0, 0, 10, 10, 10])
-    >>> hbac = BiasAwareHierarchicalKModes(n_iter=1, min_cluster_size=1, random_state=12).fit(X, y)
-    >>> hbac.labels_
+    >>> bahc = BiasAwareHierarchicalKModes(bahc_max_iter=1, bahc_min_cluster_size=1, random_state=12).fit(X, y)
+    >>> bahc.labels_
     array([0, 0, 0, 1, 1, 1], dtype=uint32)
-    >>> hbac.scores_
+    >>> bahc.scores_
     array([ 10., -10.])
     """
 
-    _dtype = None
-
-    def __init__(self, n_iter, min_cluster_size, **kmodes_params):
-        super().__init__(n_iter, min_cluster_size)
-
+    def __init__(self, bahc_max_iter, bahc_min_cluster_size, **kmodes_params):
         if "n_clusters" in kmodes_params and kmodes_params["n_clusters"] != 2:
             raise ValueError(
                 f"The parameter `n_clusters` should be 2, got {kmodes_params['n_clusters']}."
@@ -53,7 +50,15 @@ class BiasAwareHierarchicalKModes(BiasAwareHierarchicalClustering):
         else:
             kmodes_params["n_clusters"] = 2
 
-        self.kmodes = KModes(**kmodes_params)
+        self.bahc_max_iter = bahc_max_iter
+        self.bahc_min_cluster_size = bahc_min_cluster_size
+        self._hbac = BiasAwareHierarchicalClustering(
+            KModes, bahc_max_iter, bahc_min_cluster_size, **kmodes_params
+        )
 
-    def _split(self, X):
-        return self.kmodes.fit_predict(X)
+    def fit(self, X, y):
+        self._hbac.fit(X, y)
+        self.n_clusters_ = self._hbac.n_clusters_
+        self.labels_ = self._hbac.labels_
+        self.scores_ = self._hbac.scores_
+        return self

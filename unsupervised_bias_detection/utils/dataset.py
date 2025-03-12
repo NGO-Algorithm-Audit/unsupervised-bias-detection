@@ -58,8 +58,12 @@ def load_default_dataset():
                     101765    0)
     Name: readmit_30_days, Length: 101766, dtype: int64
     """
-    print('Note: it is up to the user to train a model with the provided data now before running the bias detection '
-          'tool whether it is via the Algorithm Audit website for a demo or via the unsupervised_bias_detection '
-          'package.')
-    diabetes_dataset_x, diabetes_dataset_y = data.fetch_diabetes_hospital(return_X_y=True)
+    print(
+        "Note: it is up to the user to train a model with the provided data now before running the bias detection "
+        "tool whether it is via the Algorithm Audit website for a demo or via the unsupervised_bias_detection "
+        "package."
+    )
+    diabetes_dataset_x, diabetes_dataset_y = data.fetch_diabetes_hospital(
+        return_X_y=True
+    )
     return diabetes_dataset_x, diabetes_dataset_y
