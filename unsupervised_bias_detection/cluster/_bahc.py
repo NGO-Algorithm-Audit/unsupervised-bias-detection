@@ -65,7 +65,7 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
         clusters = []
         scores = []
         label = 0
-        # The entire dataset has a discrimination score of zero
+        # The entire dataset has bias metric zero
         score = 0
         heap = [(None, label, score)]
         for _ in range(self.bahc_max_iter):
@@ -89,7 +89,7 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                 len(indices0) >= self.bahc_min_cluster_size
                 and len(indices1) >= self.bahc_min_cluster_size
             ):
-                # We calculate the discrimination scores using formula (1) in [1]
+                # We calculate the bias metric using formula (1) in [1]
                 mask0 = np.ones(n_samples, dtype=bool)
                 mask0[indices0] = False
                 score0 = np.mean(y[mask0]) - np.mean(y[indices0])
