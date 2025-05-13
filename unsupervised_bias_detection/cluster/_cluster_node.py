@@ -4,10 +4,10 @@ from typing import Self
 class ClusterNode:
     def __init__(self, label: int):
         """
-        Initialize a node in the cluster tree
+        Initialize a node in the cluster tree.
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         label : int
             The cluster label for this node (required as all nodes start as leaves)
         """
@@ -21,12 +21,12 @@ class ClusterNode:
     
     def split(self, clustering_model: ClusterMixin, children: list[Self]):
         """
-        Split this node by setting its clustering model and adding children
+        Split this node by setting its clustering model and adding children.
         
         This converts the node to an internal node and removes its label
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         clustering_model : ClusterMixin
             The clustering model used to split this node
         children : list of ClusterNode
@@ -38,10 +38,10 @@ class ClusterNode:
     
     def get_leaves(self) -> list[Self]:
         """
-        Get all leaf nodes in the subtree rooted at this node
+        Get all leaf nodes in the subtree rooted at this node.
         
-        Returns:
-        --------
+        Returns
+        -------
         list of ClusterNode
             All leaf nodes in the subtree
         """

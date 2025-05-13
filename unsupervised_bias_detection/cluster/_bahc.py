@@ -1,3 +1,5 @@
+from ._cluster_node import ClusterNode
+from collections import deque
 import heapq
 from numbers import Integral
 import numpy as np
@@ -58,22 +60,25 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
             order="C",
         )
         n_samples, _ = X.shape
-        # We start with all samples in a single cluster
+        # We start with all samples being in a single cluster
         self.n_clusters_ = 1
         # We assign all samples a label of zero
         labels = np.zeros(n_samples, dtype=np.uint32)
-        clusters = []
+        leaves = []
         scores = []
         label = 0
+        root = ClusterNode(label)
+        self.cluster_tree_ = root
         # The entire dataset has a discrimination score of zero
         score = 0
-        heap = [(None, label, score)]
+        heap = [(None, root, score)]
         for _ in range(self.bahc_max_iter):
             if not heap:
                 # If the heap is empty we stop iterating
                 break
             # Take the cluster with the highest standard deviation of metric y
-            _, label, score = heapq.heappop(heap)
+            _, node, score = heapq.heappop(heap)
+            label = node.label
             cluster_indices = np.nonzero(labels == label)[0]
             cluster = X[cluster_indices]
 
@@ -97,32 +102,73 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                 mask1[indices1] = False
                 score1 = np.mean(y[mask1]) - np.mean(y[indices1])
                 if max(score0, score1) >= score:
+                    std0 = np.std(y[indices0])
+                    node0 = ClusterNode(label)
                     # heapq implements min-heap
                     # so we have to negate std before pushing
-                    std0 = np.std(y[indices0])
-                    heapq.heappush(heap, (-std0, label, score0))
+                    heapq.heappush(heap, (-std0, node0, score0))
                     std1 = np.std(y[indices1])
-                    heapq.heappush(heap, (-std1, self.n_clusters_, score1))
+                    node1 = ClusterNode(self.n_clusters_)
+                    heapq.heappush(heap, (-std1, node1, score1))
                     labels[indices1] = self.n_clusters_
+                    # TODO: Increase n_clusters_ by clustering_model.n_clusters_ - 1
                     self.n_clusters_ += 1
+                    children = [node0, node1]
+                    node.split(clustering_model, children)
                 else:
-                    clusters.append(label)
+                    leaves.append(node)
                     scores.append(score)
             else:
-                clusters.append(label)
+                leaves.append(node)
                 scores.append(score)
         if heap:
-            clusters = np.concatenate([clusters, [label for _, label, _ in heap]])
+            # TODO: Check if this can be made more efficient
+            leaves.extend((node for _, node, _ in heap))
             scores = np.concatenate([scores, [score for _, _, score in heap]])
         else:
-            clusters = np.array(clusters)
             scores = np.array(scores)
 
         # We sort clusters by decreasing scores
         indices = np.argsort(-scores)
-        clusters = clusters[indices]
         self.scores_ = scores[indices]
-        mapping = np.zeros(self.n_clusters_, dtype=np.uint32)
-        mapping[clusters] = np.arange(self.n_clusters_, dtype=np.uint32)
-        self.labels_ = mapping[labels]
+        leaf_labels = np.array([leaf.label for leaf in leaves])
+        leaf_labels = leaf_labels[indices]
+        # TODO: Check this!!!
+        for i, leaf in enumerate(leaves):
+            leaf.label = leaf_labels[i]
+        label_mapping = np.zeros(self.n_clusters_, dtype=np.uint32)
+        label_mapping[leaf_labels] = np.arange(self.n_clusters_, dtype=np.uint32)
+        self.labels_ = label_mapping[labels]
         return self
+    
+    def predict(self, X):
+        """Predict the cluster labels for the given data.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+        """
+        # TODO: Assert that fit has been called
+        # TODO: Assert that X has the same number of features as the data used to fit
+        # TODO: Assert that clustering_model has predict method
+        # TODO: Validate X
+        n_samples, _ = X.shape
+        labels = np.zeros(n_samples, dtype=np.uint32)
+        queue = deque([(self.cluster_tree_, np.arange(n_samples))])
+        while queue:
+            node, indices = queue.popleft()
+            if node.is_leaf:
+                labels[indices] = node.label
+            else:
+                cluster = X[indices]
+                clustering_model = node.clustering_model
+                cluster_labels = clustering_model.predict(cluster)
+                if hasattr(clustering_model, "n_clusters_"):
+                    n_clusters = clustering_model.n_clusters_
+                else:
+                    n_clusters = len(np.unique(cluster_labels))
+                for i in range(n_clusters):
+                    child_indices = indices[np.nonzero(cluster_labels == i)[0]]
+                    if child_indices.size > 0:
+                        queue.append((node.children[i], child_indices))
+        return labels
