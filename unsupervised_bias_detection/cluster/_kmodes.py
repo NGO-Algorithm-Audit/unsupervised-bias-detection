@@ -43,6 +43,7 @@ class BiasAwareHierarchicalKModes(BaseEstimator, ClusterMixin):
     """
 
     def __init__(self, bahc_max_iter, bahc_min_cluster_size, **kmodes_params):
+        # TODO: Remove this once we have a better way to handle the number of clusters
         if "n_clusters" in kmodes_params and kmodes_params["n_clusters"] != 2:
             raise ValueError(
                 f"The parameter `n_clusters` should be 2, got {kmodes_params['n_clusters']}."
@@ -61,4 +62,8 @@ class BiasAwareHierarchicalKModes(BaseEstimator, ClusterMixin):
         self.n_clusters_ = self._hbac.n_clusters_
         self.labels_ = self._hbac.labels_
         self.scores_ = self._hbac.scores_
+        self.cluster_tree_ = self._hbac.cluster_tree_
         return self
+
+    def predict(self, X):
+        return self._hbac.predict(X)
