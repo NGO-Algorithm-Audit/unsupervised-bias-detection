@@ -1,11 +1,11 @@
-![image](./images/Header_Github.png)
+![image](https://raw.githubusercontent.com/NGO-Algorithm-Audit/unsupervised-bias-detection/refs/heads/master/images/Header_Github.png)
 ## Detecting higher-dimensional forms of proxy bias
 
 📄 Applied in real-world audit: [audit report](https://algorithmaudit.eu/algoprudence/cases/aa202402_preventing-prejudice_addendum/)
 
 ☁️ Web app on [Algorithm Audit website](https://algorithmaudit.eu/technical-tools/bdt/#web-app)
 
-Note: This module is still considered experimental, so conclusions drawn from the results should be carefully reviewed by domain experts. 
+🧪 Scientific paper: [Arxiv pre-print](https://arxiv.org/pdf/2502.01713)
 
 ## Key takeaways – Why unsupervised bias detection?
 - **Quantitative-qualitative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
