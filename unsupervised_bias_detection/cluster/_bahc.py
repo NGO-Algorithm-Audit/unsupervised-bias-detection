@@ -97,6 +97,7 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                 # We calculate the discrimination scores using formula (1) in [1]
                 # TODO: Move y[indices0] and y[indices1] into separate variables
                 # to avoid recomputing them
+                # Maybe create a function to compute the score
                 mask0 = np.ones(n_samples, dtype=bool)
                 mask0[indices0] = False
                 score0 = np.mean(y[mask0]) - np.mean(y[indices0])
