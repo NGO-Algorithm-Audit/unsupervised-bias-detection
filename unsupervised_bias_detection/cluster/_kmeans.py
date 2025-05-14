@@ -8,9 +8,9 @@ class BiasAwareHierarchicalKMeans(BaseEstimator, ClusterMixin):
 
     Parameters
     ----------
-    hbac_max_iter : int
+    bahc_max_iter : int
         Maximum number of iterations.
-    hbac_min_cluster_size : int
+    bahc_min_cluster_size : int
         Minimum size of a cluster.
     kmeans_params : dict
         k-means parameters
@@ -48,6 +48,7 @@ class BiasAwareHierarchicalKMeans(BaseEstimator, ClusterMixin):
         bahc_min_cluster_size,
         **kmeans_params,
     ):
+        # TODO: Remove this once we have a better way to handle the number of clusters
         if "n_clusters" in kmeans_params and kmeans_params["n_clusters"] != 2:
             raise ValueError(
                 f"The parameter `n_clusters` should be 2, got {kmeans_params['n_clusters']}."
@@ -60,7 +61,7 @@ class BiasAwareHierarchicalKMeans(BaseEstimator, ClusterMixin):
 
         self.bahc_max_iter = bahc_max_iter
         self.bahc_min_cluster_size = bahc_min_cluster_size
-        self._hbac = BiasAwareHierarchicalClustering(
+        self._bahc = BiasAwareHierarchicalClustering(
             KMeans,
             bahc_max_iter,
             bahc_min_cluster_size,
@@ -68,8 +69,12 @@ class BiasAwareHierarchicalKMeans(BaseEstimator, ClusterMixin):
         )
 
     def fit(self, X, y):
-        self._hbac.fit(X, y)
-        self.n_clusters_ = self._hbac.n_clusters_
-        self.labels_ = self._hbac.labels_
-        self.scores_ = self._hbac.scores_
+        self._bahc.fit(X, y)
+        self.n_clusters_ = self._bahc.n_clusters_
+        self.labels_ = self._bahc.labels_
+        self.scores_ = self._bahc.scores_
+        self.cluster_tree_ = self._bahc.cluster_tree_
         return self
+    
+    def predict(self, X):
+        return self._bahc.predict(X)
