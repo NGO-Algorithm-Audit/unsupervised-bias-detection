@@ -95,6 +95,8 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                 and len(indices1) >= self.bahc_min_cluster_size
             ):
                 # We calculate the discrimination scores using formula (1) in [1]
+                # TODO: Move y[indices0] and y[indices1] into separate variables
+                # to avoid recomputing them
                 mask0 = np.ones(n_samples, dtype=bool)
                 mask0[indices0] = False
                 score0 = np.mean(y[mask0]) - np.mean(y[indices0])
@@ -129,16 +131,15 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
             scores = np.array(scores)
 
         # We sort clusters by decreasing scores
-        indices = np.argsort(-scores)
-        self.scores_ = scores[indices]
+        sorted_indices = np.argsort(-scores)
+        self.scores_ = scores[sorted_indices]
         leaf_labels = np.array([leaf.label for leaf in leaves])
-        leaf_labels = leaf_labels[indices]
-        # TODO: Check this!!!
-        for i, leaf in enumerate(leaves):
-            leaf.label = leaf_labels[i]
+        leaf_labels = leaf_labels[sorted_indices]
         label_mapping = np.zeros(self.n_clusters_, dtype=np.uint32)
         label_mapping[leaf_labels] = np.arange(self.n_clusters_, dtype=np.uint32)
         self.labels_ = label_mapping[labels]
+        for leaf in leaves:
+            leaf.label = label_mapping[leaf.label]
         return self
     
     def predict(self, X):
