@@ -28,7 +28,7 @@ def test_cluster_sizes():
     rng = np.random.RandomState(12)
     X = rng.rand(20, 10)
     y = rng.rand(20)
-    bahc = BiasAwareHierarchicalKMeans(bahc_max_iter=5, bahc_min_cluster_size=20)
+    bahc = BiasAwareHierarchicalKMeans(bahc_max_iter=5, bahc_min_cluster_size=5)
     bahc.fit(X, y)
     assert np.all(np.bincount(bahc.labels_) >= bahc.bahc_min_cluster_size)
 
