@@ -68,7 +68,7 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
         leaves = []
         std = np.std(y)
         score = 0
-        root = ClusterNode(0, std, score)
+        root = ClusterNode(0, -std, score)
         self.cluster_tree_ = root
         n_nodes = 1
         # The entire dataset has a discrimination score of zero
@@ -80,11 +80,12 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
             # Take the cluster with the highest standard deviation of metric y
             node = heapq.heappop(heap)
             label = node.label
+            score = node.score
             cluster_indices = np.nonzero(labels == label)[0]
-            cluster = X[cluster_indices]
+            X_cluster = X[cluster_indices]
 
             clustering_model = self.clustering_cls(**self.clustering_params)
-            cluster_labels = clustering_model.fit_predict(cluster)
+            cluster_labels = clustering_model.fit_predict(X_cluster)
 
             if hasattr(clustering_model, "n_clusters_"):
                 n_children = clustering_model.n_clusters_
@@ -102,16 +103,16 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                     leaves.append(node)
                     valid_split = False
                     break
-            
+                        
             # If all children clusters are of sufficient size, we check if the score of each child cluster is greater than or equal to the current score
             if valid_split:
                 child_scores = []
                 for child_indices in children_indices:
-                    cluster_metric = y[child_indices]
+                    y_cluster = y[child_indices]
                     complement_mask = np.ones(n_samples, dtype=bool)
                     complement_mask[child_indices] = False
-                    complement_metric = y[complement_mask]
-                    child_score = np.mean(complement_metric) - np.mean(cluster_metric)
+                    y_complement = y[complement_mask]
+                    child_score = np.mean(y_complement) - np.mean(y_cluster)
                     if child_score >= score:
                         child_scores.append(child_score)
                     else:
