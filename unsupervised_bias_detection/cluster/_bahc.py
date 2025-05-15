@@ -61,17 +61,16 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
             order="C",
         )
         n_samples, _ = X.shape
-        # We start with all samples being in a single cluster
+        # We start with all samples being in a single cluster with label 0
         self.n_clusters_ = 1
-        # We assign all samples a label of zero
         labels = np.zeros(n_samples, dtype=np.uint32)
         leaves = []
+        label = 0
         std = np.std(y)
-        score = 0
-        root = ClusterNode(0, -std, score)
-        self.cluster_tree_ = root
-        n_nodes = 1
         # The entire dataset has a discrimination score of zero
+        score = 0
+        root = ClusterNode(label, -std, score)
+        self.cluster_tree_ = root
         heap = [root]
         for _ in range(self.bahc_max_iter):
             if not heap:
@@ -100,12 +99,12 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                 if len(child_indices) >= self.bahc_min_cluster_size:
                     children_indices.append(child_indices)
                 else:
-                    leaves.append(node)
                     valid_split = False
                     break
                         
-            # If all children clusters are of sufficient size, we check if the score of each child cluster is greater than or equal to the current score
+            # If all children clusters are of sufficient size, we check if the score of any child cluster is greater than or equal to the current score
             if valid_split:
+                valid_split = False
                 child_scores = []
                 for child_indices in children_indices:
                     y_cluster = y[child_indices]
@@ -114,26 +113,33 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                     y_complement = y[complement_mask]
                     child_score = np.mean(y_complement) - np.mean(y_cluster)
                     if child_score >= score:
-                        child_scores.append(child_score)
-                    else:
-                        leaves.append(node)
-                        valid_split = False
-                        break
+                        valid_split = True
+                    child_scores.append(child_score)
             
             # If the split is valid, we create the children nodes and split the current node
+            # Otherwise, we add the current node to the leaves
             if valid_split:
-                children = []
-                for i in range(n_children):
+                # TODO: Make this nicer!
+                # TODO: Maybe explain why we negate std before pushing to heap
+                first_child_indices = children_indices[0]
+                first_child_std = np.std(y[first_child_indices])
+                first_child_score = child_scores[0]
+                first_child = ClusterNode(label, -first_child_std, first_child_score)
+                heapq.heappush(heap, first_child)
+                labels[first_child_indices] = label
+                children = [first_child]
+                for i in range(1, n_children):
                     child_indices = children_indices[i]
                     child_std = np.std(y[child_indices])
                     child_score = child_scores[i]
-                    # heapq implements min-heap
-                    # so we have to negate std before pushing
-                    child_node = ClusterNode(n_nodes, -child_std, child_score)
+                    child_node = ClusterNode(self.n_clusters_, -child_std, child_score)
+                    heapq.heappush(heap, child_node)
+                    labels[child_indices] = self.n_clusters_
                     children.append(child_node)
-                    n_nodes += 1
+                    self.n_clusters_ += 1
                 node.split(clustering_model, children)
-                self.n_clusters_ += n_children - 1
+            else:
+                leaves.append(node)
         
         leaves.extend(heap)
         leaf_scores = np.array([leaf.score for leaf in leaves])
@@ -145,8 +151,8 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
         label_mapping = np.zeros(self.n_clusters_, dtype=np.uint32)
         label_mapping[leaf_labels] = np.arange(self.n_clusters_, dtype=np.uint32)
         self.labels_ = label_mapping[labels]
-        for leaf in leaves:
-            leaf.label = label_mapping[leaf.label]
+        for i in range(self.n_clusters_):
+            leaves[i].label = leaf_labels[i]
         return self
     
     def predict(self, X):
