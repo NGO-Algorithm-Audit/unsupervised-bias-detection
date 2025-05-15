@@ -1,8 +1,11 @@
+import itertools
 from sklearn.base import ClusterMixin
 from typing import Self
 
 class ClusterNode:
-    def __init__(self, label: int):
+    _id_counter = itertools.count()
+
+    def __init__(self, neg_std: float, score: float):
         """
         Initialize a node in the cluster tree.
         
@@ -11,13 +14,21 @@ class ClusterNode:
         label : int
             The cluster label for this node (required as all nodes start as leaves)
         """
-        self.label = label
+        self.id = next(self._id_counter)
+        self.neg_std = neg_std
+        self.score = score
+        # The label is set to the id when the node is a leaf
+        # and is set to None when the node is split
+        self.label = self.id
         self.clustering_model = None
         self.children = []
     
     @property
     def is_leaf(self):
         return len(self.children) == 0
+    
+    def __lt__(self, other: Self):
+        return self.neg_std < other.neg_std or (self.neg_std == other.neg_std and self.id < other.id)
     
     def split(self, clustering_model: ClusterMixin, children: list[Self]):
         """
@@ -31,7 +42,7 @@ class ClusterNode:
             The clustering model used to split this node
         children : list of ClusterNode
             The child nodes resulting from the split
-        """   
+        """
         self.label = None
         self.clustering_model = clustering_model
         self.children = children

@@ -48,12 +48,7 @@ class BiasAwareHierarchicalKMeans(BaseEstimator, ClusterMixin):
         bahc_min_cluster_size,
         **kmeans_params,
     ):
-        # TODO: Remove this once we have a better way to handle the number of clusters
-        if "n_clusters" in kmeans_params and kmeans_params["n_clusters"] != 2:
-            raise ValueError(
-                f"The parameter `n_clusters` should be 2, got {kmeans_params['n_clusters']}."
-            )
-        else:
+        if "n_clusters" not in kmeans_params:
             kmeans_params["n_clusters"] = 2
 
         if "n_init" not in kmeans_params:
