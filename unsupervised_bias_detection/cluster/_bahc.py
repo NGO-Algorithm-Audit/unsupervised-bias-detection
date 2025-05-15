@@ -68,8 +68,9 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
         leaves = []
         std = np.std(y)
         score = 0
-        root = ClusterNode(std, score)
+        root = ClusterNode(0, std, score)
         self.cluster_tree_ = root
+        n_nodes = 1
         # The entire dataset has a discrimination score of zero
         heap = [root]
         for _ in range(self.bahc_max_iter):
@@ -127,8 +128,9 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                     child_score = child_scores[i]
                     # heapq implements min-heap
                     # so we have to negate std before pushing
-                    child_node = ClusterNode(-child_std, child_score)
+                    child_node = ClusterNode(n_nodes, -child_std, child_score)
                     children.append(child_node)
+                    n_nodes += 1
                 node.split(clustering_model, children)
                 self.n_clusters_ += n_children - 1
         

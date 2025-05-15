@@ -3,9 +3,7 @@ from sklearn.base import ClusterMixin
 from typing import Self
 
 class ClusterNode:
-    _id_counter = itertools.count()
-
-    def __init__(self, neg_std: float, score: float):
+    def __init__(self, node_id: int, neg_std: float, score: float):
         """
         Initialize a node in the cluster tree.
         
@@ -14,12 +12,12 @@ class ClusterNode:
         label : int
             The cluster label for this node (required as all nodes start as leaves)
         """
-        self.id = next(self._id_counter)
+        self.node_id = node_id
         self.neg_std = neg_std
         self.score = score
         # The label is set to the id when the node is a leaf
         # and is set to None when the node is split
-        self.label = self.id
+        self.label = node_id
         self.clustering_model = None
         self.children = []
     
@@ -28,7 +26,7 @@ class ClusterNode:
         return len(self.children) == 0
     
     def __lt__(self, other: Self):
-        return self.neg_std < other.neg_std or (self.neg_std == other.neg_std and self.id < other.id)
+        return self.neg_std < other.neg_std or (self.neg_std == other.neg_std and self.node_id < other.node_id)
     
     def split(self, clustering_model: ClusterMixin, children: list[Self]):
         """
