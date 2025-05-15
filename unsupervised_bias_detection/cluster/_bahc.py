@@ -151,8 +151,8 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
         label_mapping = np.zeros(self.n_clusters_, dtype=np.uint32)
         label_mapping[leaf_labels] = np.arange(self.n_clusters_, dtype=np.uint32)
         self.labels_ = label_mapping[labels]
-        for i in range(self.n_clusters_):
-            leaves[i].label = leaf_labels[i]
+        for leaf in leaves:
+            leaf.label = label_mapping[leaf.label]
         return self
     
     def predict(self, X):
