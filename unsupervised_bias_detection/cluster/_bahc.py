@@ -10,7 +10,8 @@ from typing import Any, Type
 
 
 class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
-    """TODO: Add docstring.
+    """
+    TODO: Add docstring.
 
     References
     ----------
@@ -28,11 +29,13 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
         clustering_cls: Type[ClusterMixin],
         bahc_max_iter: int,
         bahc_min_cluster_size: int,
+        margin: float = 1e-5,
         **clustering_params: Any,
     ):
         self.clustering_cls = clustering_cls
         self.bahc_max_iter = bahc_max_iter
         self.bahc_min_cluster_size = bahc_min_cluster_size
+        self.margin = margin
         self.clustering_params = clustering_params
 
     def fit(self, X, y):
@@ -60,80 +63,91 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
             order="C",
         )
         n_samples, _ = X.shape
-        # We start with all samples being in a single cluster
+        # We start with all samples being in a single cluster with label 0
         self.n_clusters_ = 1
-        # We assign all samples a label of zero
         labels = np.zeros(n_samples, dtype=np.uint32)
         leaves = []
-        scores = []
         label = 0
-        root = ClusterNode(label)
-        self.cluster_tree_ = root
+        std = np.std(y)
         # The entire dataset has a discrimination score of zero
         score = 0
-        heap = [(None, root, score)]
+        root = ClusterNode(label, -std, score)
+        self.cluster_tree_ = root
+        heap = [root]
         for _ in range(self.bahc_max_iter):
             if not heap:
                 # If the heap is empty we stop iterating
                 break
             # Take the cluster with the highest standard deviation of metric y
-            _, node, score = heapq.heappop(heap)
+            node = heapq.heappop(heap)
             label = node.label
+            score = node.score
             cluster_indices = np.nonzero(labels == label)[0]
-            cluster = X[cluster_indices]
+            X_cluster = X[cluster_indices]
 
             clustering_model = self.clustering_cls(**self.clustering_params)
-            cluster_labels = clustering_model.fit_predict(cluster)
+            cluster_labels = clustering_model.fit_predict(X_cluster)
 
-            # TODO: Generalize for more than 2 clusters
-            # Can do this by checking clustering_model.n_clusters_ (if it exists)
-            # or by checking the number of unique values in cluster_labels
-            indices0 = cluster_indices[np.nonzero(cluster_labels == 0)[0]]
-            indices1 = cluster_indices[np.nonzero(cluster_labels == 1)[0]]
-            if (
-                len(indices0) >= self.bahc_min_cluster_size
-                and len(indices1) >= self.bahc_min_cluster_size
-            ):
-                # We calculate the discrimination scores using formula (1) in [1]
-                # TODO: Move y[indices0] and y[indices1] into separate variables
-                # to avoid recomputing them
-                # Maybe create a function to compute the score
-                mask0 = np.ones(n_samples, dtype=bool)
-                mask0[indices0] = False
-                score0 = np.mean(y[mask0]) - np.mean(y[indices0])
-                mask1 = np.ones(n_samples, dtype=bool)
-                mask1[indices1] = False
-                score1 = np.mean(y[mask1]) - np.mean(y[indices1])
-                if max(score0, score1) >= score:
-                    std0 = np.std(y[indices0])
-                    node0 = ClusterNode(label)
-                    # heapq implements min-heap
-                    # so we have to negate std before pushing
-                    heapq.heappush(heap, (-std0, node0, score0))
-                    std1 = np.std(y[indices1])
-                    node1 = ClusterNode(self.n_clusters_)
-                    heapq.heappush(heap, (-std1, node1, score1))
-                    labels[indices1] = self.n_clusters_
-                    # TODO: Increase n_clusters_ by clustering_model.n_clusters_ - 1
-                    self.n_clusters_ += 1
-                    children = [node0, node1]
-                    node.split(clustering_model, children)
+            if hasattr(clustering_model, "n_clusters_"):
+                n_children = clustering_model.n_clusters_
+            else:
+                n_children = len(np.unique(cluster_labels))
+            
+            # We first check if all child clusters meet the minimum size requirement
+            valid_split = True
+            children_indices = []
+            for i in range(n_children):
+                child_indices = cluster_indices[np.nonzero(cluster_labels == i)[0]]
+                if len(child_indices) >= self.bahc_min_cluster_size:
+                    children_indices.append(child_indices)
                 else:
-                    leaves.append(node)
-                    scores.append(score)
+                    valid_split = False
+                    break
+                        
+            # If all children clusters are of sufficient size, we check if the score of any child cluster is greater than or equal to the current score
+            if valid_split:
+                valid_split = False
+                child_scores = []
+                for child_indices in children_indices:
+                    y_cluster = y[child_indices]
+                    complement_mask = np.ones(n_samples, dtype=bool)
+                    complement_mask[child_indices] = False
+                    y_complement = y[complement_mask]
+                    child_score = np.mean(y_complement) - np.mean(y_cluster)
+                    if child_score >= score + self.margin:
+                        valid_split = True
+                    child_scores.append(child_score)
+            
+            # If the split is valid, we create the children nodes and split the current node
+            # Otherwise, we add the current node to the leaves
+            if valid_split:
+                # TODO: Make this nicer!
+                # TODO: Maybe explain why we negate std before pushing to heap
+                first_child_indices = children_indices[0]
+                first_child_std = np.std(y[first_child_indices])
+                first_child_score = child_scores[0]
+                first_child = ClusterNode(label, -first_child_std, first_child_score)
+                heapq.heappush(heap, first_child)
+                labels[first_child_indices] = label
+                children = [first_child]
+                for i in range(1, n_children):
+                    child_indices = children_indices[i]
+                    child_std = np.std(y[child_indices])
+                    child_score = child_scores[i]
+                    child_node = ClusterNode(self.n_clusters_, -child_std, child_score)
+                    heapq.heappush(heap, child_node)
+                    labels[child_indices] = self.n_clusters_
+                    children.append(child_node)
+                    self.n_clusters_ += 1
+                node.split(clustering_model, children)
             else:
                 leaves.append(node)
-                scores.append(score)
-        if heap:
-            # TODO: Check if this can be made more efficient
-            leaves.extend((node for _, node, _ in heap))
-            scores = np.concatenate([scores, [score for _, _, score in heap]])
-        else:
-            scores = np.array(scores)
-
+        
+        leaves.extend(heap)
+        leaf_scores = np.array([leaf.score for leaf in leaves])
         # We sort clusters by decreasing scores
-        sorted_indices = np.argsort(-scores)
-        self.scores_ = scores[sorted_indices]
+        sorted_indices = np.argsort(-leaf_scores)
+        self.scores_ = leaf_scores[sorted_indices]
         leaf_labels = np.array([leaf.label for leaf in leaves])
         leaf_labels = leaf_labels[sorted_indices]
         label_mapping = np.zeros(self.n_clusters_, dtype=np.uint32)

@@ -23,8 +23,25 @@ def test_labels():
     assert np.array_equal(np.unique(bahc.labels_), np.arange(bahc.n_clusters_))
 
 
-# def test_cluster_sizes():
+def test_cluster_sizes():
     # Checks that cluster sizes are at least bahc_min_cluster_size
+    rng = np.random.RandomState(12)
+    X = rng.rand(20, 10)
+    y = rng.rand(20)
+    bahc = BiasAwareHierarchicalKMeans(bahc_max_iter=5, bahc_min_cluster_size=5)
+    bahc.fit(X, y)
+    assert np.all(np.bincount(bahc.labels_) >= bahc.bahc_min_cluster_size)
+
+
+def test_constant_metric():
+    # Checks that there is only one cluster with a score of 0 if the metric is constant
+    rng = np.random.RandomState(12)
+    X = rng.rand(20, 10)
+    y = np.full(20, rng.rand())
+    bahc = BiasAwareHierarchicalKMeans(bahc_max_iter=5, bahc_min_cluster_size=2)
+    bahc.fit(X, y)
+    assert bahc.n_clusters_ == 1
+    assert bahc.scores_[0] == 0
 
 
 def test_scores():
