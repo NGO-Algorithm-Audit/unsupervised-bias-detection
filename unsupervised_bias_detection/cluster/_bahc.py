@@ -29,11 +29,13 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
         clustering_cls: Type[ClusterMixin],
         bahc_max_iter: int,
         bahc_min_cluster_size: int,
+        margin: float = 1e-5,
         **clustering_params: Any,
     ):
         self.clustering_cls = clustering_cls
         self.bahc_max_iter = bahc_max_iter
         self.bahc_min_cluster_size = bahc_min_cluster_size
+        self.margin = margin
         self.clustering_params = clustering_params
 
     def fit(self, X, y):
@@ -112,7 +114,7 @@ class BiasAwareHierarchicalClustering(BaseEstimator, ClusterMixin):
                     complement_mask[child_indices] = False
                     y_complement = y[complement_mask]
                     child_score = np.mean(y_complement) - np.mean(y_cluster)
-                    if child_score >= score:
+                    if child_score >= score + self.margin:
                         valid_split = True
                     child_scores.append(child_score)
             
