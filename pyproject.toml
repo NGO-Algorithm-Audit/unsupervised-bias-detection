@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "unsupervised-bias-detection"
-version = "0.2.4"
-description = ""
-authors = []
-license = "MIT"
+version = "0.2.6"
+description = "package for unsupervised bias detection"
+authors = "NGO Algorithm Audit"
+license = "EUPL-1.2 license"
 readme = "README.md"
 
 [tool.poetry.dependencies]
