@@ -2,7 +2,7 @@
 name = "unsupervised-bias-detection"
 version = "0.2.6"
 description = "package for unsupervised bias detection"
-authors = ["NGO Algorithm Audit"]
+authors = ["NGO Algorithm Audit (info@algorithmaudit.eu)"]
 license = "EUPL-1.2 license"
 readme = "README.md"
 

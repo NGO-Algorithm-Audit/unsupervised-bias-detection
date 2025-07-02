@@ -1,5 +1,5 @@
 ![image](https://raw.githubusercontent.com/NGO-Algorithm-Audit/unsupervised-bias-detection/refs/heads/master/images/Header_Github.png)
-## Detecting higher-dimensional forms of proxy bias
+## Unsupervised bias detection
 
 📄 Applied in real-world audit: [audit report](https://algorithmaudit.eu/algoprudence/cases/aa202402_preventing-prejudice_addendum/)
 
@@ -9,70 +9,90 @@
 
 ## Key takeaways – Why unsupervised bias detection?
 - **Quantitative-qualitative joint method**: Data-driven bias testing combined with the balanced and context-sensitive judgment of human experts;
-- **Normative advice commission**: Expert-led, deliberative assessment to establish unfair treatment;
-- **Bias scan tool**: Scalable method based on machine learning to detect algorithmic bias;
-- **Unsupervised bias detection**: No user data needed on protected attributes;
+- **Unsupervised bias detection**: No data needed on protected attributes, e.g., gender or ethnicity (unsupervised learning);
+- **Anolamy detection**: Scalable method based on statistical analysis;
 - **Detects complex bias**: Identifies unfairly treated groups characterized by mixture of features, detects intersectional bias;
-- **Model-agnostic**: Works for all binary AI classifiers;
-- **Open-source and not-for-profit**: Easy to use and available for the entire AI auditing community.
-
-<!-- | **CI/CD**     | [![github-actions-release](https://img.shields.io/github/actions/workflow/status/aeon-toolkit/aeon/release.yml?logo=github&label=build%20%28release%29)](https://github.com/aeon-toolkit/aeon/actions/workflows/release.yml) [![github-actions-main](https://img.shields.io/github/actions/workflow/status/aeon-toolkit/aeon/pr_pytest.yml?logo=github&branch=main&label=build%20%28main%29)](https://github.com/aeon-toolkit/aeon/actions/workflows/pr_pytest.yml) [![github-actions-nightly](https://img.shields.io/github/actions/workflow/status/aeon-toolkit/aeon/periodic_tests.yml?logo=github&label=build%20%28nightly%29)](https://github.com/aeon-toolkit/aeon/actions/workflows/periodic_tests.yml) [![docs-main](https://img.shields.io/readthedocs/aeon-toolkit/stable?logo=readthedocs&label=docs%20%28stable%29)](https://www.aeon-toolkit.org/en/stable/) [![docs-main](https://img.shields.io/readthedocs/aeon-toolkit/latest?logo=readthedocs&label=docs%20%28latest%29)](https://www.aeon-toolkit.org/en/latest/)| -->
-
+- **Model-agnostic**: Works for all algorithms and AI systems;
+- **Open-source and not-for-profit**: User friendly, privacy-preserving and free to use for the entire AI auditing community.
 
 |   |   |
 | --- | --- |
-| **Code**      | [![!pypi](https://img.shields.io/pypi/v/unsupervised-bias-detection?logo=pypi&color=blue)](https://pypi.org/project/unsupervised-bias-detection/) [![!python-versions](https://img.shields.io/pypi/pyversions/aeon?logo=python)](https://www.python.org/) [![license](https://img.shields.io/badge/license-MIT-blue)](https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection?tab=MIT-1-ov-file#) |
+| **Code**      | [![!pypi](https://img.shields.io/pypi/v/unsupervised-bias-detection?logo=pypi&color=blue)](https://pypi.org/project/unsupervised-bias-detection/) [![!python-versions](https://img.shields.io/pypi/pyversions/aeon?logo=python)](https://www.python.org/) [![license](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection?tab=EUPL-1.2-1-ov-file#readme) |
 | **Community** | [![!slack](https://img.shields.io/static/v1?logo=slack&label=Slack&message=chat&color=lightgreen)](https://join.slack.com/t/aa-experthub/shared_invite/zt-2n8aqry8z-lWC6XTbqVmb6S2hpkThaqQ) [![!linkedin](https://img.shields.io/static/v1?logo=linkedin&label=LinkedIn&message=news&color=lightblue)](https://www.linkedin.com/company/algorithm-audit/) |
 
+## Installation
 
-## How this tool fits in our quantitative-qualitative AI auditing framework?
-The Joint Fairness Assessment Method developed (JFAM) by NGO Algorithm Audit combines data-driven bias testing with normative and context-sensitive judgment of human experts, to determine fair AI on a case-by-case basis. The data-driven component comprises this unsupervised clustering tool (available as a free-to-use [web app](https://algorithmaudit.eu/technical-tools/bdt/#web-app)) that discovers complex and hidden forms of bias. It thereby tackles the difficult problem of detecting proxy-discrimination that stems from unforeseen and higher-dimensional forms of bias, including intersectional forms of discrimination. The results of the bias scan tool serve as a starting point for a deliberative assessment by human experts to evaluate potential discrimination and unfairness in an AI system.
+#### Pip
 
-As an example, we applied our bias detection tool to a BERT-based disinformation classifier and distilled a set of pressing questions about its performance and possible biases. We presented these questions to an independent advice commission composed of four academic experts on fair AI, and two civil society organizations working on disinformation detection. The advice commission believes there is a low risk of (higher-dimensional) proxy discrimination by the reviewed disinformation classifier. The commission judged that the differences in treatment identified by the quantitative bias scan can be justified, if certain conditions apply. The full advice can be read in our [algoprudence case repository](https://algorithmaudit.eu/algoprudence/cases/aa202301_bert-based-disinformation-classifier/) (ALGO:AA:2023:01).
+```
+pip install unsupervised-bias-detection
+```
 
-Our joint approach to AI auditing is supported by 20+ actors from the international AI auditing community, including journalists, civil society organizations, NGOs, corporate data scientists and academics. In sum, it combines the power of rigorous, machine learning-informed bias testing with the balanced judgment of human experts, to determine fair AI in a concrete way.
+#### Source
 
-<sub><sup>1</sup>The bias scan tool is based on the k-means Hierarchical Bias-Aware Clustering method as described in Bias-Aware Hierarchical Clustering for detecting the discriminated groups of users in recommendation systems, Misztal-Radecka, Indurkya, _Information Processing and Management_ (2021). [[link]](https://www.sciencedirect.com/science/article/abs/pii/S0306457321000285) Additional research indicates that k-means HBAC, in comparison to other clustering algorithms, works best to detect bias in real-world datasets.</sub>
+```
+git clone https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection.git
+cd unsupervised-bias-detection
+pip install -r requirements.txt
+python setup.py install
+```
 
-<sub><sup>2</sup>The uploaded data is instantly deleted from the server after being processed.</sub>
+## Unsupervised bias detection in seven steps:
 
-<sub><sup>3</sup>Real-time Rumor Debunking on Twitter, Liu et al., _Proceedings of the 24th ACM International on Conference on Information and Knowledge Management_ (2015).</sub>
+### Prepared by the user:
 
-## Bias detection tool manual
+**Step 1. Data:**
+The user should prepare the following aspects relating to the processed data:
+* Dataset: The data must be provided in a tabular format. Any missing values should be removed or replaced.
+* Type of data: All columns, except the bias variable column, should have uniform data types, e.g., either all numerical or all categorical. The user selects whether numerical of categorical data are processed.
+* Bias variable: A column should be selected from the dataset to serve as the `bias variable`, which needs to be categorical. In step 4, clustering will be performed based on these categorical values. Examples include metrics such as "being classified as high risk", "error rate" or "selected for an investigation".
 
-A .csv file of max. 1GB, with columns: features, performance metric. Note: Only the naming, not the order of the columns is of importance. The dataframe displayed in Table 1 is digestible by the [web app](https://algorithmaudit.eu/technical-tools/bdt/#web-app)
+**Step 2. Hyperparameters:** 
+The user shoulds set the following hyperparameters:
+* Iterations: How often the data are allowed to be split in smaller clusters, by default 3 iterations are selected.
+* Minimal cluster size: How many datapoints the identified clusters may contain, by deafault set to 1% of the number of rows in the attached dataset. More guidance on well-informed choice of the minimal cluster size can be found in section 3.3 of our [scientific paper](/technical-tools/bdt/#scientific-paper).
+* Bias variable interpretation: How the bias variable should be interpreted. For instance, when error rate or misclassifications are chosen as the bias variable, a lower value is preferred, as the goal is to minimize errors. Conversely, when accuracy or precision is selected as the bias variable, a higher value is preferred, reflecting the aim to maximize performance.
 
-| feat_1 | feat_2 | ... | feat_n | performance metric |
-|--------|--------|-----|--------|------------|
-| 10     | 1      | ... | 0.1    | 1          | 
-| 20     | 2      | ... | 0.2    | 1          | 
-| 30     | 3      | ... | 0.3    | 0          | 
+### Performed by the tool:
 
+**Step 3. Train-test data:**
+The dataset is divided into train and test subset, following a 80-20 ratio.
 
-<sub>*Table 1 – Structure of input data in the bias detection tool*</sub>
+**Step 4. Hierarchical Bias-Aware Clustering (HBAC):**
+The HBAC algorithm (detailed below) is applied to the train dataset. The centroids of the resulting clusters are saved and later used to assign cluster labels to data points in the test dataset.
 
-Features values can be numeric or categorical values. The numeric performance metric is context-dependent. The variable can, for instance, represents being 'selected for examination' (yes or no), 'assigned to a high-risk catagory (yes or no)' or false positive (yes or no). Low scores are considered to be a negative bias, i.e., if being selected for examination is considered to be harmful, 'selected for examination=Yes' should be codified as 0 and 'selected for examination=No' should be codified as 1.
+**Step 5. Testing cluster differences wrt. bias variable:** 
+Statistical hypothesis testing is performed to evaluate whether the bias variable differ significantly in the most deviating cluster compared to the rest of the dataset. A one-sided Z-test is used to compare the means of the bias variable by testing the following hypothesis:
+
+```
+H_0: no difference in bias variable between the most deviating cluster and the rest of the dataset
+H_A: difference in bias variable between the most deviating cluster and the rest of the dataset.
+```
+
+**Step 6. Testing cluster differences wrt. features:**
+If H_0 is rejected and H_1 is accepted, i.e., a statistically significant difference in bias variable between the most deviating cluster and the rest of the dataset occurs, feature diffences between the most deviating cluster and the rest of the dataset are examined. For this, also statistical hypothesis testing is used, namely a t-test in case numercial data and Pearson’s 𝜒2-test in case categorical data are processed. For multiple hypothesis testing, Bonferonni correction is applied. Further details can be found in section 3.4 of our [scientific paper](/technical-tools/bdt/#scientific-paper).
+
+A schematic overview of the above steps is depicted below.
+
+![image](./images/Overview_tool_EN.png)
+
+#### How does the clustering algorithm work?
+
+The *Hierarchical Bias-Aware Clustering* (HBAC) algorithm identifies clusters in the provided dataset based on a user-defined `bias variable`. The objective is to find clusters with low variation in the bias variable within each cluster. Variation in the bias variable between clusters should be high. HBAC iteratively finds clusters in the data using k-means (for numerical data) or k-modes clustering (for categorical data). For the initial split, HBAC takes the full dataset and splits it in two clusters. Cluster `C` – with the highest standard deviation of the bias variable – is selected. Then, cluster `C` is divided into two candidate clusters `C'` and `C''`'. If the average bias variable in either candidate cluster exceed the the average bias variable in `C`, the candidate cluster with highest bias variable is selected as a new cluster. This process repeats until the maximum number of iterations (`max_iterations`) is reached or the resulting cluster fails to meet the minimum size requirement (`n_min`). The pseudo-code of the HBAC algorithm is provided below.
+
+![image](./images/pseudo_code_HBAC.png)
+
+The HBAC-algorithm is introduced by Misztal-Radecka and Indurkya in a [scientific article](https://www.sciencedirect.com/science/article/abs/pii/S0306457321000285) as published in *Information Processing and Management* in 2021. Our implementation of the HBAC-algorithm advances this implementation by proposing additional methodological checks to distinguish real singals from noise, such as sample splitting, statistical hypothesis testing and measuring cluster stability. Algorithm Audit's implementation of the algorithm can be found in the <a href="https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection/blob/master/README.md" target="_blank">unsupervised-bias-detection</a> pip package.
+
+#### How should the results of the tool be interpreted?
+
+The HBAC algorithm maximizes the difference in bias variable between clusters. To prevent incorrect conclusions that there are unwanted deviations in the decision-making process under review when there truly is none, we: 1) split the dataset in training and test data; and 2) test hypotheses. If a statistically significant deviation is detected, the outcome of the tool serves as a starting point for human experts to assess the identified deviations in the decision-making processes.
 
 ## Example – Hierarchical Bias-Aware Clustering
 
 Note: The feature labels used in this example can easily be changed for numeric targets. This flexibility enables adaptation to detect (higher-dimensional) bias in various AI classifiers.
 
-```python
-import unsupervised-bias-detection as usb
-
-X = [[35, 55000, 1], # age, income, number of cars
-     [40, 45000, 0], 
-     [20, 30000, 0]]
-y = [1, 0, 0]  # flagged for fraud examination (yes:0, no:1)
-hbac = BiasAwareHierarchicalKMeans(n_iter=1, min_cluster_size=1).fit(X, y)
-hbac.n_clusters_
->>> 2
-hbac.scores_
->>> array([ 0.5, -0.5])
-```
-
-## Schematic overview
-![image](./images/Quantitative-qualitative.png)
+* COMPAS dataset [notebook]()
 
 ## Contributing Members
 - [Floris Holstege](https://github.com/fholstege)
