@@ -50,7 +50,7 @@ The user should prepare the following aspects relating to the processed data:
 **Step 2. Hyperparameters:** 
 The user shoulds set the following hyperparameters:
 * Iterations: How often the data are allowed to be split in smaller clusters, by default 3 iterations are selected.
-* Minimal cluster size: How many datapoints the identified clusters may contain, by deafault set to 1% of the number of rows in the attached dataset. More guidance on well-informed choice of the minimal cluster size can be found in section 3.3 of our [scientific paper](/technical-tools/bdt/#scientific-paper).
+* Minimal cluster size: How many datapoints the identified clusters may contain, by deafault set to 1% of the number of rows in the attached dataset. More guidance on well-informed choice of the minimal cluster size can be found in section 3.3 of our [scientific paper](https://arxiv.org/pdf/2502.01713).
 * Bias variable interpretation: How the bias variable should be interpreted. For instance, when error rate or misclassifications are chosen as the bias variable, a lower value is preferred, as the goal is to minimize errors. Conversely, when accuracy or precision is selected as the bias variable, a higher value is preferred, reflecting the aim to maximize performance.
 
 ### Performed by the tool:
@@ -70,17 +70,17 @@ H_A: difference in bias variable between the most deviating cluster and the rest
 ```
 
 **Step 6. Testing cluster differences wrt. features:**
-If H_0 is rejected and H_1 is accepted, i.e., a statistically significant difference in bias variable between the most deviating cluster and the rest of the dataset occurs, feature diffences between the most deviating cluster and the rest of the dataset are examined. For this, also statistical hypothesis testing is used, namely a t-test in case numercial data and Pearson’s 𝜒2-test in case categorical data are processed. For multiple hypothesis testing, Bonferonni correction is applied. Further details can be found in section 3.4 of our [scientific paper](/technical-tools/bdt/#scientific-paper).
+If H_0 is rejected and H_1 is accepted, i.e., a statistically significant difference in bias variable between the most deviating cluster and the rest of the dataset occurs, feature diffences between the most deviating cluster and the rest of the dataset are examined. For this, also statistical hypothesis testing is used, namely a t-test in case numercial data and Pearson’s 𝜒2-test in case categorical data are processed. For multiple hypothesis testing, Bonferonni correction is applied. Further details can be found in section 3.4 of our [scientific paper](https://arxiv.org/pdf/2502.01713).
 
 A schematic overview of the above steps is depicted below.
 
-![image](./images/Overview_tool_EN.png)
+![image](https://raw.githubusercontent.com/NGO-Algorithm-Audit/unsupervised-bias-detection/refs/heads/master/images/Overview_tool_EN.png)
 
 #### How does the clustering algorithm work?
 
 The *Hierarchical Bias-Aware Clustering* (HBAC) algorithm identifies clusters in the provided dataset based on a user-defined `bias variable`. The objective is to find clusters with low variation in the bias variable within each cluster. Variation in the bias variable between clusters should be high. HBAC iteratively finds clusters in the data using k-means (for numerical data) or k-modes clustering (for categorical data). For the initial split, HBAC takes the full dataset and splits it in two clusters. Cluster `C` – with the highest standard deviation of the bias variable – is selected. Then, cluster `C` is divided into two candidate clusters `C'` and `C''`'. If the average bias variable in either candidate cluster exceed the the average bias variable in `C`, the candidate cluster with highest bias variable is selected as a new cluster. This process repeats until the maximum number of iterations (`max_iterations`) is reached or the resulting cluster fails to meet the minimum size requirement (`n_min`). The pseudo-code of the HBAC algorithm is provided below.
 
-![image](./images/pseudo_code_HBAC.png)
+![image](https://raw.githubusercontent.com/NGO-Algorithm-Audit/unsupervised-bias-detection/refs/heads/master/images/pseudo_code_HBAC.png)
 
 The HBAC-algorithm is introduced by Misztal-Radecka and Indurkya in a [scientific article](https://www.sciencedirect.com/science/article/abs/pii/S0306457321000285) as published in *Information Processing and Management* in 2021. Our implementation of the HBAC-algorithm advances this implementation by proposing additional methodological checks to distinguish real singals from noise, such as sample splitting, statistical hypothesis testing and measuring cluster stability. Algorithm Audit's implementation of the algorithm can be found in the <a href="https://github.com/NGO-Algorithm-Audit/unsupervised-bias-detection/blob/master/README.md" target="_blank">unsupervised-bias-detection</a> pip package.
 
@@ -90,17 +90,21 @@ The HBAC algorithm maximizes the difference in bias variable between clusters. T
 
 ## Example – Hierarchical Bias-Aware Clustering
 
-Note: The feature labels used in this example can easily be changed for numeric targets. This flexibility enables adaptation to detect (higher-dimensional) bias in various AI classifiers.
-
 * COMPAS dataset [notebook]()
 
-## Contributing Members
+## Contributing members
 - [Floris Holstege](https://github.com/fholstege)
 - [Joel Persson](https://github.com/jopersson)
 - [Jurriaan Parie](https://github.com/jfparie)
 - [Kirtan Padh](https://github.com/kirtanp)
 - [Krsto Proroković](https://github.com/krstopro)
 - [Mackenzie Jorgensen](https://github.com/mjorgen1)
+
+### Finalist Stanford’s AI Audit Challenge 2023 
+Under the name Joint Fairness Assessment Method (JFAM) the unsupervised bias detection tool has been selected as a finalist in Stanford’s AI Audit Competition 2023.
+
+## OECD Catalogue of Tools & Metrics for Trustworthy AI
+The unsupervised bias detection tool is part of [OECD’s Catalogue of Tools & Metrics for Trustworthy AI](https://oecd.ai/en/catalogue/tools/unsupervised-bias-detection-tool).
 
 ### 20+ endorsements from various parts of the AI auditing community 
 #### Journalism
