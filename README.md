@@ -1,4 +1,4 @@
-![image](https://raw.githubusercontent.com/NGO-Algorithm-Audit/unsupervised-bias-detection/refs/heads/master/images/Header_Github.png)
+
 ## Unsupervised bias detection
 
 📄 Applied in real-world audit: [audit report](https://algorithmaudit.eu/algoprudence/cases/aa202402_preventing-prejudice_addendum/)
@@ -91,49 +91,6 @@ The HBAC algorithm maximizes the difference in bias variable between clusters. T
 ## Example – Hierarchical Bias-Aware Clustering
 
 * COMPAS dataset [notebook]()
-
-## Contributing members
-- [Floris Holstege](https://github.com/fholstege)
-- [Joel Persson](https://github.com/jopersson)
-- [Jurriaan Parie](https://github.com/jfparie)
-- [Kirtan Padh](https://github.com/kirtanp)
-- [Krsto Proroković](https://github.com/krstopro)
-- [Mackenzie Jorgensen](https://github.com/mjorgen1)
-
-### Finalist Stanford’s AI Audit Challenge 2023 
-Under the name Joint Fairness Assessment Method (JFAM) the unsupervised bias detection tool has been selected as a finalist in Stanford’s AI Audit Competition 2023.
-
-## OECD Catalogue of Tools & Metrics for Trustworthy AI
-The unsupervised bias detection tool is part of [OECD’s Catalogue of Tools & Metrics for Trustworthy AI](https://oecd.ai/en/catalogue/tools/unsupervised-bias-detection-tool).
-
-### 20+ endorsements from various parts of the AI auditing community 
-#### Journalism
-- Gabriel Geiger, Investigative Reporter Algorithms and Automated Decision-Making at Lighthouse Reports
-
-#### Civil society organisations
-- [Maldita](https://maldita.es/maldita-es-journalism-to-not-be-fooled/), an independent journalistic platform focused on the control of disinformation and public discourse through fact-checking and data journalism techniques
-- [Demos](https://demos.co.uk/), Britain's leading cross-party think-tank
-- [AI Forensics](https://www.aiforensics.org), a European non-profit that investigates influential and opaque algorithms
-- [NLAIC](https://nlaic.com), The Netherlands AI Coalition
-- [Progressive Café](https://progressiefcafe.nl), public platform of young Dutch intellectuals, represented by Kiza Magendane
-- [Dutch AI Ethics Community](https://www.linkedin.com/company/daiec/), represented by Samaa Mohammad
-- Simone Maria Parazzoli, OECD Observatory of Public Sector Innovation (OPSI)
-
-#### Industry
-- Selma Muhammad, Trustworthy AI consultant at Deloitte
-- Laurens van der Maas, Data Scientist at AWS
-- Xiaoming op de Hoek, Data Scientist at Rabobank
-- Jan Overgoor, Data Scientist at SPAN
-- Dasha Simons, Trustworthy AI consultant at IBM
-
-#### Academia
-- Anne Meuwese, Professor in Public Law & AI at Leiden University
-- Hinda Haned, Professor in Responsible Data Science at University of Amsterdam
-- Raphaële Xenidis, Associate Professor in EU law at Sciences Po Paris
-- Marlies van Eck, Assistant Professor in Administrative Law & AI at Radboud University
-- Aileen Nielsen, Fellow Law&Tech at ETH Zürich
-- Vahid Niamadpour, PhD-candidate in Linguistics at Leiden University
-- Ola Al Khatib, PhD-candidate in the legal regulation of algorithmic decision-making at Utrecht University
 
 ## Help and Support
 
